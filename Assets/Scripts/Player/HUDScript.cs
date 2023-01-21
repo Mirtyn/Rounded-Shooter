@@ -26,4 +26,9 @@ public class HUDScript : Projectbehaviour
     {
         goldText.text = "Gold: " + gold.ToString();
     }
+
+    public void ShopButtinPressed()
+    {
+        Debug.Log("Shop Keeper: Yes?");
+    }
 }
