@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CasualEnemyScript : Projectbehaviour
+public class CasualEnemyScript : EnemyScript
 {
     string CasualEnemyDescription = "Casual Enemy";
     [SerializeField] GoldScript goldScript;
@@ -21,6 +21,11 @@ public class CasualEnemyScript : Projectbehaviour
     Quaternion rotGoal;
     Vector3 direction;
 
+    public CasualEnemyScript()
+        : base(0.9f)
+    {
+    }
+
     void Start()
     {
         goldScript = FindObjectOfType<GoldScript>();
@@ -35,7 +40,7 @@ public class CasualEnemyScript : Projectbehaviour
         rotGoal = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
 
-        translation = new Vector3(0, 0, 0.9f) * Time.deltaTime;
+        translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 
         transform.Translate(translation);
     }

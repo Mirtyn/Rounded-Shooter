@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToughEnemyScript : Projectbehaviour
+public class ToughEnemyScript : EnemyScript
 {
     string ToughEnemyDescription = "Tough Enemy";
     [SerializeField] GoldScript goldScript;
@@ -20,6 +20,10 @@ public class ToughEnemyScript : Projectbehaviour
     Quaternion rotGoal;
     Vector3 direction;
 
+    public ToughEnemyScript()
+        : base(0.55f)
+    {
+    }
     void Start()
     {
         goldScript = FindObjectOfType<GoldScript>();
@@ -34,7 +38,7 @@ public class ToughEnemyScript : Projectbehaviour
         rotGoal = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
 
-        translation = new Vector3(0, 0, 0.55f) * Time.deltaTime;
+        translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 
         transform.Translate(translation);
     }

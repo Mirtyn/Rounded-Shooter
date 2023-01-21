@@ -47,4 +47,4 @@ MonoBehaviour:
   timerScript: {fileID: 0}
   casualEnemy: {fileID: 6821775452321487912, guid: c88a2e723bb2ba54c923b99c83e2fc72, type: 3}
   fastEnemy: {fileID: 6821775452321487912, guid: 39152efb59c0bde4cab3c2fdee805cb0, type: 3}
-  thoughEnemy: {fileID: 6821775452321487912, guid: 13f103e4783428e42a6a56073ec6aa29, type: 3}
+  toughEnemy: {fileID: 6821775452321487912, guid: 13f103e4783428e42a6a56073ec6aa29, type: 3}

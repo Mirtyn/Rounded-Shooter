@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FastEnemyScript : Projectbehaviour
+public class FastEnemyScript : EnemyScript
 {
     string FastEnemyDescription = "Fast Enemy";
     [SerializeField] GoldScript goldScript;
@@ -16,6 +16,11 @@ public class FastEnemyScript : Projectbehaviour
     float turnSpeed = 0.5f;
     Quaternion rotGoal;
     Vector3 direction;
+
+    public FastEnemyScript()
+        : base(2.0f)
+    {
+    }
 
     void Start()
     {
@@ -31,7 +36,7 @@ public class FastEnemyScript : Projectbehaviour
         rotGoal = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
 
-        translation = new Vector3(0, 0, 2f) * Time.deltaTime;
+        translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 
         transform.Translate(translation);
     }

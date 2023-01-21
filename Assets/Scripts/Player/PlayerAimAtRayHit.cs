@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAimAtRayHit : Projectbehaviour
 {
     [SerializeField] Transform target;
-    float turnSpeed = 0.1f;
+    float turnSpeed = 3.00f;
     Quaternion rotGoal;
     Vector3 direction;
 
@@ -22,6 +22,6 @@ public class PlayerAimAtRayHit : Projectbehaviour
         direction.x = (target.position.x - transform.position.x);
         direction.z = (target.position.z - transform.position.z);
         rotGoal = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed * Time.deltaTime);
     }
 }

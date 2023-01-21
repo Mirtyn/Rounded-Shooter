@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Models;
 
 public class EnemyWavesControler : Projectbehaviour
 {
@@ -12,18 +13,54 @@ public class EnemyWavesControler : Projectbehaviour
 
     [SerializeField] GameObject casualEnemy;
     [SerializeField] GameObject fastEnemy;
-    [SerializeField] GameObject thoughEnemy;
+    [SerializeField] GameObject toughEnemy;
 
     private static string CasualEnemyDescription = "Casual Enemy";
     private static string FastEnemyDescription = "Fast Enemy";
     private static string ToughEnemyDescription = "Tough Enemy";
 
-    //bool spawnedExampleW = false;
-    bool spawnedW1 = false;
-    bool spawnedW2 = false;
-    bool spawnedW3 = false;
-    bool spawnedW4 = false;
-    bool spawnedW5 = false;
+    List<Wave> Waves = new List<Wave>();
+
+    int currentWave = 0;
+
+    public EnemyWavesControler()
+    {
+        var m = 1.55f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 3, 0.25f * m)
+                .AddSetting(EnemyType.Fast, 1, 0.50f * m)
+                //.AddSetting(EnemyType.Tough, 1, 0.25f * m)
+                .AddStartTime(1f)
+                .BuildWave());
+
+        m = 1.65f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 4, 0.25f * m)
+                .AddSetting(EnemyType.Fast, 1, 0.50f * m)
+                .AddSetting(EnemyType.Tough, 1, 0.25f * m)
+                .AddStartTime(20f)
+                .BuildWave());
+
+        m = 1.75f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 5, 0.30f * m)
+                .AddSetting(EnemyType.Fast, 2, 0.55f * m)
+                .AddSetting(EnemyType.Tough, 1, 0.25f * m)
+                .AddStartTime(46f)
+                .BuildWave());
+
+        m = 1.75f;
+
+        Waves.Add(new WaveBuilder()
+                //.AddSetting(EnemyType.Casual, 5, 0.30f * m)
+                //.AddSetting(EnemyType.Fast, 2, 0.55f * m)
+                .AddSetting(EnemyType.Tough, 3, 0.30f * m)
+                .AddStartTime(46f)
+                .BuildWave());
+    }
 
     void Update()
     {
@@ -32,44 +69,35 @@ public class EnemyWavesControler : Projectbehaviour
 
     void WaveSpawner()
     {
-        // W1
-        if (timerScript.InGameTime >= 1f && spawnedW1 == false)
+        if(currentWave == Waves.Count)
         {
-            SpawnWave1();
+            Debug.Log("Game over");
+
+            return;
         }
 
-        // W2
-        if (timerScript.InGameTime >= 20f && spawnedW2 == false)
-        {
-            SpawnWave2();
-        }
+        var wave = Waves[currentWave];
 
-        // W3
-        if (timerScript.InGameTime >= 46f && spawnedW3 == false)
+        if(wave.WaveStartTime <= timerScript.InGameTime)
         {
-            SpawnWave3();
-        }
+            Debug.Log("Wave: " + currentWave + " time: " + timerScript.InGameTime);
 
-        // W4
-        if (timerScript.InGameTime >= 72f && spawnedW4 == false)
-        {
-            SpawnWave4();
-        }
+            SpawnWave(wave);
 
-        // W5
-        if (timerScript.InGameTime >= 112f && spawnedW5 == false)
-        {
-            SpawnWave5();
+            if (currentWave < Waves.Count)
+            {
+                currentWave++;
+            }
         }
     }
 
-    Vector3 GenerateRandomVector(string typeEnemy)
+    Vector3 GenerateRandomVector(Enemy enemy)
     {
-        if (typeEnemy == CasualEnemyDescription || typeEnemy == ToughEnemyDescription)
+        if (enemy.EnemyType == EnemyType.Casual || enemy.EnemyType == EnemyType.Tough)
         {
             height = 0.6f;
         }
-        else // if (typeEnemy == FastEnemyDescripotion)
+        else // if (enemy.EnemyType == EnemyType.Fast)
         {
             height = 0.5f;
         }
@@ -98,121 +126,35 @@ public class EnemyWavesControler : Projectbehaviour
         return v;
     }
 
-    //void SpawnCasualEnemy()
-    //{
-    //    string typeEnemy = "Casual Enemy";
-
-    //    GenerateRandomVector(typeEnemy);
-
-    //    Instantiate<GameObject>(casualEnemy, spawnPos, Quaternion.identity);
-    //}
-
-    //void SpawnFastEnemy()
-    //{
-    //    string typeEnemy = "Fast Enemy";
-
-    //    GenerateRandomVector(typeEnemy);
-
-    //    Instantiate<GameObject>(fastEnemy, spawnPos, Quaternion.identity);
-    //}
-
-    //void SpawnToughEnemy()
-    //{
-    //    string typeEnemy = "Tough Enemy";
-
-    //    GenerateRandomVector(typeEnemy);
-
-    //    Instantiate<GameObject>(thoughEnemy, spawnPos, Quaternion.identity);
-    //}
-
-    void SpawnEnemy(string typeEnemy, GameObject enemmy)
+    void SpawnEnemy(Enemy enemy)
     {
-        spawnPos = GenerateRandomVector(typeEnemy);
+        spawnPos = GenerateRandomVector(enemy);
 
-        Instantiate<GameObject>(enemmy, spawnPos, Quaternion.identity);
+        var gameObject =  Instantiate<GameObject>(FindGameObjectForEnemy(enemy), spawnPos, Quaternion.identity);
+
+        var enemyScript = gameObject.GetComponent<EnemyScript>();
+
+        enemyScript.Speed = enemy.Speed;
     }
 
-    //void ExampleWave1()
-    //{
-    //    spawnedExampleW = true;
-
-    //    for (var i = 0; i < 2; i++)
-    //    {
-    //        SpawnEnemy(CasualEnemyDescription, casualEnemy);
-    //    }
-
-    //    for (var i = 0; i < 2; i++)
-    //    {
-    //        SpawnEnemy(FastEnemyDescription, fastEnemy);
-    //    }
-
-    //    for (var i = 0; i < 2; i++)
-    //    {
-    //        SpawnEnemy(ToughEnemyDescription, thoughEnemy);
-    //    }
-    //}
-
-    void SpawnWave1()
+    GameObject FindGameObjectForEnemy(Enemy enemy)
     {
-        spawnedW1 = true;
-
-        for (var i = 0; i < 3; i++)
+        switch(enemy.EnemyType)
         {
-            SpawnEnemy(CasualEnemyDescription, casualEnemy);
+            case EnemyType.Fast:
+                return fastEnemy;
+            case EnemyType.Tough:
+                return toughEnemy;
+            default:
+                return casualEnemy;
         }
     }
 
-    void SpawnWave2()
+    void SpawnWave(Wave wave)
     {
-        spawnedW2 = true;
-
-        for (var i = 0; i < 5; i++)
+        foreach(var enemy in wave.Enemies)
         {
-            SpawnEnemy(CasualEnemyDescription, casualEnemy);
-        }
-    }
-
-    void SpawnWave3()
-    {
-        spawnedW3 = true;
-
-        for (var i = 0; i < 3; i++)
-        {
-            SpawnEnemy(FastEnemyDescription, fastEnemy);
-        }
-
-        SpawnEnemy(CasualEnemyDescription, casualEnemy);
-    }
-
-    void SpawnWave4()
-    {
-        spawnedW4 = true;
-
-        for (var i = 0; i < 4; i++)
-        {
-            SpawnEnemy(CasualEnemyDescription, casualEnemy);
-        }
-
-        for (var i = 0; i < 2; i++)
-        {
-            SpawnEnemy(FastEnemyDescription, fastEnemy);
-        }
-    }
-
-    void SpawnWave5()
-    {
-        spawnedW5 = true;
-
-        SpawnEnemy(FastEnemyDescription, fastEnemy);
-
-        for (var i = 0; i < 3; i++)
-        {
-            SpawnEnemy(CasualEnemyDescription, casualEnemy);
-        }
-
-        for (var i = 0; i < 2; i++)
-        {
-            SpawnEnemy(ToughEnemyDescription, thoughEnemy);
+            SpawnEnemy(enemy);
         }
     }
 }
