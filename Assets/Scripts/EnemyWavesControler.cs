@@ -9,80 +9,52 @@ public class EnemyWavesControler : Projectbehaviour
 
     Vector3 spawnPos;
 
-    float height;
-
     [SerializeField] GameObject casualEnemy;
     [SerializeField] GameObject fastEnemy;
     [SerializeField] GameObject toughEnemy;
-
-    private static string CasualEnemyDescription = "Casual Enemy";
-    private static string FastEnemyDescription = "Fast Enemy";
-    private static string ToughEnemyDescription = "Tough Enemy";
 
     List<Wave> Waves = new List<Wave>();
 
     int currentWave = 0;
 
+    private static SquareSpawner _squareSpawner = new SquareSpawner();
+
     public EnemyWavesControler()
     {
-        // W1
-        var m = 0.9f;
+        var m = 1.55f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 3, 0.9f * m)
-                //.AddSetting(EnemyType.Fast, 1, 2f * m)
-                //.AddSetting(EnemyType.Tough, 1, 0.55f * m)
+                .AddSetting(EnemyType.Casual, 3, 0.25f * m, 7f, 8f)
+                .AddSetting(EnemyType.Fast, 1, 0.50f * m, 8f, 10f)
+                //.AddSetting(EnemyType.Tough, 1, 0.25f * m, 10f, 12f)
                 .AddStartTime(1f)
                 .BuildWave());
 
-        // W2
-        m = 0.9f;
+        m = 1.65f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 5, 0.9f * m)
-                //.AddSetting(EnemyType.Fast, 1, 2f * m)
-                //.AddSetting(EnemyType.Tough, 1, 0.55f * m)
-                .AddStartTime(20f)
+                .AddSetting(EnemyType.Casual, 4, 0.25f * m, 8f, 12f)
+                .AddSetting(EnemyType.Fast, 1, 0.50f * m, 8f, 12f)
+                .AddSetting(EnemyType.Tough, 1, 0.25f * m, 8f, 12f)
+                .AddStartTime(10f)
                 .BuildWave());
 
-        // W3
-        m = 0.90f;
+        m = 1.75f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 1, 0.9f * m)
-                .AddSetting(EnemyType.Fast, 4, 2f * m)
-                //.AddSetting(EnemyType.Tough, 1, 0.55f * m)
+                .AddSetting(EnemyType.Casual, 5, 0.30f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 2, 0.55f * m, 12f, 20f)
+                .AddSetting(EnemyType.Tough, 1, 0.25f * m, 14f, 24f)
                 .AddStartTime(46f)
                 .BuildWave());
 
-        // W4
-        m = 0.9f;
+        m = 1.75f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 3, 1f * m)
-                .AddSetting(EnemyType.Fast, 1, 2f * m)
-                //.AddSetting(EnemyType.Tough, 1, 0.55f * m)
-                .AddStartTime(74f)
-                .BuildWave());
-
-        // W5
-        m = 0.9f;
-
-        Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 2, 1f * m)
-                .AddSetting(EnemyType.Fast, 2, 2f * m)
-                .AddSetting(EnemyType.Tough, 1, 0.55f * m)
-                .AddStartTime(106f)
-                .BuildWave());
-
-        // W6
-        m = 1f;
-
-        Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 5, 1f * m)
-                .AddSetting(EnemyType.Fast, 2, 2f * m)
-                .AddSetting(EnemyType.Tough, 3, 0.55f * m)
-                .AddStartTime(140f)
+                .AddSetting(EnemyType.Casual, 5, 0.30f * m, 12f, 20f)
+                //.AddSetting(EnemyType.Fast, 2, 0.55f * m, 12f, 20f)
+                .AddSetting(EnemyType.Tough, 2, 0.25f * m, 16f, 24f)
+                .AddStartTime(68f)
                 .BuildWave());
     }
 
@@ -95,8 +67,6 @@ public class EnemyWavesControler : Projectbehaviour
     {
         if(currentWave == Waves.Count)
         {
-            Debug.Log("Game over");
-
             return;
         }
 
@@ -111,57 +81,35 @@ public class EnemyWavesControler : Projectbehaviour
             if (currentWave < Waves.Count)
             {
                 currentWave++;
+
+                if (currentWave == Waves.Count)
+                {
+                    Debug.Log("Waves finished");
+                }
             }
         }
     }
 
-    Vector3 GenerateRandomVector(Enemy enemy)
+    void SpawnWave(Wave wave)
     {
-        if (enemy.EnemyType == EnemyType.Casual || enemy.EnemyType == EnemyType.Tough)
+        foreach (var enemy in wave.Enemies)
         {
-            height = 0.6f;
+            SpawnEnemy(enemy);
         }
-        else // if (enemy.EnemyType == EnemyType.Fast)
-        {
-            height = 0.5f;
-        }
-
-        Vector3 v;
-
-        int rArea = Random.Range(0, 4);
-
-        if (rArea == 0)
-        {
-            v = new Vector3(Random.Range(20f, -10f), height, Random.Range(20f, 10f));
-        }
-        else if (rArea == 1)
-        {
-            v = new Vector3(Random.Range(-20f, -10f), height, Random.Range(20f, -10f));
-        }
-        else if (rArea == 2)
-        {
-            v = new Vector3(Random.Range(-20f, 10f), height, Random.Range(-20f, -10f));
-        }
-        else // if (rArea == 3)
-        {
-            v = new Vector3(Random.Range(20f, 10f), height, Random.Range(-20f, 10f));
-        }
-
-        return v;
     }
 
     void SpawnEnemy(Enemy enemy)
     {
-        spawnPos = GenerateRandomVector(enemy);
+        spawnPos = Projectbehaviour.UseRadiusSpawner ? new RadiusSpawner(enemy.MinRadius, enemy.MaxRadius).RandomPosition() : _squareSpawner.RandomPosition(enemy);
 
-        var gameObject =  Instantiate<GameObject>(FindGameObjectForEnemy(enemy), spawnPos, Quaternion.identity);
+        var gameObject =  Instantiate<GameObject>(FindPrefabForEnemy(enemy), spawnPos, Quaternion.identity);
 
         var enemyScript = gameObject.GetComponent<EnemyScript>();
 
         enemyScript.Speed = enemy.Speed;
     }
 
-    GameObject FindGameObjectForEnemy(Enemy enemy)
+    GameObject FindPrefabForEnemy(Enemy enemy)
     {
         switch(enemy.EnemyType)
         {
@@ -171,14 +119,6 @@ public class EnemyWavesControler : Projectbehaviour
                 return toughEnemy;
             default:
                 return casualEnemy;
-        }
-    }
-
-    void SpawnWave(Wave wave)
-    {
-        foreach(var enemy in wave.Enemies)
-        {
-            SpawnEnemy(enemy);
         }
     }
 }

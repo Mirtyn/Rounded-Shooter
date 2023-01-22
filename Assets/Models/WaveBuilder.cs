@@ -13,6 +13,8 @@ namespace Assets.Models
 			public EnemyType EnemyType;
 			public int Count;
 			public float Speed;
+			public float MinRadius;
+			public float MaxRadius;
 		}
 
 		public float StartTime = 1f;
@@ -31,18 +33,23 @@ namespace Assets.Models
 			return this;
 		}
 
-		public WaveBuilder AddSetting(EnemyType enemyType, int count, float speed = 0.5f)
+		public WaveBuilder AddSetting(EnemyType enemyType, int count, float speed, float minRadius, float maxRadius)
 		{
-			Settings.Add(new Setting { EnemyType = enemyType, Count = count, Speed = speed });
+			Settings.Add(new Setting { EnemyType = enemyType, Count = count, Speed = speed, MinRadius = minRadius, MaxRadius = maxRadius });
 
 			return this;
 		}
 
 		public Wave BuildWave()
 		{
-			var wave = new Wave { WaveStartTime = StartTime };
+			return BuildWave(Settings, StartTime);
+		}
 
-			foreach (var setting in Settings)
+		public Wave BuildWave(IEnumerable<Setting> settings, float startTime)
+		{
+			var wave = new Wave { WaveStartTime = startTime };
+
+			foreach (var setting in settings)
 			{
 				for (var i = 0; i < setting.Count; i++)
 				{
@@ -50,6 +57,8 @@ namespace Assets.Models
 					{
 						EnemyType = setting.EnemyType,
 						Speed = setting.Speed,
+						MinRadius = setting.MinRadius,
+						MaxRadius = setting.MaxRadius,
 					};
 
 					wave.Enemies.Add(enemy);

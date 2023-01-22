@@ -15,5 +15,22 @@ namespace Assets.Models
 		//public Vector3 Position;
 
 		public bool IsAlive = true;
+
+        public float MinRadius;
+        public float MaxRadius;
+
+        public float Height
+        {
+			get
+            {
+                switch(EnemyType)
+                {
+                    case EnemyType.Fast:
+                        return 0.5f;
+                    default:
+                        return 0.6f;
+                }
+            }
+        }
 	}
 }

@@ -10,11 +10,9 @@ namespace Assets.Models
 	{
 		public List<Enemy> Enemies;
 
-		//public float WaveTime = 10f;
-
 		public float WaveStartTime = 1f;
 
-        public Wave()
+		public Wave()
         {
 			Enemies = new List<Enemy>();
 		}
