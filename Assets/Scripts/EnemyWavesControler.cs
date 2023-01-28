@@ -21,40 +21,104 @@ public class EnemyWavesControler : Projectbehaviour
 
     public EnemyWavesControler()
     {
-        var m = 1.55f;
+        // W1
+        var m = 0.9f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 3, 0.25f * m, 7f, 8f)
-                .AddSetting(EnemyType.Fast, 1, 0.50f * m, 8f, 10f)
+                .AddSetting(EnemyType.Casual, 3, 0.9f * m, 7f, 8f)
+                //.AddSetting(EnemyType.Fast, 1, 0.50f * m, 8f, 10f)
                 //.AddSetting(EnemyType.Tough, 1, 0.25f * m, 10f, 12f)
                 .AddStartTime(1f)
                 .BuildWave());
 
-        m = 1.65f;
+        // W2
+        m = 0.9f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 4, 0.25f * m, 8f, 12f)
-                .AddSetting(EnemyType.Fast, 1, 0.50f * m, 8f, 12f)
-                .AddSetting(EnemyType.Tough, 1, 0.25f * m, 8f, 12f)
-                .AddStartTime(10f)
+                .AddSetting(EnemyType.Casual, 5, 0.9f * m, 8f, 12f)
+                //.AddSetting(EnemyType.Fast, 1, 2f * m, 8f, 12f)
+                //.AddSetting(EnemyType.Tough, 1, 0.25f * m, 8f, 12f)
+                .AddStartTime(20f)
                 .BuildWave());
 
-        m = 1.75f;
+        // W3
+        m = 0.9f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 5, 0.30f * m, 12f, 20f)
-                .AddSetting(EnemyType.Fast, 2, 0.55f * m, 12f, 20f)
-                .AddSetting(EnemyType.Tough, 1, 0.25f * m, 14f, 24f)
+                .AddSetting(EnemyType.Casual, 1, 0.9f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 3, 2f * m, 12f, 20f)
+                //.AddSetting(EnemyType.Tough, 1, 0.25f * m, 14f, 24f)
                 .AddStartTime(46f)
                 .BuildWave());
 
-        m = 1.75f;
+        // W4
+        m = 0.9f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 5, 0.30f * m, 12f, 20f)
-                //.AddSetting(EnemyType.Fast, 2, 0.55f * m, 12f, 20f)
-                .AddSetting(EnemyType.Tough, 2, 0.25f * m, 16f, 24f)
-                .AddStartTime(68f)
+                .AddSetting(EnemyType.Casual, 3, 0.9f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 2, 2f * m, 12f, 20f)
+                //.AddSetting(EnemyType.Tough, 2, 0.25f * m, 16f, 24f)
+                .AddStartTime(70f)
+                .BuildWave());
+
+        // W5
+        m = 0.9f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 2, 0.9f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 1, 2f * m, 12f, 20f)
+                .AddSetting(EnemyType.Tough, 1, 0.75f * m, 16f, 24f)
+                .AddStartTime(100f)
+                .BuildWave());
+
+        // W6
+        m = 1f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 2, 1f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 1, 2f * m, 12f, 20f)
+                .AddSetting(EnemyType.Tough, 3, 0.75f * m, 16f, 24f)
+                .AddStartTime(134f)
+                .BuildWave());
+
+        // W7
+        m = 1.05f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 2, 1f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 1, 2f * m, 12f, 20f)
+                .AddSetting(EnemyType.Tough, 3, 0.75f * m, 16f, 24f)
+                .AddStartTime(170f)
+                .BuildWave());
+
+        // W8
+        m = 1.1f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 3, 1f * m, 12f, 20f)
+                //.AddSetting(EnemyType.Fast, 1, 2f * m, 12f, 20f)
+                .AddSetting(EnemyType.Tough, 2, 0.75f * m, 16f, 24f)
+                .AddStartTime(200f)
+                .BuildWave());
+
+        // W9
+        m = 1.15f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 2, 1f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 4, 2f * m, 12f, 20f)
+                //.AddSetting(EnemyType.Tough, 3, 0.75f * m, 16f, 24f)
+                .AddStartTime(236f)
+                .BuildWave());
+
+        // W10
+        m = 1f;
+
+        Waves.Add(new WaveBuilder()
+                .AddSetting(EnemyType.Casual, 5, 1f * m, 12f, 20f)
+                .AddSetting(EnemyType.Fast, 3, 2f * m, 12f, 20f)
+                .AddSetting(EnemyType.Tough, 1, 0.75f * m, 16f, 24f)
+                .AddStartTime(280f)
                 .BuildWave());
     }
 

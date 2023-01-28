@@ -52,6 +52,9 @@ public class CasualEnemyScript : EnemyScript
             case "Arrow":
                 HitByArrow();
                 break;
+            case "Bomb":
+                HitByBomb();
+                break;
             case "MyPlayer":
                 Debug.Log("You died");
                 break;
@@ -95,5 +98,13 @@ public class CasualEnemyScript : EnemyScript
     {
         eye_1.GetComponent<Renderer>().material.color = Color.white;
         eye_2.GetComponent<Renderer>().material.color = Color.white;
+    }
+
+    void HitByBomb()
+    {
+        HP = 0;
+        Destroy(gameObject);
+        goldScript.AddGold(CasualEnemyDescription);
+        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
     }
 }

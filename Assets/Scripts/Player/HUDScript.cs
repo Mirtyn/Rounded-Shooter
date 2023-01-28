@@ -12,6 +12,8 @@ public class HUDScript : Projectbehaviour
     [SerializeField] TMP_Text timerText;
 
     [SerializeField] TMP_Text goldText;
+
+    [SerializeField] GameObject shopPanel;
     void Update()
     {
         SetTimeOnHUD();
@@ -29,6 +31,6 @@ public class HUDScript : Projectbehaviour
 
     public void ShopButtinPressed()
     {
-        Debug.Log("Shop Keeper: Yes?");
+        shopPanel.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
     }
 }

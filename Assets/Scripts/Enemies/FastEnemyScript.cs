@@ -48,6 +48,9 @@ public class FastEnemyScript : EnemyScript
             case "Arrow":
                 HitByArrow();
                 break;
+            case "Bomb":
+                HitByBomb();
+                break;
             case "MyPlayer":
                 Debug.Log("You died");
                 break;
@@ -59,6 +62,14 @@ public class FastEnemyScript : EnemyScript
 
     void HitByArrow()
     {
+        Destroy(gameObject);
+        goldScript.AddGold(FastEnemyDescription);
+        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+    }
+
+    void HitByBomb()
+    {
+        HP = 0;
         Destroy(gameObject);
         goldScript.AddGold(FastEnemyDescription);
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
