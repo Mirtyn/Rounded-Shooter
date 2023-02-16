@@ -19,6 +19,11 @@ public class GoldScript : MonoBehaviour
             Gold += 2;
         }
 
+        SendGoldToHUD();
+    }
+
+    public void SendGoldToHUD()
+    {
         hudScript.SetGoldOnHUD(Gold);
     }
 }

@@ -6,6 +6,7 @@ using Assets.Models;
 public class EnemyWavesControler : Projectbehaviour
 {
     [SerializeField] TimerScript timerScript;
+    [SerializeField] Transform enemiesHolder;
 
     Vector3 spawnPos;
 
@@ -25,7 +26,9 @@ public class EnemyWavesControler : Projectbehaviour
         var m = 0.9f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 3, 0.9f * m, 7f, 8f)
+                //.AddSetting(EnemyType.Casual, 1, 0.9f * m, 11.5f, 13.5f)
+                .AddSetting(EnemyType.Casual, 1, 0.9f * m, 10f, 12f)
+                .AddSetting(EnemyType.Casual, 1, 0.9f * m, 13f, 15f)
                 //.AddSetting(EnemyType.Fast, 1, 0.50f * m, 8f, 10f)
                 //.AddSetting(EnemyType.Tough, 1, 0.25f * m, 10f, 12f)
                 .AddStartTime(1f)
@@ -35,7 +38,8 @@ public class EnemyWavesControler : Projectbehaviour
         m = 0.9f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 5, 0.9f * m, 8f, 12f)
+                .AddSetting(EnemyType.Casual, 1, 0.9f * m, 10f, 13f)
+                .AddSetting(EnemyType.Casual, 2, 0.9f * m, 12f, 15f)
                 //.AddSetting(EnemyType.Fast, 1, 2f * m, 8f, 12f)
                 //.AddSetting(EnemyType.Tough, 1, 0.25f * m, 8f, 12f)
                 .AddStartTime(20f)
@@ -45,8 +49,9 @@ public class EnemyWavesControler : Projectbehaviour
         m = 0.9f;
 
         Waves.Add(new WaveBuilder()
-                .AddSetting(EnemyType.Casual, 1, 0.9f * m, 12f, 20f)
-                .AddSetting(EnemyType.Fast, 3, 2f * m, 12f, 20f)
+                .AddSetting(EnemyType.Casual, 1, 0.9f * m, 12f, 16f)
+                .AddSetting(EnemyType.Fast, 2, 2f * m, 15f, 20f)
+                .AddSetting(EnemyType.Fast, 1, 2f * m, 12f, 20f)
                 //.AddSetting(EnemyType.Tough, 1, 0.25f * m, 14f, 24f)
                 .AddStartTime(46f)
                 .BuildWave());
@@ -166,7 +171,7 @@ public class EnemyWavesControler : Projectbehaviour
     {
         spawnPos = Projectbehaviour.UseRadiusSpawner ? new RadiusSpawner(enemy.MinRadius, enemy.MaxRadius).RandomPosition() : _squareSpawner.RandomPosition(enemy);
 
-        var gameObject =  Instantiate<GameObject>(FindPrefabForEnemy(enemy), spawnPos, Quaternion.identity);
+        var gameObject =  Instantiate<GameObject>(FindPrefabForEnemy(enemy), spawnPos, Quaternion.identity, enemiesHolder.transform);
 
         var enemyScript = gameObject.GetComponent<EnemyScript>();
 

@@ -6,6 +6,7 @@ public class ToughEnemyScript : EnemyScript
 {
     string ToughEnemyDescription = "Tough Enemy";
     [SerializeField] GoldScript goldScript;
+    [SerializeField] PlayerScript playerScript;
 
     [SerializeField] GameObject eye_1;
     [SerializeField] GameObject eye_2;
@@ -15,7 +16,7 @@ public class ToughEnemyScript : EnemyScript
 
     public int HP = 6;
 
-    [SerializeField] Transform target;
+    Transform target;
     float turnSpeed = 0.5f;
     Quaternion rotGoal;
     Vector3 direction;
@@ -26,21 +27,26 @@ public class ToughEnemyScript : EnemyScript
     }
     void Start()
     {
+        target = FindObjectOfType<PlayerScript>().transform;
         goldScript = FindObjectOfType<GoldScript>();
+        playerScript = FindObjectOfType<PlayerScript>();
     }
 
     void Update()
     {
-        Vector3 translation;
+        if (playerScript.IsDead == false)
+        {
+            Vector3 translation;
 
-        direction.x = (target.position.x - transform.position.x);
-        direction.z = (target.position.z - transform.position.z);
-        rotGoal = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+            direction.x = (target.position.x - transform.position.x);
+            direction.z = (target.position.z - transform.position.z);
+            rotGoal = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
 
-        translation = new Vector3(0, 0, Speed) * Time.deltaTime;
+            translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 
-        transform.Translate(translation);
+            transform.Translate(translation);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -54,7 +60,7 @@ public class ToughEnemyScript : EnemyScript
                 HitByBomb();
                 break;
             case "MyPlayer":
-                Debug.Log("You died");
+                playerScript.Death();
                 break;
             default:
                 break;
@@ -107,7 +113,7 @@ public class ToughEnemyScript : EnemyScript
         eye_2.GetComponent<Renderer>().material.color = Color.white;
     }
 
-    void HitByBomb()
+    public void HitByBomb()
     {
         HP = 0;
         Destroy(gameObject);

@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class PlayerAimAtRayHit : Projectbehaviour
 {
+    [SerializeField] PlayerData playerData;
+
     [SerializeField] Transform target;
-    float turnSpeed = 3.00f;
+    float turnSpeed;
     Quaternion rotGoal;
     Vector3 direction;
 
     void Update()
     {
+        switch (playerData.PlayerTurnSpeedLevel)
+        {
+            case 1:
+                turnSpeed = 2f;
+                break;
+            case 2:
+                turnSpeed = 2.75f;
+                break;
+            case 3:
+                turnSpeed = 3.75f;
+                break;
+            case 4:
+                turnSpeed = 6f;
+                break;
+        }
+
         if (y_Clamp == false)
         {
             direction.y = (target.position.y - transform.position.y);

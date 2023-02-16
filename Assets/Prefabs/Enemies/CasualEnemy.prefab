@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 3160413103462466760}
   - component: {fileID: 5718252212789968326}
   - component: {fileID: 6650255618688982937}
+  - component: {fileID: -8685462823812768534}
   m_Layer: 0
   m_Name: CasualEnemy
   m_TagString: Enemy
@@ -479,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1554cce57c444f449b885f0bff53dbee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 0.9
   goldScript: {fileID: 6460138935172725197, guid: a8a95bd93daf64a43b69f7646c69edd2, type: 3}
   eye_1: {fileID: 3728609676187693871}
   eye_2: {fileID: 946895583058020374}
@@ -487,3 +489,15 @@ MonoBehaviour:
   deathParticle: {fileID: 4123581489045267226, guid: 1a9aafa88d62156419fc11490e311fe6, type: 3}
   HP: 3
   target: {fileID: 8593639138423312534, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
+--- !u!114 &-8685462823812768534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821775452321487912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6aad26db2a4d604483887b558c0b51e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -8,7 +8,7 @@ public class PlayerData : Projectbehaviour
     public int ArrowSpeedLevel = 1;
     public int PlayerTurnSpeedLevel = 1;
     public int ShootingCooldownLevel = 1;
-    public int Bombs = 3;
+    public int Bombs = 0;
     public int MaxBombs = 3;
     public bool HasForceField = false;
 }
