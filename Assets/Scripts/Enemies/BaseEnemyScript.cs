@@ -19,6 +19,8 @@ public class BaseEnemyScript : MonoBehaviour
             case "Tough":
                 this.GetComponent<ToughEnemyScript>().HitByBomb();
                 break;
+            case "Boss":
+                break;
         }
     }
 }

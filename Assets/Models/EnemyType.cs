@@ -11,5 +11,6 @@ namespace Assets.Models
 		Casual,
 		Fast,
 		Tough,
+		Boss,
 	}
 }

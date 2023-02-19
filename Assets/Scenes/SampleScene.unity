@@ -768,6 +768,14 @@ PrefabInstance:
       propertyPath: playerData
       value: 
       objectReference: {fileID: 6685008013062896420}
+    - target: {fileID: 274325681034839574, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: arrowSpeedUpgradeCost
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 274325681034839574, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: rotateSpeedUpgradeCost
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5523654475802531074, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
       propertyPath: m_text
       value: 'Cost: 2 Gold'
