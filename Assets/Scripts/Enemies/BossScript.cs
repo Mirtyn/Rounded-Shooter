@@ -76,49 +76,49 @@ public class BossScript : EnemyScript
             if (rnd > 0 && rnd <= 12.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(0f, 0f, 4f);
+                this.transform.position = new Vector3(0f, 0f, 5f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 12.5 && rnd <= 25)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(5.80000019f, 0f, 3.29999995f);
+                this.transform.position = new Vector3(5f, 0f, 4f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 25 && rnd <= 37.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(5f, 0f, 0f);
+                this.transform.position = new Vector3(6f, 0f, 0f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 37.5 && rnd <= 50)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(5.80000019f, 0f, -3.29999995f);
+                this.transform.position = new Vector3(5f, 0f, -4f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 50 && rnd <= 62.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(0f, 0f, -4f);
+                this.transform.position = new Vector3(0f, 0f, -5f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 62.5 && rnd <= 75)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(-5.80000019f, 0f, -3.29999995f);
+                this.transform.position = new Vector3(-5f, 0f, -4f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 75 && rnd <= 87.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(-5f, 0f, 0f);
+                this.transform.position = new Vector3(-6f, 0f, 0f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 87.5 && rnd <= 100)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(-5.80000019f, 0f, 3.29999995f);
+                this.transform.position = new Vector3(-5f, 0f, 4f);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
         }
@@ -234,31 +234,31 @@ public class BossScript : EnemyScript
 
         switch (HP)
         {
-            case 27:
+            case 45:
                 body.GetComponent<Renderer>().material.color = new Color(0.1f, 0f, 0f);
                 break;
-            case 24:
+            case 40:
                 body.GetComponent<Renderer>().material.color = new Color(0.2f, 0f, 0f);
                 break;
-            case 21:
+            case 35:
                 body.GetComponent<Renderer>().material.color = new Color(0.3f, 0f, 0f);
                 break;
-            case 18:
+            case 30:
                 body.GetComponent<Renderer>().material.color = new Color(0.4f, 0f, 0f);
                 break;
-            case 15:
+            case 25:
                 body.GetComponent<Renderer>().material.color = new Color(0.5f, 0f, 0f);
                 break;
-            case 12:
+            case 20:
                 body.GetComponent<Renderer>().material.color = new Color(0.6f, 0f, 0f);
                 break;
-            case 9:
+            case 15:
                 body.GetComponent<Renderer>().material.color = new Color(0.7f, 0f, 0f);
                 break;
-            case 6:
+            case 10:
                 body.GetComponent<Renderer>().material.color = new Color(0.8f, 0f, 0f);
                 break;
-            case 3:
+            case 5:
                 body.GetComponent<Renderer>().material.color = new Color(0.9f, 0f, 0f);
                 break;
         }
