@@ -30,13 +30,13 @@ public class EnemyWavesControler : Projectbehaviour
     public EnemyWavesControler()
     {
         // easy
-        BuildEnemyWaves(15f, 0.32f, 0);
+        //BuildEnemyWaves(15f, 0.32f, 0);
 
         // medium
         //BuildEnemyWaves(15f, 0.50f, 4);
 
         // hard
-        //BuildEnemyWaves(15f, 0.7f, 10);
+        BuildEnemyWaves(15f, 0.7f, 10);
     }
 
     public void BuildEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -118,11 +118,7 @@ public class EnemyWavesControler : Projectbehaviour
         TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 14, 1f * speedmofifier, 1));
         TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16, 1.55f * speedmofifier, 2));
 
-        if (time >= 150 && BossSpawned == false)
-        {
-            BossSpawned = true;
-            Instantiate(boss, new Vector3(0f, 0f, 15f), Quaternion.identity);
-        }
+        
 
         var t = 24.0f;
 
@@ -196,19 +192,19 @@ public class EnemyWavesControler : Projectbehaviour
 
     void Update()
     {
-        //CheckForWave15();
+        CheckForBossSpawn();
         //WaveSpawner();
         SpawnTimedEnemies();
     }
 
-    //void CheckForWave15()
-    //{
-    //    if (timerScript.InGameTime >= 350 && BossSpawned == false)
-    //    {
-    //        BossSpawned = true;
-    //        Instantiate(boss, new Vector3(0f, 0f, 4f), Quaternion.identity);
-    //    }
-    //}
+    void CheckForBossSpawn()
+    {
+        if (timerScript.InGameTime >= 140 && BossSpawned == false)
+        {
+            BossSpawned = true;
+            Instantiate(boss, new Vector3(0f, 0f, 15f), Quaternion.identity);
+        }
+    }
 
     void SpawnTimedEnemies()
     {
