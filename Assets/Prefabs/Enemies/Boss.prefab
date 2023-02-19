@@ -488,7 +488,7 @@ MonoBehaviour:
   hitParticle: {fileID: 2887721676277110569, guid: fd58327e3f835da45a9a1ba2aba3b34a, type: 3}
   deathParticle: {fileID: 4123581489045267226, guid: 1a9aafa88d62156419fc11490e311fe6, type: 3}
   teleportParticle: {fileID: 3421500922652259946, guid: 3d72af2da05bd124f953be6b614cc0a2, type: 3}
-  HP: 30
+  HP: 50
   bossCasualEnemy: {fileID: 6763625225670781712, guid: e2bca569feac299418eaef1a2fba7b79, type: 3}
   bossFastEnemy: {fileID: 2337786182300049708, guid: 3c07035e4a9aec148983f31eeb5ae4c1, type: 3}
   bossThoughEnemy: {fileID: 1712879617447824070, guid: c7cf86454df4a6a4997cb0381ed63bf7, type: 3}

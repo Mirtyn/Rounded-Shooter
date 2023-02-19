@@ -21,8 +21,8 @@ public class ShopScript : Projectbehaviour
 
     int bombCost = 4;
 
-    [SerializeField] int rotateSpeedUpgradeCost = 4;
-    [SerializeField] int arrowSpeedUpgradeCost = 3;
+    [SerializeField] int rotateSpeedUpgradeCost = 3;
+    [SerializeField] int arrowSpeedUpgradeCost = 2;
     [SerializeField] int shootingCooldownUpgradeCost = 5;
 
     [SerializeField] Button buyBombButton;
@@ -92,13 +92,13 @@ public class ShopScript : Projectbehaviour
                 switch (playerData.PlayerTurnSpeedLevel)
                 {
                     case 1:
-                        rotateSpeedUpgradeCost = 4;
+                        rotateSpeedUpgradeCost = 3;
                         break;
                     case 2:
-                        rotateSpeedUpgradeCost = 9;
+                        rotateSpeedUpgradeCost = 7;
                         break;
                     case 3:
-                        rotateSpeedUpgradeCost = 16;
+                        rotateSpeedUpgradeCost = 13;
                         break;
                 }
 
@@ -126,13 +126,13 @@ public class ShopScript : Projectbehaviour
                 switch (playerData.ArrowSpeedLevel)
                 {
                     case 1:
-                        arrowSpeedUpgradeCost = 3;
+                        arrowSpeedUpgradeCost = 2;
                         break;
                     case 2:
-                        arrowSpeedUpgradeCost = 7;
+                        arrowSpeedUpgradeCost = 5;
                         break;
                     case 3:
-                        arrowSpeedUpgradeCost = 18;
+                        arrowSpeedUpgradeCost = 16;
                         break;
                 }
 
@@ -163,10 +163,10 @@ public class ShopScript : Projectbehaviour
                         shootingCooldownUpgradeCost = 5;
                         break;
                     case 2:
-                        shootingCooldownUpgradeCost = 13;
+                        shootingCooldownUpgradeCost = 11;
                         break;
                     case 3:
-                        shootingCooldownUpgradeCost = 24;
+                        shootingCooldownUpgradeCost = 20;
                         break;
                 }
 

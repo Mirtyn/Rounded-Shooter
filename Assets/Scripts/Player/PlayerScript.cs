@@ -15,11 +15,14 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject enemiesHolder;
     [SerializeField] HUDScript hUDScript;
 
+    public float GameSpeed = 1f;
+
     public GameObject[] EnemiesOnMap;
 
     float cooldown = 0f;
     void Start()
     {
+        Time.timeScale = GameSpeed;
         startPos = this.transform.position;
     }
 
@@ -45,7 +48,7 @@ public class PlayerScript : MonoBehaviour
                         Instantiate<GameObject>(BombExplode, new Vector3(0f, 0.2f, 0f), Quaternion.identity);
                         playerData.Bombs--;
                         hUDScript.SetBombsOnScreen();
-                        cooldown = 0.2f;
+                        cooldown = 0.5f;
 
                         EnemiesOnMap = GameObject.FindGameObjectsWithTag("Enemy");
 

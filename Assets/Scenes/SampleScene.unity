@@ -424,6 +424,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
+      propertyPath: GameSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
       propertyPath: hUDScript
       value: 
       objectReference: {fileID: 60690520}
@@ -764,6 +768,22 @@ PrefabInstance:
       propertyPath: playerData
       value: 
       objectReference: {fileID: 6685008013062896420}
+    - target: {fileID: 5523654475802531074, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: m_text
+      value: 'Cost: 2 Gold'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523654475802531074, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: m_fontSize
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834094168886433079, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: m_text
+      value: 'Cost: 3 Gold'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834094168886433079, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: m_fontSize
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 8341553857047082885, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
       propertyPath: m_Camera
       value: 
