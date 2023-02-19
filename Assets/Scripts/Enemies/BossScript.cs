@@ -24,6 +24,7 @@ public class BossScript : EnemyScript
 
     float rnd;
     float teleportCooldown;
+    float rndCooldown;
 
     [SerializeField] GameObject bossCasualEnemy;
     [SerializeField] GameObject bossFastEnemy;
@@ -33,6 +34,8 @@ public class BossScript : EnemyScript
     float maxSummonCooldown = 10f;
 
     float timeAliveScinceSpawn = 1f;
+
+    //float nextUpdateTime = 0f;
 
     //public ToughEnemyScript()
     //    : base(0.55f)
@@ -59,15 +62,34 @@ public class BossScript : EnemyScript
             transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
         }
 
-        BossMovementOptions();
-        BossSpawnEnemies();
+        if (rndCooldown <= 0)
+        {
+            rndCooldown = 2.0f;
+            BossMovementOptions();
+            BossSpawnEnemies();
+        }
+
+        if (rndCooldown > 0)
+        {
+            rndCooldown -= Time.deltaTime;
+        }
+
+        if (teleportCooldown > 0)
+        {
+            teleportCooldown -= Time.deltaTime;
+        }
+
+        if (summonCooldown > 0)
+        {
+            summonCooldown -= Time.deltaTime;
+        }
     }
 
     void BossMovementOptions()
     {
         rnd = Random.Range(0f, 100f);
 
-        if (teleportCooldown <= 0f && rnd <= 1f)
+        if (teleportCooldown <= 0f && rnd <= 50f)
         {
             teleportCooldown = 2f;
 
@@ -123,17 +145,14 @@ public class BossScript : EnemyScript
             }
         }
 
-        if (teleportCooldown > 0)
-        {
-            teleportCooldown -= Time.deltaTime;
-        }
+        
     }
 
     void BossSpawnEnemies()
     {
         rnd = Random.Range(0f, 100f);
 
-        if (summonCooldown <= 0 && rnd <= 1.2)
+        if (summonCooldown <= 0 && rnd <= 50)
         {
             summonCooldown = maxSummonCooldown;
 
@@ -189,10 +208,7 @@ public class BossScript : EnemyScript
             }
         }
         
-        if (summonCooldown > 0)
-        {
-            summonCooldown -= Time.deltaTime;
-        }
+        
     }
 
     void OnCollisionEnter(Collision collision)

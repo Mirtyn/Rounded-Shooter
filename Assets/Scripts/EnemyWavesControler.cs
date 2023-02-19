@@ -22,6 +22,10 @@ public class EnemyWavesControler : Projectbehaviour
 
     List<TimedEnemy> TimedEnemies = new List<TimedEnemy>();
 
+    public GameObject[] EnemiesOnMap;
+
+    public int LastSpawnedEnemy;
+
     //int currentWave = 0;
     //int CurrentTimedEnemy { get; set; }
 
@@ -30,13 +34,13 @@ public class EnemyWavesControler : Projectbehaviour
     public EnemyWavesControler()
     {
         // easy
-        //BuildEnemyWaves(15f, 0.32f, 0);
+        BuildEnemyWaves(15f, 0.32f, 0);
 
         // medium
         //BuildEnemyWaves(15f, 0.50f, 4);
 
         // hard
-        BuildEnemyWaves(15f, 0.7f, 10);
+        //BuildEnemyWaves(15f, 0.7f, 10);
     }
 
     public void BuildEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -195,6 +199,7 @@ public class EnemyWavesControler : Projectbehaviour
         CheckForBossSpawn();
         //WaveSpawner();
         SpawnTimedEnemies();
+        //CheckForGameEnding();
     }
 
     void CheckForBossSpawn()
@@ -202,7 +207,7 @@ public class EnemyWavesControler : Projectbehaviour
         if (timerScript.InGameTime >= 140 && BossSpawned == false)
         {
             BossSpawned = true;
-            Instantiate(boss, new Vector3(0f, 0f, 15f), Quaternion.identity);
+            Instantiate(boss, new Vector3(0f, 0f, 5), Quaternion.identity);
         }
     }
 
@@ -215,8 +220,30 @@ public class EnemyWavesControler : Projectbehaviour
                 //Debug.Log("Enemy time: " + enemy.StartTime);
                 Debug.Log($"Enemy spawned:{TimedEnemies.Count(o => o.HasSpawned) + 1} /{TimedEnemies.Count}");
 
+                LastSpawnedEnemy = TimedEnemies.Count(o => o.HasSpawned) + 1;
+
                 SpawnTimedEnemy(enemy);
             }
+        }
+    }
+
+    void CheckForGameEnding()
+    {
+        EnemiesOnMap = GameObject.FindGameObjectsWithTag("Enemy");
+
+        int o = 0;
+        foreach (GameObject i in EnemiesOnMap)
+        {
+            if (Vector3.Distance(EnemiesOnMap[o].transform.position, this.transform.position) <= 4f)
+            {
+                EnemiesOnMap[o].GetComponent<BaseEnemyScript>().BombDeath();
+            }
+            o++;
+        }
+
+        if (LastSpawnedEnemy == TimedEnemies.Count && BossSpawned == true)
+        {
+
         }
     }
 
