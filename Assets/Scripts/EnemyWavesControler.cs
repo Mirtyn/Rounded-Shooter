@@ -9,7 +9,7 @@ public class EnemyWavesControler : Projectbehaviour
     [SerializeField] TimerScript timerScript;
     [SerializeField] Transform enemiesHolder;
 
-    Vector3 spawnPos;
+    //Vector3 spawnPos;
 
     [SerializeField] GameObject casualEnemy;
     [SerializeField] GameObject fastEnemy;
@@ -18,92 +18,105 @@ public class EnemyWavesControler : Projectbehaviour
 
     public bool BossSpawned = false;
 
-    List<Wave> Waves = new List<Wave>();
+    //List<Wave> Waves = new List<Wave>();
 
     List<TimedEnemy> TimedEnemies = new List<TimedEnemy>();
 
-    int currentWave = 0;
+    //int currentWave = 0;
     //int CurrentTimedEnemy { get; set; }
 
-    private static SquareSpawner _squareSpawner = new SquareSpawner();
+    //private static SquareSpawner _squareSpawner = new SquareSpawner();
 
     public EnemyWavesControler()
     {
         // easy
-        //BuildEnemyWaves(0.35f);
-        
+        BuildEnemyWaves(15f, 0.32f, 0);
+
+        // medium
+        //BuildEnemyWaves(15f, 0.50f, 4);
+
         // hard
-        BuildEnemyWaves(0.7f);
+        //BuildEnemyWaves(15f, 0.7f, 10);
     }
 
-    public void BuildEnemyWaves(float m)
+    public void BuildEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
     {
         var timedSpawner = new TimedSpawner();
 
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 16.5f, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 21f, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 27f, 0.9f * m, 1));
+        var time = basetime;
 
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 35f, 0.85f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 38f, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 43f, 0.9f * m, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1.5f, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 12, 0.9f * speedmofifier, 1));
 
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 50f, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 53f, 2f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 59f, 2f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 59.8f, 2f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 60f, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 62f, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 63f, 2f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 66f, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 70f, 2f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 70f, 2f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, 74f, 0.55f * m, 1));
+        time = 35f;
 
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 80f, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 82f, 0.8f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 82f, 1.75f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, 83f, 0.5f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 85f, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 87f, 0.85f * m, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 0.85f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 3, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 8, 0.9f * speedmofifier, 1));
 
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 94f, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 97f, 1.8f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, 97f, 0.45f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 97f, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, 99.5f, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, 100.75f, 1.55f * m, 2));
+        time = 50f;
 
-        var time = 108f;
-        m = 0.72f;
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3, 2f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 6, 2f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 6.75f, 2f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 10, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 12, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 13, 2f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20, 2f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20, 2f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 24, 0.55f * speedmofifier, 1));
 
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3, 0.8f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 4, 0.45f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 9, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 12, 1.55f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 13.5f, 0.5f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 15f, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16f, 1.75f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16.5f, 0.825f * m, 1));
+        time = 80f;
+
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 2, 0.8f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 2, 1.75f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 3, 0.5f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 5, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 7, 0.85f * speedmofifier, 1));
+
+        time = 94f;
+
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3f, 1.8f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 3f, 0.45f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 3f, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 5.5f, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 6f, 1.55f * speedmofifier, 2));
+
+        time = 108f;
+        speedmofifier += 0.3f * speedmofifier;
+
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3, 0.8f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 4, 0.45f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 9, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 12, 1.55f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 13.5f, 0.5f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 15f, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16f, 1.75f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16.5f, 0.825f * speedmofifier, 1));
 
         time = 130f;
-        m = 0.75f;
+        speedmofifier += 0.5f * speedmofifier;
 
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1, 0.8f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 1, 1.75f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 3, 0.5f * m, 2));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 4, 1f * m, 2));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 5, 0.85f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 5.5f, 1.75f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 7.5f, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 8.5f, 1.8f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 10, 0.55f * m, 2));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 13, 1.1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 14, 1f * m, 1));
-        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16, 1.55f * m, 2));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1, 0.8f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 1, 1.75f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 3, 0.5f * speedmofifier, 2));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 4, 1f * speedmofifier, 2));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 5, 0.85f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 5.5f, 1.75f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 7.5f, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 8.5f, 1.8f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 10, 0.55f * speedmofifier, 2));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 13, 1.1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 14, 1f * speedmofifier, 1));
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16, 1.55f * speedmofifier, 2));
 
         if (time >= 150 && BossSpawned == false)
         {
@@ -118,7 +131,7 @@ public class EnemyWavesControler : Projectbehaviour
         var r = new System.Random();
 
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < additionalWavesCount; i++)
         {
             var fast = r.NextDouble() < 0.25 ? true : false;
 
@@ -131,43 +144,43 @@ public class EnemyWavesControler : Projectbehaviour
                 t = 14f;
             }
 
-            m += 0.12f;
+            speedmofifier += 0.15f * speedmofifier;
 
-            if (m > 1.9)
+            if (speedmofifier > 1.9)
             {
-                m = 1.9f;
+                speedmofifier = 1.9f;
             }
 
             if (fast)
             {
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 0.9f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3f, 2f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 9f, 2f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 9.8f, 2f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 10f, 0.9f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 12f, 0.9f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 13f, 2f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16f, 1f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20f, 2f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20f, 2f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 24f, 0.55f * m, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 0.9f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3f, 2f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 9f, 2f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 9.8f, 2f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 10f, 0.9f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 12f, 0.9f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 13f, 2f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16f, 1f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20f, 2f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20f, 2f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 24f, 0.55f * speedmofifier, 1));
             }
             else
             {
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3, 0.8f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 4, 0.45f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 9, 1f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 12, 1.55f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 13.5f, 0.5f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 15f, 1f * m, 1));
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16f, 1.75f * m, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3, 0.8f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 4, 0.45f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 9, 1f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 12, 1.55f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 13.5f, 0.5f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 15f, 1f * speedmofifier, 1));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16f, 1.75f * speedmofifier, 1));
             }
 
             for (var j = 0; j < (int)c; j++)
             {
-                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16.5f, 0.825f * m, (int)c));
+                TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16.5f, 0.825f * speedmofifier, (int)c));
             }
 
             if (i < 8)
@@ -188,14 +201,14 @@ public class EnemyWavesControler : Projectbehaviour
         SpawnTimedEnemies();
     }
 
-    void CheckForWave15()
-    {
-        if (timerScript.InGameTime >= 350 && BossSpawned == false)
-        {
-            BossSpawned = true;
-            Instantiate(boss, new Vector3(0f, 0f, 4f), Quaternion.identity);
-        }
-    }
+    //void CheckForWave15()
+    //{
+    //    if (timerScript.InGameTime >= 350 && BossSpawned == false)
+    //    {
+    //        BossSpawned = true;
+    //        Instantiate(boss, new Vector3(0f, 0f, 4f), Quaternion.identity);
+    //    }
+    //}
 
     void SpawnTimedEnemies()
     {
