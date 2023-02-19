@@ -63,6 +63,10 @@ public class ArrowMovement : Projectbehaviour
                 hitEnemy = true;
                 ArrowHit(hitEnemy, collision);
                 break;
+            case "Boss":
+                hitEnemy = true;
+                ArrowHit(hitEnemy, collision);
+                break;
             default:
                 break;
 

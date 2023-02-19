@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -24,6 +25,14 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        if (playerData.ShopOpened == false)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+        }
+
         this.transform.position = startPos;
         if (IsDead == false)
         {
@@ -43,7 +52,7 @@ public class PlayerScript : MonoBehaviour
                         int o = 0;
                         foreach (GameObject i in EnemiesOnMap)
                         {
-                            if (Vector3.Distance(EnemiesOnMap[o].transform.position, this.transform.position) <= 3f)
+                            if (Vector3.Distance(EnemiesOnMap[o].transform.position, this.transform.position) <= 4f)
                             {
                                 EnemiesOnMap[o].GetComponent<BaseEnemyScript>().BombDeath();
                             }
@@ -72,5 +81,11 @@ public class PlayerScript : MonoBehaviour
         Destroy(gameObject.transform.GetChild(0).gameObject);
         Destroy(gameObject.transform.GetChild(1).gameObject);
         Destroy(gameObject.transform.GetChild(2).gameObject);
+        Invoke("RestartScene", 3f);
+    }
+
+    void RestartScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }

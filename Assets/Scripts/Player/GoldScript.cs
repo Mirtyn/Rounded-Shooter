@@ -14,9 +14,13 @@ public class GoldScript : MonoBehaviour
         {
             Gold++;
         }
-        else
+        else if (typeEnemy == "Tough Enemy")
         {
             Gold += 2;
+        }
+        else if (typeEnemy == "Boss")
+        {
+            Gold += 20;
         }
 
         SendGoldToHUD();

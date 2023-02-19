@@ -18,6 +18,8 @@ public class FastEnemyScript : EnemyScript
     Quaternion rotGoal;
     Vector3 direction;
 
+    [SerializeField] bool getGold = true;
+
     public FastEnemyScript()
         : base(2.0f)
     {
@@ -69,7 +71,11 @@ public class FastEnemyScript : EnemyScript
     void HitByArrow()
     {
         Destroy(gameObject);
-        goldScript.AddGold(FastEnemyDescription);
+        if (getGold == true)
+        {
+            goldScript.AddGold(FastEnemyDescription);
+        }
+
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
     }
 
@@ -77,7 +83,11 @@ public class FastEnemyScript : EnemyScript
     {
         HP = 0;
         Destroy(gameObject);
-        goldScript.AddGold(FastEnemyDescription);
+        if (getGold == true)
+        {
+            goldScript.AddGold(FastEnemyDescription);
+        }
+
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
     }
 }

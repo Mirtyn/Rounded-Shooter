@@ -444,7 +444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6821775452321487912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.41, y: 0.6, z: -3.56}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -482,13 +482,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 0.55
   goldScript: {fileID: 6460138935172725197, guid: a8a95bd93daf64a43b69f7646c69edd2, type: 3}
+  playerScript: {fileID: 0}
   eye_1: {fileID: 3728609676187693871}
   eye_2: {fileID: 946895583058020374}
   body: {fileID: 1776538368817824214}
   hitParticle: {fileID: 2887721676277110569, guid: fd58327e3f835da45a9a1ba2aba3b34a, type: 3}
   deathParticle: {fileID: 4123581489045267226, guid: 1a9aafa88d62156419fc11490e311fe6, type: 3}
-  HP: 5
-  target: {fileID: 8593639138423312534, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
+  HP: 6
 --- !u!114 &-6793091599511043931
 MonoBehaviour:
   m_ObjectHideFlags: 0

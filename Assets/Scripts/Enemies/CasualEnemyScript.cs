@@ -23,6 +23,8 @@ public class CasualEnemyScript : EnemyScript
     Quaternion rotGoal;
     Vector3 direction;
 
+    [SerializeField] bool getGold = true;
+
     public CasualEnemyScript()
         : base(0.9f)
     {
@@ -77,7 +79,11 @@ public class CasualEnemyScript : EnemyScript
         if (HP == 0)
         {
             Destroy(gameObject);
-            goldScript.AddGold(CasualEnemyDescription);
+            if (getGold == true)
+            {
+                goldScript.AddGold(CasualEnemyDescription);
+            }
+
             Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
         }
         else
@@ -110,7 +116,11 @@ public class CasualEnemyScript : EnemyScript
     {
         HP = 0;
         Destroy(gameObject);
-        goldScript.AddGold(CasualEnemyDescription);
+        if (getGold == true)
+        {
+            goldScript.AddGold(CasualEnemyDescription);
+        }
+
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
     }
 }

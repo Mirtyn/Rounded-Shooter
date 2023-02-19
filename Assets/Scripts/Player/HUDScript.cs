@@ -30,6 +30,7 @@ public class HUDScript : Projectbehaviour
 
     public void ShopButtinPressed()
     {
+        playerData.ShopOpened = true;
         shopPanel.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
     }
 

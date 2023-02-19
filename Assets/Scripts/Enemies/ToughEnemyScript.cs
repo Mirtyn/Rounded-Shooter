@@ -21,6 +21,8 @@ public class ToughEnemyScript : EnemyScript
     Quaternion rotGoal;
     Vector3 direction;
 
+    [SerializeField] bool getGold = true;
+
     public ToughEnemyScript()
         : base(0.55f)
     {
@@ -75,7 +77,11 @@ public class ToughEnemyScript : EnemyScript
         if (HP == 0)
         {
             Destroy(gameObject);
-            goldScript.AddGold(ToughEnemyDescription);
+            if (getGold == true)
+            {
+                goldScript.AddGold(ToughEnemyDescription);
+            }
+
             Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
         }
         else
@@ -117,7 +123,11 @@ public class ToughEnemyScript : EnemyScript
     {
         HP = 0;
         Destroy(gameObject);
-        goldScript.AddGold(ToughEnemyDescription);
+        if (getGold == true)
+        {
+            goldScript.AddGold(ToughEnemyDescription);
+        }
+
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
     }
 }

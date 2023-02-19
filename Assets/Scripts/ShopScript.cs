@@ -32,6 +32,18 @@ public class ShopScript : Projectbehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (playerData.ShopOpened == true)
+            {
+                ExitShopButtonPressed();
+            }
+            else
+            {
+                hUDScript.ShopButtinPressed();
+            }
+        }
+
         if (Input.GetAxis("Cancel") > 0)
         {
             ExitShopButtonPressed();
@@ -48,6 +60,7 @@ public class ShopScript : Projectbehaviour
     }
     public void ExitShopButtonPressed()
     {
+        playerData.ShopOpened = false;
         this.GetComponent<RectTransform>().localPosition = new Vector3(1920, 0, 0);
     }
 
