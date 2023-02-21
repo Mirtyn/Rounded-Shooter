@@ -22,7 +22,7 @@ public class HUDScript : ProjectBehaviour
 
     void SetScoreOnHUD()
     {
-        scoreText.text = "Score: " + ScoreCalculator.CalculateScore(timerScript.InGameTime, goldScript.Gold);
+        scoreText.text = "Score: " + Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold);
     }
 
     void SetTimeOnHUD()
@@ -37,12 +37,12 @@ public class HUDScript : ProjectBehaviour
 
     public void ShopButtinPressed()
     {
-        PlayerData.ShopOpened = true;
+        Game.PlayerData.ShopOpened = true;
         shopPanel.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
     }
 
     public void SetBombsOnScreen()
     {
-        bombAmountText.text = PlayerData.Bombs.ToString();
+        bombAmountText.text = Game.PlayerData.Bombs.ToString();
     }
 }

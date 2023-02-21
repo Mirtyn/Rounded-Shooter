@@ -6,8 +6,6 @@ public class ToughEnemyScript : EnemyScript
 {
     [SerializeField] PlayerScript playerScript;
 
-    [SerializeField] GameObject eye_1;
-    [SerializeField] GameObject eye_2;
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
 
@@ -23,8 +21,10 @@ public class ToughEnemyScript : EnemyScript
         HP = 6;
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
+
         target = FindObjectOfType<PlayerScript>().transform;
         goldScript = FindObjectOfType<GoldScript>();
         playerScript = FindObjectOfType<PlayerScript>();
@@ -72,21 +72,15 @@ public class ToughEnemyScript : EnemyScript
 
         if (HP == 0)
         {
-            Destroy(gameObject);
-            if (getGold == true)
-            {
-                goldScript.AddGold(Description);
-            }
-
-            Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+            OnDeath();
         }
         else
         {
             Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
         }
 
-        eye_1.GetComponent<Renderer>().material.color = Color.red;
-        eye_2.GetComponent<Renderer>().material.color = Color.red;
+        TurnEyesRed();
+
         Invoke("TurnWhiteEyes", 0.5f);
 
         switch (HP)
@@ -109,21 +103,8 @@ public class ToughEnemyScript : EnemyScript
         }
     }
 
-    void TurnWhiteEyes()
-    {
-        eye_1.GetComponent<Renderer>().material.color = Color.white;
-        eye_2.GetComponent<Renderer>().material.color = Color.white;
-    }
-
     public void HitByBomb()
     {
-        HP = 0;
-        Destroy(gameObject);
-        if (getGold == true)
-        {
-            goldScript.AddGold(Description);
-        }
-
-        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+        OnDeath();
     }
 }

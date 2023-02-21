@@ -12,7 +12,7 @@ public class PlayerShooting : ProjectBehaviour
 
     void Update()
     {
-        switch (PlayerData.ShootingCooldownLevel)
+        switch (Game.PlayerData.ShootingCooldownLevel)
         {
             case 1:
                 maxCooldown = 0.85f;

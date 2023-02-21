@@ -18,7 +18,7 @@ namespace Assets.Models
 			Radius = radius;
 		}
 
-		public IEnumerable<TimedEnemy> Build(EnemyType enemyType, float arrivaltime, float speed, int count = 1)
+		public IEnumerable<Enemy> Build(EnemyType enemyType, float arrivaltime, float speed, int count = 1)
         {
 			var radius = Radius;
 
@@ -30,14 +30,14 @@ namespace Assets.Models
 				radius = time * speed;
 			}
 
-			var radians = (float)random.NextDouble() * MathF.PI * 2f;
-
-			var x = MathF.Cos(radians) * radius;
-			var z = MathF.Sin(radians) * radius;
-
 			for(var c = 0; c < count; c++)
             {
-				yield return new TimedEnemy
+				var radians = (float)random.NextDouble() * MathF.PI * 2f;
+
+				var x = MathF.Cos(radians) * radius;
+				var z = MathF.Sin(radians) * radius;
+
+				yield return new Enemy
 				{
 					EnemyType = enemyType,
 					Speed = speed,
@@ -47,5 +47,20 @@ namespace Assets.Models
 				};
 			}
 		}
-	}
+
+        public IEnumerable<Enemy> Build(EnemyType enemyType, Vector3 position, float starttime, float speed, int count = 1)
+        {
+            for (var c = 0; c < count; c++)
+            {
+                yield return new Enemy
+                {
+                    EnemyType = enemyType,
+                    Speed = speed,
+                    IsAlive = true,
+                    Position = position,
+                    StartTime = starttime,
+                };
+            }
+        }
+    }
 }

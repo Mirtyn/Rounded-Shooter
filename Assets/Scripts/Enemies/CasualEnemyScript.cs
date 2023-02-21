@@ -7,8 +7,6 @@ public class CasualEnemyScript : EnemyScript
 {
     [SerializeField] PlayerScript playerScript;
 
-    [SerializeField] GameObject eye_1;
-    [SerializeField] GameObject eye_2;
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
 
@@ -24,7 +22,7 @@ public class CasualEnemyScript : EnemyScript
         HP = 3;
     }
 
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -81,8 +79,8 @@ public class CasualEnemyScript : EnemyScript
             Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
         }
 
-        eye_1.GetComponent<Renderer>().material.color = Color.red;
-        eye_2.GetComponent<Renderer>().material.color = Color.red;
+        TurnEyesRed();
+
         Invoke("TurnWhiteEyes", 0.5f);
 
         switch (HP)
@@ -94,12 +92,6 @@ public class CasualEnemyScript : EnemyScript
                 body.GetComponent<Renderer>().material.color = new Color(0.8f, 0f, 0f);
                 break;
         }
-    }
-
-    void TurnWhiteEyes()
-    {
-        eye_1.GetComponent<Renderer>().material.color = Color.white;
-        eye_2.GetComponent<Renderer>().material.color = Color.white;
     }
 
     public void HitByBomb()

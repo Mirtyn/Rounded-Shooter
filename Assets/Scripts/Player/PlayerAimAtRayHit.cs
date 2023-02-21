@@ -13,7 +13,7 @@ public class PlayerAimAtRayHit : ProjectBehaviour
 
     void Update()
     {
-        switch (PlayerData.PlayerTurnSpeedLevel)
+        switch (Game.PlayerData.PlayerTurnSpeedLevel)
         {
             case 1:
                 turnSpeed = 2f;

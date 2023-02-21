@@ -30,8 +30,18 @@ public class ScoreManager
         deathscore = 0;
     }
 
-    internal void TrackEnemyDeath(TimedEnemy enemy, GameObject enemyGameObject, GameObject playerGameObject)
+    internal void TrackEnemyDeath(Enemy enemy, GameObject enemyGameObject, GameObject playerGameObject)
     {
+        if(enemyGameObject == null)
+        {
+            var t = 0;
+        }
+
+        if (playerGameObject == null)
+        {
+            var t = 0;
+        }
+
         var d = Vector3.Distance(enemyGameObject.transform.position, playerGameObject.transform.position);
 
         var minscore = 20;

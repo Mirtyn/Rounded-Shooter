@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Models
 {
-	internal class Enemy
+	public class Enemy
 	{
 		public EnemyType EnemyType;
 
 		public float Speed;
 
-		//public Vector3 Position;
+		public Vector3 Position;
 
-		public bool IsAlive = true;
+        public bool IsAlive = true;
 
-        public float MinRadius;
-        public float MaxRadius;
+        public bool HasSpawned = false;
+
+        public float StartTime;
+
+        public int InstanceID;
+
+        public GameObject GameObject { get; set; }
 
         public float Height
         {

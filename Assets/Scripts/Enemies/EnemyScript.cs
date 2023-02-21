@@ -12,6 +12,8 @@ public class EnemyScript : ProjectBehaviour
 
     [SerializeField] public GoldScript goldScript;
     [SerializeField] public GameObject deathParticle;
+    [SerializeField] GameObject eye_1;
+    [SerializeField] GameObject eye_2;
 
     public int HP = 3;
 
@@ -34,12 +36,17 @@ public class EnemyScript : ProjectBehaviour
     {
         HP = 0;
 
-        var enemy = TimedEnemies.SingleOrDefault(o => o.InstanceID == gameObject.GetInstanceID());
+        var enemy = Game.EnemyManager.Enemies.SingleOrDefault(o => o.InstanceID == gameObject.GetInstanceID());
 
-        if(enemy != null)
+        if (enemy == null)
+        {
+            var t = 0;
+        }
+
+        if (enemy != null)
         {
             enemy.IsAlive = false;
-            ScoreCalculator.TrackEnemyDeath(enemy, gameObject, Player);
+            Game.ScoreManager.TrackEnemyDeath(enemy, gameObject, Player);
         }
 
         Destroy(gameObject);
@@ -50,5 +57,17 @@ public class EnemyScript : ProjectBehaviour
         }
 
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+    }
+
+    protected void TurnWhiteEyes()
+    {
+        eye_1.GetComponent<Renderer>().material.color = Color.white;
+        eye_2.GetComponent<Renderer>().material.color = Color.white;
+    }
+
+    protected void TurnEyesRed()
+    {
+        eye_1.GetComponent<Renderer>().material.color = Color.red;
+        eye_2.GetComponent<Renderer>().material.color = Color.red;
     }
 }

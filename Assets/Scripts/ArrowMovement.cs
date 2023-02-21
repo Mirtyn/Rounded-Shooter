@@ -20,7 +20,7 @@ public class ArrowMovement : ProjectBehaviour
     {
         Vector3 translation;
 
-        switch (PlayerData.ArrowSpeedLevel)
+        switch (Game.PlayerData.ArrowSpeedLevel)
         {
             case 1:
                 arrowSpeed = 3f;

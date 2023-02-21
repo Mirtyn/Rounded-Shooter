@@ -1,3 +1,4 @@
+using Assets.Models;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,6 @@ public class BossScript : EnemyScript
 {
     [SerializeField] PlayerScript playerScript;
 
-    [SerializeField] GameObject eye_1;
-    [SerializeField] GameObject eye_2;
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
     [SerializeField] GameObject teleportParticle;
@@ -36,11 +35,13 @@ public class BossScript : EnemyScript
         : base(0f)
     {
         Description = "Boss";
-        HP = 50;
+        HP = 20;
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
+
         target = FindObjectOfType<PlayerScript>().transform;
         goldScript = FindObjectOfType<GoldScript>();
         playerScript = FindObjectOfType<PlayerScript>();
@@ -152,6 +153,8 @@ public class BossScript : EnemyScript
 
         if (summonCooldown <= 0 && rnd <= 50)
         {
+            var timedSpawner = new TimedSpawner();
+
             summonCooldown = maxSummonCooldown;
 
             rnd = Random.Range(0f, 100f);
@@ -166,13 +169,15 @@ public class BossScript : EnemyScript
                 if (rnd < 50)
                 {
                     offset = -3f;
-                    Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
                 }
                 else
                 {
                     offset = 3f;
-                    Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
                 }
+
+                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, transform.position + right * offset, 0, 0.50f, 1));
             }
             else if (rnd > 40 && rnd <= 75)
             {
@@ -181,13 +186,15 @@ public class BossScript : EnemyScript
                 if (rnd < 50)
                 {
                     offset = -3f;
-                    Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
                 }
                 else
                 {
                     offset = 3f;
-                    Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
                 }
+
+                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, transform.position + right * offset, 0, 0.30f, 1));
             }
             else if (rnd > 75 && rnd <= 100)
             {
@@ -196,13 +203,15 @@ public class BossScript : EnemyScript
                 if (rnd < 50)
                 {
                     offset = -3f;
-                    Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
                 }
                 else
                 {
                     offset = 3f;
-                    Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
                 }
+
+                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, transform.position + right * offset, 0, 0.25f, 1));
             }
         }
         
@@ -231,9 +240,7 @@ public class BossScript : EnemyScript
 
         if (HP == 0)
         {
-            Destroy(gameObject);
-            goldScript.AddGold(Description);
-            Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+            OnDeath();
             Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
             Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
         }
@@ -242,8 +249,8 @@ public class BossScript : EnemyScript
             Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
         }
 
-        eye_1.GetComponent<Renderer>().material.color = Color.red;
-        eye_2.GetComponent<Renderer>().material.color = Color.red;
+        TurnEyesRed();
+
         Invoke("TurnWhiteEyes", 0.5f);
 
         switch (HP)
@@ -276,11 +283,5 @@ public class BossScript : EnemyScript
                 body.GetComponent<Renderer>().material.color = new Color(0.9f, 0f, 0f);
                 break;
         }
-    }
-
-    void TurnWhiteEyes()
-    {
-        eye_1.GetComponent<Renderer>().material.color = Color.white;
-        eye_2.GetComponent<Renderer>().material.color = Color.white;
     }
 }

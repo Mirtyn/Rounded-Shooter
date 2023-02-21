@@ -20,8 +20,10 @@ public class FastEnemyScript : EnemyScript
         HP = 1;
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
+
         target = FindObjectOfType<PlayerScript>().transform;
         goldScript = FindObjectOfType<GoldScript>();
         playerScript = FindObjectOfType<PlayerScript>();
@@ -65,24 +67,11 @@ public class FastEnemyScript : EnemyScript
 
     void HitByArrow()
     {
-        Destroy(gameObject);
-        if (getGold == true)
-        {
-            goldScript.AddGold(Description);
-        }
-
-        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+        OnDeath();
     }
 
     public void HitByBomb()
     {
-        HP = 0;
-        Destroy(gameObject);
-        if (getGold == true)
-        {
-            goldScript.AddGold(Description);
-        }
-
-        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+        OnDeath();
     }
 }
