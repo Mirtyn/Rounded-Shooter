@@ -9,7 +9,7 @@ public class ProjectBehaviour : MonoBehaviour
 
     static public bool UseRadiusSpawner = true;
         
-    public static ScoreCalculator ScoreCalculator = new ScoreCalculator();
+    public static ScoreManager ScoreCalculator = new ScoreManager();
 
     public static List<TimedEnemy> TimedEnemies = new List<TimedEnemy>();
 
