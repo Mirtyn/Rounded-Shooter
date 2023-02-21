@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HUDScript : Projectbehaviour
+public class HUDScript : ProjectBehaviour
 {
     [SerializeField] TimerScript timerScript;
     [SerializeField] GoldScript goldScript;
@@ -11,11 +11,18 @@ public class HUDScript : Projectbehaviour
     [SerializeField] TMP_Text goldText;
     [SerializeField] TMP_Text bombAmountText;
     [SerializeField] GameObject shopPanel;
-    [SerializeField] PlayerData playerData;
+    //[SerializeField] PlayerData playerData;
+    [SerializeField] TMP_Text scoreText;
 
     void Update()
     {
+        SetScoreOnHUD();
         SetTimeOnHUD();
+    }
+
+    void SetScoreOnHUD()
+    {
+        scoreText.text = "Score: " + ScoreCalculator.CalculateScore(timerScript.InGameTime, goldScript.Gold);
     }
 
     void SetTimeOnHUD()
@@ -30,12 +37,12 @@ public class HUDScript : Projectbehaviour
 
     public void ShopButtinPressed()
     {
-        playerData.ShopOpened = true;
+        PlayerData.ShopOpened = true;
         shopPanel.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
     }
 
     public void SetBombsOnScreen()
     {
-        bombAmountText.text = playerData.Bombs.ToString();
+        bombAmountText.text = PlayerData.Bombs.ToString();
     }
 }

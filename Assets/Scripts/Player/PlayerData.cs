@@ -2,13 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : Projectbehaviour
+public class PlayerData
 {
-    public bool ShopOpened = false;
-    public int ArrowSpeedLevel = 1;
-    public int PlayerTurnSpeedLevel = 1;
-    public int ShootingCooldownLevel = 1;
-    public int Bombs = 0;
-    public int MaxBombs = 3;
-    public bool HasForceField = false;
+    public bool ShopOpened;
+    public int ArrowSpeedLevel;
+    public int PlayerTurnSpeedLevel;
+    public int ShootingCooldownLevel;
+    public int Bombs;
+    public int MaxBombs;
+    public bool HasForceField;
+
+    public PlayerData()
+    {
+        Reset();
+    }
+
+    public void Reset()
+    {
+        ShopOpened = false;
+        ArrowSpeedLevel = 1;
+        PlayerTurnSpeedLevel = 1;
+        ShootingCooldownLevel = 1;
+        Bombs = 0;
+        MaxBombs = 3;
+        HasForceField = false;
+    }
 }

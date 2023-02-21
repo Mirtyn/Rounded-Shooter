@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowMovement : Projectbehaviour
+public class ArrowMovement : ProjectBehaviour
 {
-    [SerializeField] PlayerData playerData;
+    //[SerializeField] PlayerData playerData;
 
     bool hitEnemy;
     bool move = true;
 
     float arrowSpeed;
 
-    void Start()
-    {
-        playerData = FindObjectOfType<PlayerData>();
-    }
+    //void Start()
+    //{
+    //    //playerData = FindObjectOfType<PlayerData>();
+    //}
 
     void Update()
     {
         Vector3 translation;
 
-        switch (playerData.ArrowSpeedLevel)
+        switch (PlayerData.ArrowSpeedLevel)
         {
             case 1:
                 arrowSpeed = 3f;

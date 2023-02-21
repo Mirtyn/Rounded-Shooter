@@ -2,11 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimerScript : Projectbehaviour
+public class TimerScript : ProjectBehaviour
 {
     public float InGameTime;
+
+    public bool KeepTrackOfTime = true;
+
+    void Start()
+    {
+        ScoreCalculator.Reset();
+        ScoreCalculator.MarkStart(InGameTime);
+    }
+
+
     void Update()
     {
-        InGameTime += Time.deltaTime;
+        if (KeepTrackOfTime)
+        {
+            InGameTime += Time.deltaTime;
+        }
     }
 }

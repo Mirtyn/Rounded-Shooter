@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CastRayOutCamera : Projectbehaviour
+public class CastRayOutCamera : ProjectBehaviour
 {
     [SerializeField] Camera mainCamera;
 

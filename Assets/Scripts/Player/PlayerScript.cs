@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerScript : ProjectBehaviour
 {
     public bool IsDead = false;
     Vector3 startPos;
@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject BombExplode;
     [SerializeField] GameObject playerDeathParticle;
 
-    [SerializeField] PlayerData playerData;
+    //[SerializeField] PlayerData playerData;
     [SerializeField] GameObject enemiesHolder;
     [SerializeField] HUDScript hUDScript;
 
@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        if (playerData.ShopOpened == false)
+        if (PlayerData.ShopOpened == false)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -41,12 +41,12 @@ public class PlayerScript : MonoBehaviour
         {
             if (Input.GetAxis("UseBomb") > 0)
             {
-                if (playerData.Bombs > 0)
+                if (PlayerData.Bombs > 0)
                 {
                     if (cooldown <= 0f)
                     {
                         Instantiate<GameObject>(BombExplode, new Vector3(0f, 0.2f, 0f), Quaternion.identity);
-                        playerData.Bombs--;
+                        PlayerData.Bombs--;
                         hUDScript.SetBombsOnScreen();
                         cooldown = 0.5f;
 

@@ -5,33 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class CasualEnemyScript : EnemyScript
 {
-    string CasualEnemyDescription = "Casual Enemy";
-
-    [SerializeField] GoldScript goldScript;
     [SerializeField] PlayerScript playerScript;
 
     [SerializeField] GameObject eye_1;
     [SerializeField] GameObject eye_2;
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
-    [SerializeField] GameObject deathParticle;
-
-    public int HP = 3;
 
     Transform target;
     float turnSpeed = 0.5f;
     Quaternion rotGoal;
     Vector3 direction;
 
-    [SerializeField] bool getGold = true;
-
     public CasualEnemyScript()
         : base(0.9f)
     {
+        Description = "Casual Enemy";
+        HP = 3;
     }
 
     void Start()
     {
+        base.Start();
+
         target = FindObjectOfType<PlayerScript>().transform;
         goldScript = FindObjectOfType<GoldScript>();
         playerScript = FindObjectOfType<PlayerScript>();
@@ -78,13 +74,7 @@ public class CasualEnemyScript : EnemyScript
 
         if (HP == 0)
         {
-            Destroy(gameObject);
-            if (getGold == true)
-            {
-                goldScript.AddGold(CasualEnemyDescription);
-            }
-
-            Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+            OnDeath();
         }
         else
         {
@@ -114,13 +104,7 @@ public class CasualEnemyScript : EnemyScript
 
     public void HitByBomb()
     {
-        HP = 0;
-        Destroy(gameObject);
-        if (getGold == true)
-        {
-            goldScript.AddGold(CasualEnemyDescription);
-        }
-
-        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+        OnDeath();
     }
+
 }

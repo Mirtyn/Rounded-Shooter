@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShooting : Projectbehaviour
+public class PlayerShooting : ProjectBehaviour
 {
     [SerializeField] GameObject arrow;
-    [SerializeField] PlayerData playerData;
+    //[SerializeField] PlayerData playerData;
 
     public float cooldown = 0f;
     public float maxCooldown;
 
     void Update()
     {
-        switch (playerData.ShootingCooldownLevel)
+        switch (PlayerData.ShootingCooldownLevel)
         {
             case 1:
                 maxCooldown = 0.85f;

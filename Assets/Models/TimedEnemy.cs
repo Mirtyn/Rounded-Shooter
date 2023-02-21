@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Models
 {
-	internal class TimedEnemy
+	public class TimedEnemy
 	{
 		public EnemyType EnemyType;
 
@@ -20,6 +20,8 @@ namespace Assets.Models
         public bool HasSpawned = false;
 
         public float StartTime;
+
+        public int InstanceID;
 
         public float Height
         {

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAimAtRayHit : Projectbehaviour
+public class PlayerAimAtRayHit : ProjectBehaviour
 {
-    [SerializeField] PlayerData playerData;
+    //[SerializeField] PlayerData playerData;
 
     [SerializeField] Transform target;
     float turnSpeed;
@@ -13,7 +13,7 @@ public class PlayerAimAtRayHit : Projectbehaviour
 
     void Update()
     {
-        switch (playerData.PlayerTurnSpeedLevel)
+        switch (PlayerData.PlayerTurnSpeedLevel)
         {
             case 1:
                 turnSpeed = 2f;

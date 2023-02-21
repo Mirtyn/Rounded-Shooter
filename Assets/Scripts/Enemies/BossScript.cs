@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class BossScript : EnemyScript
 {
-    string BossEnemyDescription = "Boss";
-    [SerializeField] GoldScript goldScript;
     [SerializeField] PlayerScript playerScript;
 
     [SerializeField] GameObject eye_1;
     [SerializeField] GameObject eye_2;
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
-    [SerializeField] GameObject deathParticle;
     [SerializeField] GameObject teleportParticle;
-
-    public int HP = 50;
 
     Transform target;
     float turnSpeed = 1f;
@@ -37,10 +32,13 @@ public class BossScript : EnemyScript
 
     //float nextUpdateTime = 0f;
 
-    //public ToughEnemyScript()
-    //    : base(0.55f)
-    //{
-    //}
+    public BossScript()
+        : base(0f)
+    {
+        Description = "Boss";
+        HP = 50;
+    }
+
     void Start()
     {
         target = FindObjectOfType<PlayerScript>().transform;
@@ -234,7 +232,7 @@ public class BossScript : EnemyScript
         if (HP == 0)
         {
             Destroy(gameObject);
-            goldScript.AddGold(BossEnemyDescription);
+            goldScript.AddGold(Description);
             Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
             Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
             Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);

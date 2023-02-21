@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class FastEnemyScript : EnemyScript
 {
-    string FastEnemyDescription = "Fast Enemy";
-    [SerializeField] GoldScript goldScript;
     [SerializeField] PlayerScript playerScript;
 
     [SerializeField] GameObject hitParticle;
-    [SerializeField] GameObject deathParticle;
-
-    public int HP = 1;
 
     Transform target;
     float turnSpeed = 0.5f;
     Quaternion rotGoal;
     Vector3 direction;
 
-    [SerializeField] bool getGold = true;
-
     public FastEnemyScript()
         : base(2.0f)
     {
+        Description = "Fast Enemy"; 
+        HP = 1;
     }
 
     void Start()
@@ -73,7 +68,7 @@ public class FastEnemyScript : EnemyScript
         Destroy(gameObject);
         if (getGold == true)
         {
-            goldScript.AddGold(FastEnemyDescription);
+            goldScript.AddGold(Description);
         }
 
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
@@ -85,7 +80,7 @@ public class FastEnemyScript : EnemyScript
         Destroy(gameObject);
         if (getGold == true)
         {
-            goldScript.AddGold(FastEnemyDescription);
+            goldScript.AddGold(Description);
         }
 
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);

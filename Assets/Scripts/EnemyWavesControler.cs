@@ -4,7 +4,7 @@ using UnityEngine;
 using Assets.Models;
 using System.Linq;
 
-public class EnemyWavesControler : Projectbehaviour
+public class EnemyWavesControler : ProjectBehaviour
 {
     [SerializeField] TimerScript timerScript;
     [SerializeField] Transform enemiesHolder;
@@ -20,9 +20,7 @@ public class EnemyWavesControler : Projectbehaviour
 
     //List<Wave> Waves = new List<Wave>();
 
-    List<TimedEnemy> TimedEnemies = new List<TimedEnemy>();
-
-    public GameObject[] EnemiesOnMap;
+    //public GameObject[] EnemiesOnMap;
 
     public int LastSpawnedEnemy;
 
@@ -31,8 +29,13 @@ public class EnemyWavesControler : Projectbehaviour
 
     //private static SquareSpawner _squareSpawner = new SquareSpawner();
 
-    public EnemyWavesControler()
+    public void Start()
     {
+        Reset();
+
+        // super easy
+        //BuildSuperEasyEnemyWaves(15f, 0.32f, 0);
+
         // easy
         BuildEnemyWaves(15f, 0.32f, 0);
 
@@ -41,6 +44,17 @@ public class EnemyWavesControler : Projectbehaviour
 
         // hard
         //BuildEnemyWaves(15f, 0.7f, 10);
+    }
+
+    public void BuildSuperEasyEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
+    {
+        var timedSpawner = new TimedSpawner();
+
+        var time = basetime;
+
+        TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1.5f, 0.9f * speedmofifier, 1));
+        //TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * speedmofifier, 1));
+        //TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 12, 0.9f * speedmofifier, 1));
     }
 
     public void BuildEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -122,7 +136,7 @@ public class EnemyWavesControler : Projectbehaviour
         TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 14, 1f * speedmofifier, 1));
         TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16, 1.55f * speedmofifier, 2));
 
-        
+
 
         var t = 24.0f;
 
@@ -197,9 +211,10 @@ public class EnemyWavesControler : Projectbehaviour
     void Update()
     {
         CheckForBossSpawn();
-        //WaveSpawner();
+
         SpawnTimedEnemies();
-        //CheckForGameEnding();
+
+        CheckForGameEnding();
     }
 
     void CheckForBossSpawn()
@@ -227,24 +242,34 @@ public class EnemyWavesControler : Projectbehaviour
         }
     }
 
+    bool IsAnyEnemyAlive()
+    {
+        return TimedEnemies.Any(o => o.IsAlive || !o.HasSpawned);
+    }
+
     void CheckForGameEnding()
     {
-        EnemiesOnMap = GameObject.FindGameObjectsWithTag("Enemy");
-
-        int o = 0;
-        foreach (GameObject i in EnemiesOnMap)
+        if(!IsAnyEnemyAlive())
         {
-            if (Vector3.Distance(EnemiesOnMap[o].transform.position, this.transform.position) <= 4f)
-            {
-                EnemiesOnMap[o].GetComponent<BaseEnemyScript>().BombDeath();
-            }
-            o++;
+            timerScript.KeepTrackOfTime = false;
         }
 
-        if (LastSpawnedEnemy == TimedEnemies.Count && BossSpawned == true)
-        {
+        //EnemiesOnMap = GameObject.FindGameObjectsWithTag("Enemy");
 
-        }
+        //int o = 0;
+        //foreach (GameObject i in EnemiesOnMap)
+        //{
+        //    if (Vector3.Distance(EnemiesOnMap[o].transform.position, this.transform.position) <= 4f)
+        //    {
+        //        EnemiesOnMap[o].GetComponent<BaseEnemyScript>().BombDeath();
+        //    }
+        //    o++;
+        //}
+
+        //if (LastSpawnedEnemy == TimedEnemies.Count && BossSpawned == true)
+        //{
+
+        //}
     }
 
     //void WaveSpawner()
@@ -300,6 +325,8 @@ public class EnemyWavesControler : Projectbehaviour
         var enemyScript = gameObject.GetComponent<EnemyScript>();
 
         enemyScript.Speed = enemy.Speed;
+
+        enemy.InstanceID = gameObject.GetInstanceID();
 
         enemy.HasSpawned = true;
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Models
 {
-	internal enum EnemyType
+	public enum EnemyType
 	{
 		Casual,
 		Fast,
