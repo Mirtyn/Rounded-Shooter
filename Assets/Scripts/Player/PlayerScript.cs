@@ -28,7 +28,7 @@ public class PlayerScript : ProjectBehaviour
 
     void Update()
     {
-        if (PlayerData.ShopOpened == false)
+        if (Game.PlayerData.ShopOpened == false)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -41,12 +41,12 @@ public class PlayerScript : ProjectBehaviour
         {
             if (Input.GetAxis("UseBomb") > 0)
             {
-                if (PlayerData.Bombs > 0)
+                if (Game.PlayerData.Bombs > 0)
                 {
                     if (cooldown <= 0f)
                     {
                         Instantiate<GameObject>(BombExplode, new Vector3(0f, 0.2f, 0f), Quaternion.identity);
-                        PlayerData.Bombs--;
+                        Game.PlayerData.Bombs--;
                         hUDScript.SetBombsOnScreen();
                         cooldown = 0.5f;
 

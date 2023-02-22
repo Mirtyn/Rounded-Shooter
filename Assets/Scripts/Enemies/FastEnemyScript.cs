@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class FastEnemyScript : EnemyScript
 {
-    [SerializeField] PlayerScript playerScript;
+    //[SerializeField] PlayerScript playerScript;
 
     [SerializeField] GameObject hitParticle;
-
-    Transform target;
-    float turnSpeed = 0.5f;
-    Quaternion rotGoal;
-    Vector3 direction;
 
     public FastEnemyScript()
         : base(2.0f)
@@ -20,11 +15,13 @@ public class FastEnemyScript : EnemyScript
         HP = 1;
     }
 
-    void Start()
+    new void Start()
     {
-        target = FindObjectOfType<PlayerScript>().transform;
-        goldScript = FindObjectOfType<GoldScript>();
-        playerScript = FindObjectOfType<PlayerScript>();
+        base.Start();
+
+        //target = FindObjectOfType<PlayerScript>().transform;
+        //goldScript = FindObjectOfType<GoldScript>();
+        //playerScript = FindObjectOfType<PlayerScript>();
     }
 
     void Update()
@@ -33,10 +30,12 @@ public class FastEnemyScript : EnemyScript
         {
             Vector3 translation;
 
-            direction.x = (target.position.x - transform.position.x);
-            direction.z = (target.position.z - transform.position.z);
-            rotGoal = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+            //direction.x = (target.position.x - transform.position.x);
+            //direction.z = (target.position.z - transform.position.z);
+            //rotGoal = Quaternion.LookRotation(direction);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+
+            RotateTowardsPlayer(1f);
 
             translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 
@@ -65,24 +64,11 @@ public class FastEnemyScript : EnemyScript
 
     void HitByArrow()
     {
-        Destroy(gameObject);
-        if (getGold == true)
-        {
-            goldScript.AddGold(Description);
-        }
-
-        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+        OnDeath();
     }
 
     public void HitByBomb()
     {
-        HP = 0;
-        Destroy(gameObject);
-        if (getGold == true)
-        {
-            goldScript.AddGold(Description);
-        }
-
-        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+        OnDeath();
     }
 }

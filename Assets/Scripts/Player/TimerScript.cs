@@ -10,8 +10,8 @@ public class TimerScript : ProjectBehaviour
 
     void Start()
     {
-        ScoreCalculator.Reset();
-        ScoreCalculator.MarkStart(InGameTime);
+        Game.ScoreManager.Reset();
+        Game.ScoreManager.MarkStart(InGameTime);
     }
 
 

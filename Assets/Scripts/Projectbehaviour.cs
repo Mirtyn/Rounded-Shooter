@@ -9,16 +9,14 @@ public class ProjectBehaviour : MonoBehaviour
 
     static public bool UseRadiusSpawner = true;
         
-    public static ScoreCalculator ScoreCalculator = new ScoreCalculator();
+    //public static ScoreManager ScoreCalculator = new ScoreManager();
 
-    public static List<TimedEnemy> TimedEnemies = new List<TimedEnemy>();
+    //public static PlayerData PlayerData = new PlayerData();
 
-    public static PlayerData PlayerData = new PlayerData();
+    public static GameManager Game = new GameManager();
 
     public void Reset()
     {
-        ScoreCalculator.Reset();
-        TimedEnemies.Clear();
-        PlayerData.Reset();
+        Game.Reset();
     }
 }

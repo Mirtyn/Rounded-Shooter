@@ -34,7 +34,7 @@ public class ShopScript : ProjectBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (PlayerData.ShopOpened == true)
+            if (Game.PlayerData.ShopOpened == true)
             {
                 ExitShopButtonPressed();
             }
@@ -49,7 +49,7 @@ public class ShopScript : ProjectBehaviour
             ExitShopButtonPressed();
         }
 
-        if (PlayerData.Bombs >= PlayerData.MaxBombs)
+        if (Game.PlayerData.Bombs >= Game.PlayerData.MaxBombs)
         {
             buyBombButton.interactable = false;
         }
@@ -60,7 +60,7 @@ public class ShopScript : ProjectBehaviour
     }
     public void ExitShopButtonPressed()
     {
-        PlayerData.ShopOpened = false;
+        Game.PlayerData.ShopOpened = false;
         this.GetComponent<RectTransform>().localPosition = new Vector3(1920, 0, 0);
     }
 
@@ -68,10 +68,10 @@ public class ShopScript : ProjectBehaviour
     {
         if (goldScript.Gold >= bombCost)
         {
-            if (PlayerData.Bombs != PlayerData.MaxBombs)
+            if (Game.PlayerData.Bombs != Game.PlayerData.MaxBombs)
             {
                 goldScript.Gold -= bombCost;
-                PlayerData.Bombs++;
+                Game.PlayerData.Bombs++;
                 hUDScript.SetBombsOnScreen();
                 goldScript.SendGoldToHUD();
             }
@@ -82,14 +82,14 @@ public class ShopScript : ProjectBehaviour
     {
         if (goldScript.Gold >= rotateSpeedUpgradeCost)
         {
-            if (PlayerData.PlayerTurnSpeedLevel < 4)
+            if (Game.PlayerData.PlayerTurnSpeedLevel < 4)
             {
                 goldScript.Gold -= rotateSpeedUpgradeCost;
-                PlayerData.PlayerTurnSpeedLevel++;
-                playerRotateSpeedUpgradeText.text = "Player Rotate Speed: Level " + PlayerData.PlayerTurnSpeedLevel.ToString();
+                Game.PlayerData.PlayerTurnSpeedLevel++;
+                playerRotateSpeedUpgradeText.text = "Player Rotate Speed: Level " + Game.PlayerData.PlayerTurnSpeedLevel.ToString();
                 goldScript.SendGoldToHUD();
                 
-                switch (PlayerData.PlayerTurnSpeedLevel)
+                switch (Game.PlayerData.PlayerTurnSpeedLevel)
                 {
                     case 1:
                         rotateSpeedUpgradeCost = 3;
@@ -104,7 +104,7 @@ public class ShopScript : ProjectBehaviour
 
                 playerRotateSpeedCostText.text = "Cost: " + rotateSpeedUpgradeCost + " Gold";
 
-                if (PlayerData.PlayerTurnSpeedLevel == 4)
+                if (Game.PlayerData.PlayerTurnSpeedLevel == 4)
                 {
                     upgradePlayerTurnSpeedButton.GetComponent<Button>().interactable = false;
                 }
@@ -116,14 +116,14 @@ public class ShopScript : ProjectBehaviour
     {
         if (goldScript.Gold >= arrowSpeedUpgradeCost)
         {
-            if (PlayerData.ArrowSpeedLevel < 4)
+            if (Game.PlayerData.ArrowSpeedLevel < 4)
             {
                 goldScript.Gold -= arrowSpeedUpgradeCost;
-                PlayerData.ArrowSpeedLevel++;
-                arrowSpeedUpgradeText.text = "Arrow Fly Speed: Level " + PlayerData.ArrowSpeedLevel.ToString();
+                Game.PlayerData.ArrowSpeedLevel++;
+                arrowSpeedUpgradeText.text = "Arrow Fly Speed: Level " + Game.PlayerData.ArrowSpeedLevel.ToString();
                 goldScript.SendGoldToHUD();
 
-                switch (PlayerData.ArrowSpeedLevel)
+                switch (Game.PlayerData.ArrowSpeedLevel)
                 {
                     case 1:
                         arrowSpeedUpgradeCost = 2;
@@ -138,7 +138,7 @@ public class ShopScript : ProjectBehaviour
 
                 arrowSpeedCostText.text = "Cost: " + arrowSpeedUpgradeCost + " Gold";
 
-                if (PlayerData.ArrowSpeedLevel == 4)
+                if (Game.PlayerData.ArrowSpeedLevel == 4)
                 {
                     upgradeArrowSpeedButton.GetComponent<Button>().interactable = false;
                 }
@@ -150,14 +150,14 @@ public class ShopScript : ProjectBehaviour
     {
         if (goldScript.Gold >= shootingCooldownUpgradeCost)
         {
-            if (PlayerData.ShootingCooldownLevel < 4)
+            if (Game.PlayerData.ShootingCooldownLevel < 4)
             {
                 goldScript.Gold -= shootingCooldownUpgradeCost;
-                PlayerData.ShootingCooldownLevel++;
-                shootingCooldownUpgradeText.text = "Shooting Cooldown: Level " + PlayerData.ShootingCooldownLevel.ToString();
+                Game.PlayerData.ShootingCooldownLevel++;
+                shootingCooldownUpgradeText.text = "Shooting Cooldown: Level " + Game.PlayerData.ShootingCooldownLevel.ToString();
                 goldScript.SendGoldToHUD();
 
-                switch (PlayerData.ShootingCooldownLevel)
+                switch (Game.PlayerData.ShootingCooldownLevel)
                 {
                     case 1:
                         shootingCooldownUpgradeCost = 5;
@@ -172,7 +172,7 @@ public class ShopScript : ProjectBehaviour
 
                 shootingCooldownCostText.text = "Cost: " + shootingCooldownUpgradeCost + " Gold";
 
-                if (PlayerData.ShootingCooldownLevel == 4)
+                if (Game.PlayerData.ShootingCooldownLevel == 4)
                 {
                     upgradeShootingCooldownButton.GetComponent<Button>().interactable = false;
                 }

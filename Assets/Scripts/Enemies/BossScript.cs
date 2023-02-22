@@ -1,21 +1,15 @@
+using Assets.Models;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BossScript : EnemyScript
 {
-    [SerializeField] PlayerScript playerScript;
+    //[SerializeField] PlayerScript playerScript;
 
-    [SerializeField] GameObject eye_1;
-    [SerializeField] GameObject eye_2;
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
     [SerializeField] GameObject teleportParticle;
-
-    Transform target;
-    float turnSpeed = 1f;
-    Quaternion rotGoal;
-    Vector3 direction;
 
     float rnd;
     float teleportCooldown;
@@ -39,11 +33,13 @@ public class BossScript : EnemyScript
         HP = 50;
     }
 
-    void Start()
+    new void Start()
     {
-        target = FindObjectOfType<PlayerScript>().transform;
-        goldScript = FindObjectOfType<GoldScript>();
-        playerScript = FindObjectOfType<PlayerScript>();
+        base.Start();
+
+        Debug.Log("BossScript.Start()");
+
+        rndCooldown = 2f;
     }
 
     void Update()
@@ -52,16 +48,18 @@ public class BossScript : EnemyScript
 
         maxSummonCooldown = 10 - (timeAliveScinceSpawn / 17);
 
-        if (playerScript.IsDead == false)
-        {
-            direction.x = (target.position.x - transform.position.x);
-            direction.z = (target.position.z - transform.position.z);
-            rotGoal = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
-        }
+        //if (playerScript.IsDead == false)
+        //{
+        //    direction.x = (target.position.x - transform.position.x);
+        //    direction.z = (target.position.z - transform.position.z);
+        //    rotGoal = Quaternion.LookRotation(direction);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+        //}
 
         if (rndCooldown <= 0)
         {
+            //Debug.Log("BossScript.Update(): " + rndCooldown);
+
             rndCooldown = 2.0f;
             BossMovementOptions();
             BossSpawnEnemies();
@@ -83,8 +81,11 @@ public class BossScript : EnemyScript
         }
     }
 
+
     void BossMovementOptions()
     {
+        //Debug.Log("BossMovementOptions");
+
         rnd = Random.Range(0f, 100f);
 
         if (teleportCooldown <= 0f && rnd <= 50f)
@@ -97,61 +98,73 @@ public class BossScript : EnemyScript
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(0f, 0f, 5f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 12.5 && rnd <= 25)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(5f, 0f, 4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 25 && rnd <= 37.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(6f, 0f, 0f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 37.5 && rnd <= 50)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(5f, 0f, -4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 50 && rnd <= 62.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(0f, 0f, -5f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 62.5 && rnd <= 75)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(-5f, 0f, -4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 75 && rnd <= 87.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(-6f, 0f, 0f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 87.5 && rnd <= 100)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(-5f, 0f, 4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
-        }
-
-        
+        }        
     }
 
     void BossSpawnEnemies()
     {
+        //return;
+
+        //Debug.Log("BossSpawnEnemies");
+
         rnd = Random.Range(0f, 100f);
 
         if (summonCooldown <= 0 && rnd <= 50)
         {
+            var timedSpawner = new TimedSpawner();
+
             summonCooldown = maxSummonCooldown;
 
             rnd = Random.Range(0f, 100f);
@@ -159,50 +172,56 @@ public class BossScript : EnemyScript
             Vector3 right = transform.right;
             float offset;
 
-            if (rnd > 0 && rnd <= 40)
+            if (rnd <= 40)
             {
                 rnd = Random.Range(0f, 100f);
 
                 if (rnd < 50)
                 {
                     offset = -3f;
-                    Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
                 }
                 else
                 {
                     offset = 3f;
-                    Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
                 }
+
+                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, transform.position + right * offset, 0, 0.50f, 1));
             }
-            else if (rnd > 40 && rnd <= 75)
+            else if (rnd <= 75)
             {
                 rnd = Random.Range(0f, 100f);
 
                 if (rnd < 50)
                 {
                     offset = -3f;
-                    Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
                 }
                 else
                 {
                     offset = 3f;
-                    Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
                 }
+
+                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, transform.position + right * offset, 0, 0.30f, 1));
             }
-            else if (rnd > 75 && rnd <= 100)
+            else
             {
                 rnd = Random.Range(0f, 100f);
 
                 if (rnd < 50)
                 {
                     offset = -3f;
-                    Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
                 }
                 else
                 {
                     offset = 3f;
-                    Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
+                    //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
                 }
+
+                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, transform.position + right * offset, 0, 0.25f, 1));
             }
         }
         
@@ -231,9 +250,7 @@ public class BossScript : EnemyScript
 
         if (HP == 0)
         {
-            Destroy(gameObject);
-            goldScript.AddGold(Description);
-            Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+            OnDeath();
             Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
             Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
         }
@@ -242,8 +259,8 @@ public class BossScript : EnemyScript
             Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
         }
 
-        eye_1.GetComponent<Renderer>().material.color = Color.red;
-        eye_2.GetComponent<Renderer>().material.color = Color.red;
+        TurnEyesRed();
+
         Invoke("TurnWhiteEyes", 0.5f);
 
         switch (HP)
@@ -276,11 +293,5 @@ public class BossScript : EnemyScript
                 body.GetComponent<Renderer>().material.color = new Color(0.9f, 0f, 0f);
                 break;
         }
-    }
-
-    void TurnWhiteEyes()
-    {
-        eye_1.GetComponent<Renderer>().material.color = Color.white;
-        eye_2.GetComponent<Renderer>().material.color = Color.white;
     }
 }

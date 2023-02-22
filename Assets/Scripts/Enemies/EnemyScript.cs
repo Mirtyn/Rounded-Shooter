@@ -10,8 +10,16 @@ public class EnemyScript : ProjectBehaviour
 
     public string Description = "Casual Enemy";
 
-    [SerializeField] public GoldScript goldScript;
-    [SerializeField] public GameObject deathParticle;
+    [SerializeField] protected GoldScript goldScript;
+    [SerializeField] protected GameObject deathParticle;
+    [SerializeField] GameObject eye_1;
+    [SerializeField] GameObject eye_2;
+    [SerializeField] protected PlayerScript playerScript;
+
+    Transform target;
+    //float turnSpeed = 1f;
+    Quaternion rotGoal;
+    Vector3 direction;
 
     public int HP = 3;
 
@@ -28,18 +36,37 @@ public class EnemyScript : ProjectBehaviour
     {
         goldScript = FindObjectOfType<GoldScript>();
         Player = GameObject.FindGameObjectWithTag("MyPlayer");
+        playerScript = FindObjectOfType<PlayerScript>();
+        target = playerScript.transform;
+
+        RotateTowardsPlayer(1);
+    }
+
+    public void RotateTowardsPlayer(float time)
+    {
+        direction.x = (target.position.x - transform.position.x);
+        direction.z = (target.position.z - transform.position.z);
+
+        rotGoal = Quaternion.LookRotation(direction);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, time);
     }
 
     public void OnDeath()
     {
         HP = 0;
 
-        var enemy = TimedEnemies.SingleOrDefault(o => o.InstanceID == gameObject.GetInstanceID());
+        var enemy = Game.EnemyManager.Enemies.SingleOrDefault(o => o.InstanceID == gameObject.GetInstanceID());
 
-        if(enemy != null)
+        //if (enemy == null)
+        //{
+        //    var t = 0;
+        //}
+
+        if (enemy != null)
         {
             enemy.IsAlive = false;
-            ScoreCalculator.TrackEnemyDeath(enemy, gameObject, Player);
+            Game.ScoreManager.TrackEnemyDeath(enemy, gameObject, Player);
         }
 
         Destroy(gameObject);
@@ -50,5 +77,17 @@ public class EnemyScript : ProjectBehaviour
         }
 
         Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+    }
+
+    protected void TurnWhiteEyes()
+    {
+        eye_1.GetComponent<Renderer>().material.color = Color.white;
+        eye_2.GetComponent<Renderer>().material.color = Color.white;
+    }
+
+    protected void TurnEyesRed()
+    {
+        eye_1.GetComponent<Renderer>().material.color = Color.red;
+        eye_2.GetComponent<Renderer>().material.color = Color.red;
     }
 }
