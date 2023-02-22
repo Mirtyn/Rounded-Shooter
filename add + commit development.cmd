@@ -1,3 +1,3 @@
 git add .
-git commit -m "deleted unused files"
+git commit -m "development"
 PAUSE
