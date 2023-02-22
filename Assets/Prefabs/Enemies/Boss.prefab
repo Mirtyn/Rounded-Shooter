@@ -485,7 +485,7 @@ MonoBehaviour:
   deathParticle: {fileID: 4123581489045267226, guid: 1a9aafa88d62156419fc11490e311fe6, type: 3}
   eye_1: {fileID: 2593886505901596360}
   eye_2: {fileID: 2118367697468040689}
-  HP: 10
+  HP: 50
   getGold: 1
   playerScript: {fileID: 0}
   body: {fileID: 641323750247951409}

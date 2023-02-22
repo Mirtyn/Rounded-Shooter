@@ -5,16 +5,11 @@ using UnityEngine;
 
 public class BossScript : EnemyScript
 {
-    [SerializeField] PlayerScript playerScript;
+    //[SerializeField] PlayerScript playerScript;
 
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
     [SerializeField] GameObject teleportParticle;
-
-    Transform target;
-    float turnSpeed = 1f;
-    Quaternion rotGoal;
-    Vector3 direction;
 
     float rnd;
     float teleportCooldown;
@@ -35,16 +30,16 @@ public class BossScript : EnemyScript
         : base(0f)
     {
         Description = "Boss";
-        HP = 20;
+        HP = 50;
     }
 
     new void Start()
     {
         base.Start();
 
-        target = FindObjectOfType<PlayerScript>().transform;
-        goldScript = FindObjectOfType<GoldScript>();
-        playerScript = FindObjectOfType<PlayerScript>();
+        Debug.Log("BossScript.Start()");
+
+        rndCooldown = 2f;
     }
 
     void Update()
@@ -53,16 +48,18 @@ public class BossScript : EnemyScript
 
         maxSummonCooldown = 10 - (timeAliveScinceSpawn / 17);
 
-        if (playerScript.IsDead == false)
-        {
-            direction.x = (target.position.x - transform.position.x);
-            direction.z = (target.position.z - transform.position.z);
-            rotGoal = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
-        }
+        //if (playerScript.IsDead == false)
+        //{
+        //    direction.x = (target.position.x - transform.position.x);
+        //    direction.z = (target.position.z - transform.position.z);
+        //    rotGoal = Quaternion.LookRotation(direction);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+        //}
 
         if (rndCooldown <= 0)
         {
+            //Debug.Log("BossScript.Update(): " + rndCooldown);
+
             rndCooldown = 2.0f;
             BossMovementOptions();
             BossSpawnEnemies();
@@ -84,8 +81,11 @@ public class BossScript : EnemyScript
         }
     }
 
+
     void BossMovementOptions()
     {
+        //Debug.Log("BossMovementOptions");
+
         rnd = Random.Range(0f, 100f);
 
         if (teleportCooldown <= 0f && rnd <= 50f)
@@ -98,57 +98,67 @@ public class BossScript : EnemyScript
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(0f, 0f, 5f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 12.5 && rnd <= 25)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(5f, 0f, 4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 25 && rnd <= 37.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(6f, 0f, 0f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 37.5 && rnd <= 50)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(5f, 0f, -4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 50 && rnd <= 62.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(0f, 0f, -5f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 62.5 && rnd <= 75)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(-5f, 0f, -4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 75 && rnd <= 87.5)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(-6f, 0f, 0f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
             else if (rnd > 87.5 && rnd <= 100)
             {
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
                 this.transform.position = new Vector3(-5f, 0f, 4f);
+                RotateTowardsPlayer(1);
                 Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
             }
-        }
-
-        
+        }        
     }
 
     void BossSpawnEnemies()
     {
+        //return;
+
+        //Debug.Log("BossSpawnEnemies");
+
         rnd = Random.Range(0f, 100f);
 
         if (summonCooldown <= 0 && rnd <= 50)
@@ -162,7 +172,7 @@ public class BossScript : EnemyScript
             Vector3 right = transform.right;
             float offset;
 
-            if (rnd > 0 && rnd <= 40)
+            if (rnd <= 40)
             {
                 rnd = Random.Range(0f, 100f);
 
@@ -179,7 +189,7 @@ public class BossScript : EnemyScript
 
                 Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, transform.position + right * offset, 0, 0.50f, 1));
             }
-            else if (rnd > 40 && rnd <= 75)
+            else if (rnd <= 75)
             {
                 rnd = Random.Range(0f, 100f);
 
@@ -196,7 +206,7 @@ public class BossScript : EnemyScript
 
                 Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, transform.position + right * offset, 0, 0.30f, 1));
             }
-            else if (rnd > 75 && rnd <= 100)
+            else
             {
                 rnd = Random.Range(0f, 100f);
 

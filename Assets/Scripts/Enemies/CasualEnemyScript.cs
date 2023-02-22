@@ -5,15 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class CasualEnemyScript : EnemyScript
 {
-    [SerializeField] PlayerScript playerScript;
+    //[SerializeField] PlayerScript playerScript;
 
     [SerializeField] GameObject body;
     [SerializeField] GameObject hitParticle;
-
-    Transform target;
-    float turnSpeed = 0.5f;
-    Quaternion rotGoal;
-    Vector3 direction;
 
     public CasualEnemyScript()
         : base(0.9f)
@@ -26,9 +21,7 @@ public class CasualEnemyScript : EnemyScript
     {
         base.Start();
 
-        target = FindObjectOfType<PlayerScript>().transform;
-        goldScript = FindObjectOfType<GoldScript>();
-        playerScript = FindObjectOfType<PlayerScript>();
+        //playerScript = FindObjectOfType<PlayerScript>();
     }
 
     void Update()
@@ -37,10 +30,12 @@ public class CasualEnemyScript : EnemyScript
         {
             Vector3 translation;
 
-            direction.x = (target.position.x - transform.position.x);
-            direction.z = (target.position.z - transform.position.z);
-            rotGoal = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+            //direction.x = (target.position.x - transform.position.x);
+            //direction.z = (target.position.z - transform.position.z);
+            //rotGoal = Quaternion.LookRotation(direction);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
+
+            RotateTowardsPlayer(1f);
 
             translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 

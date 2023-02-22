@@ -16,8 +16,6 @@ public class EnemyWavesControler : ProjectBehaviour
     [SerializeField] GameObject toughEnemy;
     [SerializeField] GameObject boss;
 
-    public bool BossSpawned = false;
-
     //List<Wave> Waves = new List<Wave>();
 
     //public GameObject[] EnemiesOnMap;
@@ -34,7 +32,7 @@ public class EnemyWavesControler : ProjectBehaviour
         Reset();
 
         // super easy
-        BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
+        BuildSuperEasyEnemyWaves(0f, 0.32f, 0);
 
         // easy
         //BuildEasyEnemyWaves(15f, 0.32f, 0);
@@ -52,7 +50,7 @@ public class EnemyWavesControler : ProjectBehaviour
 
         var time = basetime;
 
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1.5f, 0.9f * speedmofifier, 1));
+        //Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1.5f, 0.9f * speedmofifier, 1));
         //Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * speedmofifier, 1));
         //Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, time + 3, 1, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, new Vector3(0f, 0f, 5), time, 1, 1));
@@ -136,6 +134,8 @@ public class EnemyWavesControler : ProjectBehaviour
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 13, 1.1f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 14, 1f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16, 1.55f * speedmofifier, 2));
+
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, time + 10, 1f, 1));
     }
 
     public void BuildEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -216,6 +216,8 @@ public class EnemyWavesControler : ProjectBehaviour
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 13, 1.1f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 14, 1f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16, 1.55f * speedmofifier, 2));
+
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, time + 15, 1f, 1));
 
 
 
@@ -324,32 +326,33 @@ public class EnemyWavesControler : ProjectBehaviour
 
     void SpawnEnemy(Enemy enemy)
     {
-        if(enemy.EnemyType == EnemyType.SpawnerBoss)
-        {
-            SpawnBoss(enemy);
-        }
-
-        var gameObject = Instantiate<GameObject>(FindPrefabForEnemy(enemy), enemy.Position, Quaternion.identity, enemiesHolder.transform);
+        var gameObject = enemy.EnemyType != EnemyType.SpawnerBoss
+            ? Instantiate<GameObject>(FindPrefabForEnemy(enemy), enemy.Position, Quaternion.identity, enemiesHolder.transform)
+            : Instantiate<GameObject>(FindPrefabForEnemy(enemy), enemy.Position, Quaternion.identity, enemiesHolder.transform);
 
         var enemyScript = gameObject.GetComponent<EnemyScript>();
 
         enemyScript.Speed = enemy.Speed;
+        //enemyScript.RotateTowardsPlayer(1f);
 
         enemy.InstanceID = gameObject.GetInstanceID();
 
         enemy.HasSpawned = true;
     }
 
-    void SpawnBoss(Enemy enemy)
-    {
-        BossSpawned = true;
+    //void SpawnBoss(Enemy enemy)
+    //{
 
-        var gameObject = Instantiate(boss, enemy.Position, Quaternion.identity);
+    //    var gameObject = Instantiate(boss, enemy.Position, Quaternion.identity);
 
-        enemy.InstanceID = gameObject.GetInstanceID();
+    //    var enemyScript = gameObject.GetComponent<EnemyScript>();
 
-        enemy.HasSpawned = true;
-    }
+    //    enemyScript.Speed = enemy.Speed;
+
+    //    enemy.InstanceID = gameObject.GetInstanceID();
+
+    //    enemy.HasSpawned = true;
+    //}
 
     void CheckForGameEnding()
     {
@@ -440,6 +443,8 @@ public class EnemyWavesControler : ProjectBehaviour
                 return fastEnemy;
             case EnemyType.Tough:
                 return toughEnemy;
+            case EnemyType.SpawnerBoss:
+                return boss;
             default:
                 return casualEnemy;
         }
