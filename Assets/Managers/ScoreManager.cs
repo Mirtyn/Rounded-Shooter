@@ -32,15 +32,15 @@ public class ScoreManager
 
     internal void TrackEnemyDeath(Enemy enemy, GameObject enemyGameObject, GameObject playerGameObject)
     {
-        if(enemyGameObject == null)
-        {
-            var t = 0;
-        }
+        //if(enemyGameObject == null)
+        //{
+        //    var t = 0;
+        //}
 
-        if (playerGameObject == null)
-        {
-            var t = 0;
-        }
+        //if (playerGameObject == null)
+        //{
+        //    var t = 0;
+        //}
 
         var d = Vector3.Distance(enemyGameObject.transform.position, playerGameObject.transform.position);
 
