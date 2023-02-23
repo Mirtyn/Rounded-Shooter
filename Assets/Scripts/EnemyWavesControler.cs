@@ -16,6 +16,8 @@ public class EnemyWavesControler : ProjectBehaviour
     [SerializeField] GameObject toughEnemy;
     [SerializeField] GameObject boss;
 
+    [SerializeField] GameObject finsishPanel;
+
     //List<Wave> Waves = new List<Wave>();
 
     //public GameObject[] EnemiesOnMap;
@@ -53,7 +55,7 @@ public class EnemyWavesControler : ProjectBehaviour
         //Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1.5f, 0.9f * speedmofifier, 1));
         //Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * speedmofifier, 1));
         //Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, time + 3, 1, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, new Vector3(0f, 0f, 5), time, 1, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, new Vector3(0f, 0f, 5), time, 0.35f, 1));
     }
 
     public void BuildEasyEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -359,6 +361,8 @@ public class EnemyWavesControler : ProjectBehaviour
         if(Game.EnemyManager.AreAllDead())
         {
             timerScript.KeepTrackOfTime = false;
+
+            finsishPanel.active = true;
         }
 
         //EnemiesOnMap = GameObject.FindGameObjectsWithTag("Enemy");
