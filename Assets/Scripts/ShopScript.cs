@@ -86,7 +86,7 @@ public class ShopScript : ProjectBehaviour
             {
                 goldScript.Gold -= rotateSpeedUpgradeCost;
                 Game.PlayerData.PlayerTurnSpeedLevel++;
-                playerRotateSpeedUpgradeText.text = "Player Rotate Speed: Level " + Game.PlayerData.PlayerTurnSpeedLevel.ToString();
+                playerRotateSpeedUpgradeText.text = "Level " + Game.PlayerData.PlayerTurnSpeedLevel.ToString();
                 goldScript.SendGoldToHUD();
                 
                 switch (Game.PlayerData.PlayerTurnSpeedLevel)
@@ -120,7 +120,7 @@ public class ShopScript : ProjectBehaviour
             {
                 goldScript.Gold -= arrowSpeedUpgradeCost;
                 Game.PlayerData.ArrowSpeedLevel++;
-                arrowSpeedUpgradeText.text = "Arrow Fly Speed: Level " + Game.PlayerData.ArrowSpeedLevel.ToString();
+                arrowSpeedUpgradeText.text = "Level " + Game.PlayerData.ArrowSpeedLevel.ToString();
                 goldScript.SendGoldToHUD();
 
                 switch (Game.PlayerData.ArrowSpeedLevel)
@@ -154,7 +154,7 @@ public class ShopScript : ProjectBehaviour
             {
                 goldScript.Gold -= shootingCooldownUpgradeCost;
                 Game.PlayerData.ShootingCooldownLevel++;
-                shootingCooldownUpgradeText.text = "Shooting Cooldown: Level " + Game.PlayerData.ShootingCooldownLevel.ToString();
+                shootingCooldownUpgradeText.text = "Level " + Game.PlayerData.ShootingCooldownLevel.ToString();
                 goldScript.SendGoldToHUD();
 
                 switch (Game.PlayerData.ShootingCooldownLevel)

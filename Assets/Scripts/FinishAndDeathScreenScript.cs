@@ -7,8 +7,11 @@ public class FinishAndDeathScreenScript : MonoBehaviour
 {
     public void RestartScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
-
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

@@ -65,7 +65,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd82a1e37696c194fa9b668298cc200f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 0}
   target: {fileID: 0}
 --- !u!114 &399660323
 MonoBehaviour:
@@ -80,7 +79,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrow: {fileID: 5418910420603444726, guid: 6ea759a5315ac794c982d54b4e4d1527, type: 3}
-  playerData: {fileID: 0}
   cooldown: 0
   maxCooldown: 0
 --- !u!54 &851621139467379449
@@ -114,10 +112,12 @@ MonoBehaviour:
   IsDead: 0
   BombExplode: {fileID: 1668991630889547312, guid: 963521d4016228f41bb48a97c7374256, type: 3}
   playerDeathParticle: {fileID: 2281659287658787881, guid: bcf72949d8682dd41a29c1a73cd741f6, type: 3}
-  playerData: {fileID: 0}
   enemiesHolder: {fileID: 0}
   hUDScript: {fileID: 0}
+  timerScript: {fileID: 0}
+  GameSpeed: 1
   EnemiesOnMap: []
+  deathPanel: {fileID: 0}
 --- !u!1 &4916030291971036552
 GameObject:
   m_ObjectHideFlags: 0

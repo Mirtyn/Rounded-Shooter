@@ -14,12 +14,16 @@ public class PlayerScript : ProjectBehaviour
     //[SerializeField] PlayerData playerData;
     [SerializeField] GameObject enemiesHolder;
     [SerializeField] HUDScript hUDScript;
+    [SerializeField] TimerScript timerScript;
 
     public float GameSpeed = 1f;
 
     public GameObject[] EnemiesOnMap;
 
     float cooldown = 0f;
+
+    [SerializeField] GameObject deathPanel;
+
     void Start()
     {
         Time.timeScale = GameSpeed;
@@ -84,11 +88,9 @@ public class PlayerScript : ProjectBehaviour
         Destroy(gameObject.transform.GetChild(0).gameObject);
         Destroy(gameObject.transform.GetChild(1).gameObject);
         Destroy(gameObject.transform.GetChild(2).gameObject);
-        Invoke("RestartScene", 3f);
-    }
 
-    void RestartScene()
-    {
-        SceneManager.LoadScene(0);
+        deathPanel.active = true;
+
+        timerScript.KeepTrackOfTime = false;
     }
 }

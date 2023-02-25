@@ -233,22 +233,16 @@ Light:
   m_CorrespondingSourceObject: {fileID: 6153603121967866157, guid: 762e75201af19e640903550bad327c84, type: 3}
   m_PrefabInstance: {fileID: 6153603121331049399}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &948865120 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 709978059984786731, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+  m_PrefabInstance: {fileID: 8341553856631604780}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &963194227 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1574647713453476591, guid: 4f88f7ab58230684bb224fa4435ed0c6, type: 3}
   m_PrefabInstance: {fileID: 1574647713334536092}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1752705206 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2679240425033939487, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-  m_PrefabInstance: {fileID: 8341553856631604780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9930bd9092bbcdf4c92286d50c8dda01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1866228453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 303923966, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
@@ -383,14 +377,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 620388818}
-    - target: {fileID: 399660320, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
-      propertyPath: playerData
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 399660323, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
-      propertyPath: playerData
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 159146730050898038, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
       propertyPath: m_Name
       value: Player
@@ -440,17 +426,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
-      propertyPath: GameSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
       propertyPath: hUDScript
       value: 
       objectReference: {fileID: 60690520}
     - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
-      propertyPath: playerData
+      propertyPath: deathPanel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 948865120}
+    - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
+      propertyPath: timerScript
+      value: 
+      objectReference: {fileID: 192125736}
     - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
       propertyPath: enemiesHolder
       value: 
@@ -583,10 +569,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6890753763783051880, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
-      propertyPath: boss
-      value: 
-      objectReference: {fileID: 5686401558786077135, guid: fec18b68be4186d4a8ffb811ba12fdcf, type: 3}
-    - target: {fileID: 6890753763783051880, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
       propertyPath: timerScript
       value: 
       objectReference: {fileID: 192125736}
@@ -712,38 +694,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 303923966, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874025650, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874025650, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874025650, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1752705206}
-    - target: {fileID: 1874025650, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874025650, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874025650, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FinishAndDeathScreenScript, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874025650, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 274325681034839574, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
       propertyPath: goldScript
       value: 
@@ -848,10 +798,6 @@ PrefabInstance:
       propertyPath: timerScript
       value: 
       objectReference: {fileID: 192125736}
-    - target: {fileID: 8522673155585764081, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
 --- !u!1001 &8489478074719910021
