@@ -698,6 +698,10 @@ PrefabInstance:
       propertyPath: goldScript
       value: 
       objectReference: {fileID: 304656629}
+    - target: {fileID: 274325681034839574, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: shopPannel
+      value: 
+      objectReference: {fileID: 8341553856631604781}
     - target: {fileID: 8341553857047082885, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
       propertyPath: m_Camera
       value: 
@@ -800,6 +804,11 @@ PrefabInstance:
       objectReference: {fileID: 192125736}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+--- !u!1 &8341553856631604781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8522673155585764081, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+  m_PrefabInstance: {fileID: 8341553856631604780}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8489478074719910021
 PrefabInstance:
   m_ObjectHideFlags: 0

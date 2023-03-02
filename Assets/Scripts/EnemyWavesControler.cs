@@ -33,17 +33,29 @@ public class EnemyWavesControler : ProjectBehaviour
     {
         Reset();
 
+        if (Game_Type == GameType.Easy)
+        {
+            BuildEasyEnemyWaves(15f, 0.32f, 0);
+        }
+        else if (Game_Type == GameType.Medium)
+        {
+            BuildMediumEnemyWaves(15f, 0.50f, 4);
+        }
+        else if (Game_Type == GameType.Hard)
+        {
+            BuildHardEnemyWaves(15f, 0.7f, 10);
+        }
+        else if (Game_Type == GameType.Master)
+        {
+
+        }
+        else // Random
+        {
+
+        }
+
         // super easy
         //BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
-
-        // easy
-        //BuildEasyEnemyWaves(15f, 0.32f, 0);
-
-        // medium
-        BuildMediumEnemyWaves(15f, 0.50f, 4);
-
-        // hard
-        //BuildHardEnemyWaves(15f, 0.7f, 10);
     }
 
     public void BuildSuperEasyEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)

@@ -30,6 +30,26 @@ public class ShopScript : ProjectBehaviour
     [SerializeField] GameObject upgradePlayerTurnSpeedButton;
     [SerializeField] GameObject upgradeShootingCooldownButton;
 
+    [SerializeField] GameObject shopPannel;
+
+    void Start()
+    {
+        if (Game_Type == GameType.Master)
+        {
+            Game.PlayerData.ShopOpened = false;
+            Game.PlayerData.ArrowSpeedLevel = 4;
+            Game.PlayerData.PlayerTurnSpeedLevel = 4;
+            Game.PlayerData.ShootingCooldownLevel = 4;
+            Game.PlayerData.Bombs = 5;
+            Game.PlayerData.MaxBombs = 0;
+            Game.PlayerData.HasForceField = false;
+
+            hUDScript.SetBombsOnScreen();
+
+            shopPannel.active = false;
+        }
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))

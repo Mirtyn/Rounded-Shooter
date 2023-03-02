@@ -36,7 +36,7 @@ public class PlayerScript : ProjectBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Application.Quit();
+                SceneManager.LoadScene(0);
             }
         }
 

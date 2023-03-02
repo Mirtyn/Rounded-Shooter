@@ -15,9 +15,13 @@ public class GameManager
         return GameObject.FindGameObjectWithTag("MyPlayer");
     }
 
-    public void Reset()
+    public void Reset(bool resetPlayerData)
     {
-        PlayerData.Reset();
+        if (resetPlayerData == true)
+        {
+            PlayerData.Reset();
+        }
+
         EnemyManager.Reset();
         ScoreManager.Reset();
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FinishAndDeathScreenScript : MonoBehaviour
+public class FinishAndDeathScreenScript : ProjectBehaviour
 {
     public void RestartScene()
     {
