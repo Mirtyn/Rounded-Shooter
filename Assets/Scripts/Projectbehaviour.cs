@@ -9,6 +9,8 @@ public class ProjectBehaviour : MonoBehaviour
 
     static public bool UseRadiusSpawner = true;
 
+    static public bool IsPaused = false;
+
     bool resetPlayerData;
 
     //public static ScoreManager ScoreCalculator = new ScoreManager();
@@ -31,6 +33,8 @@ public class ProjectBehaviour : MonoBehaviour
 
     public void Reset()
     {
+        IsPaused = false;
+
         if (Game_Type == GameType.Master)
         {
             resetPlayerData = false;

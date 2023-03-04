@@ -32,6 +32,8 @@ public class ShopScript : ProjectBehaviour
 
     [SerializeField] GameObject shopPannel;
 
+    public float EscapePressedCooldown;
+
     void Start()
     {
         if (Game_Type == GameType.Master)
@@ -64,9 +66,15 @@ public class ShopScript : ProjectBehaviour
             }
         }
 
-        if (Input.GetAxis("Cancel") > 0)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
+            EscapePressedCooldown = 0.1f;
             ExitShopButtonPressed();
+        }
+
+        if (EscapePressedCooldown > 0)
+        {
+            EscapePressedCooldown -= Time.deltaTime;
         }
 
         if (Game.PlayerData.Bombs >= Game.PlayerData.MaxBombs)

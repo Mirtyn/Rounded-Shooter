@@ -15,12 +15,15 @@ public class PlayerScript : ProjectBehaviour
     [SerializeField] GameObject enemiesHolder;
     [SerializeField] HUDScript hUDScript;
     [SerializeField] TimerScript timerScript;
+    [SerializeField] ShopScript shopScript;
 
     public float GameSpeed = 1f;
 
     public GameObject[] EnemiesOnMap;
 
     float cooldown = 0f;
+
+    //float escapeCooldown = 0f;
 
     [SerializeField] GameObject deathPanel;
 
@@ -34,11 +37,19 @@ public class PlayerScript : ProjectBehaviour
     {
         if (Game.PlayerData.ShopOpened == false)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (shopScript.EscapePressedCooldown <= 0)
             {
-                SceneManager.LoadScene(0);
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    SceneManager.LoadScene(0);
+                }
             }
         }
+
+        //if (escapeCooldown > 0)
+        //{
+        //    escapeCooldown -= Time.deltaTime;
+        //}
 
         this.transform.position = startPos;
         if (IsDead == false)
@@ -92,5 +103,17 @@ public class PlayerScript : ProjectBehaviour
         deathPanel.active = true;
 
         timerScript.KeepTrackOfTime = false;
+    }
+
+    public void PauseGame()
+    {
+        IsPaused = true;
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGame()
+    {
+        IsPaused = false;
+        Time.timeScale = GameSpeed;
     }
 }
