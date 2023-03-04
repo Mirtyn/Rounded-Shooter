@@ -38,6 +38,7 @@ public class ShopScript : ProjectBehaviour
     {
         if (Game_Type == GameType.Master)
         {
+            Game.PlayerData.IsDead = false;
             Game.PlayerData.ShopOpened = false;
             Game.PlayerData.ArrowSpeedLevel = 4;
             Game.PlayerData.PlayerTurnSpeedLevel = 4;
@@ -48,7 +49,7 @@ public class ShopScript : ProjectBehaviour
 
             hUDScript.SetBombsOnScreen();
 
-            shopPannel.active = false;
+            shopPannel.SetActive(false);
         }
     }
 

@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : ProjectBehaviour
 {
-    public bool IsDead = false;
     Vector3 startPos;
 
     [SerializeField] GameObject BombExplode;
@@ -52,7 +51,7 @@ public class PlayerScript : ProjectBehaviour
         //}
 
         this.transform.position = startPos;
-        if (IsDead == false)
+        if (Game.PlayerData.IsDead == false)
         {
             if (Input.GetAxis("UseBomb") > 0)
             {
@@ -87,10 +86,21 @@ public class PlayerScript : ProjectBehaviour
         }
     }
 
+    public bool IsDead()
+    {
+        return Game.PlayerData.IsDead;
+    }
+
+    public bool IsDead(bool dead)
+    {
+        Game.PlayerData.IsDead = dead;
+
+        return IsDead();
+    }
+
     public void Death()
     {
-        IsDead = true;
-
+        IsDead(true);
         Instantiate(playerDeathParticle, new Vector3(this.transform.position.x, 2, this.transform.position.z), Quaternion.identity);
         Destroy(gameObject.GetComponent<CapsuleCollider>());
         Destroy(gameObject.GetComponent<PlayerAimAtRayHit>());
@@ -100,7 +110,7 @@ public class PlayerScript : ProjectBehaviour
         Destroy(gameObject.transform.GetChild(1).gameObject);
         Destroy(gameObject.transform.GetChild(2).gameObject);
 
-        deathPanel.active = true;
+        deathPanel.SetActive(true);
 
         timerScript.KeepTrackOfTime = false;
     }

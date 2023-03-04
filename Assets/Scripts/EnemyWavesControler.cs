@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Models;
 using System.Linq;
+using RoundedShooter;
 
 public class EnemyWavesControler : ProjectBehaviour
 {
     [SerializeField] TimerScript timerScript;
     [SerializeField] Transform enemiesHolder;
+    [SerializeField] GoldScript goldScript;
 
     //Vector3 spawnPos;
 
@@ -24,6 +26,8 @@ public class EnemyWavesControler : ProjectBehaviour
 
     public int LastSpawnedEnemy;
 
+    private bool _hasSubmitedScore = false;
+
     //int currentWave = 0;
     //int CurrentTimedEnemy { get; set; }
 
@@ -33,9 +37,17 @@ public class EnemyWavesControler : ProjectBehaviour
     {
         Reset();
 
+#if DEBUG
+
+        // super easy
+        BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
+
+#else
+
         if (Game_Type == GameType.Easy)
         {
-            BuildEasyEnemyWaves(15f, 0.32f, 0);
+            //BuildEasyEnemyWaves(15f, 0.32f, 0);
+            BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
         }
         else if (Game_Type == GameType.Medium)
         {
@@ -54,8 +66,7 @@ public class EnemyWavesControler : ProjectBehaviour
 
         }
 
-        // super easy
-        //BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
+#endif
     }
 
     public void BuildSuperEasyEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -692,81 +703,41 @@ public class EnemyWavesControler : ProjectBehaviour
 
     void CheckForGameEnding()
     {
-        if(Game.EnemyManager.AreAllDead())
+        if (Game.EnemyManager.AreAllDead())
         {
             timerScript.KeepTrackOfTime = false;
 
-            finsishPanel.active = true;
+            finsishPanel.SetActive(true);
+
+            if (!Game.PlayerData.IsDead && !_hasSubmitedScore)
+            {
+                SubmitButtonPressed();
+            }
         }
-
-        //EnemiesOnMap = GameObject.FindGameObjectsWithTag("Enemy");
-
-        //int o = 0;
-        //foreach (GameObject i in EnemiesOnMap)
-        //{
-        //    if (Vector3.Distance(EnemiesOnMap[o].transform.position, this.transform.position) <= 4f)
-        //    {
-        //        EnemiesOnMap[o].GetComponent<BaseEnemyScript>().BombDeath();
-        //    }
-        //    o++;
-        //}
-
-        //if (LastSpawnedEnemy == TimedEnemies.Count && BossSpawned == true)
-        //{
-
-        //}
     }
 
-    //void WaveSpawner()
-    //{
-    //    if(currentWave == Waves.Count)
-    //    {
-    //        return;
-    //    }
+    public void SubmitButtonPressed()
+    {
+        var version = ProjectBehaviour.Version;
 
-    //    var wave = Waves[currentWave];
+        var ladderService = new LadderClientApi(@"https://mirtyn.be/rounded-shooter/ladder/post");
 
-    //    if(wave.WaveStartTime <= timerScript.InGameTime)
-    //    {
-    //        Debug.Log("Wave: " + currentWave + " time: " + timerScript.InGameTime);
+        var entryFlag = Ladder.Flag.None;
 
-    //        SpawnWave(wave);
+        if (ladderService.TryPost(new Ladder.Entry { Name = "[unknown]", Points = Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold), Flag = entryFlag }, version, out LadderClientApi.PostResponse response))
+        {
+            _hasSubmitedScore = true;
 
-    //        if (currentWave < Waves.Count)
-    //        {
-    //            currentWave++;
+            Debug.Log("The data was succesfully saved.");
+            Debug.Log($"You are position {response.Position} on the ladder.");
+        }
+        else
+        {
+            Debug.Log("The data could not be saved.");
+            Debug.Log("Please try again latter.");
+        }
 
-    //            if (currentWave == Waves.Count)
-    //            {
-    //                Debug.Log("Waves finished");
-    //            }
-    //        }
-    //    }
-    //}
-
-    //void SpawnWave(Wave wave)
-    //{
-    //    foreach (var enemy in wave.Enemies)
-    //    {
-    //        SpawnEnemy(enemy);
-    //    }
-    //}
-
-    //void SpawnEnemy(Enemy enemy)
-    //{
-    //    spawnPos = Projectbehaviour.UseRadiusSpawner ? new RadiusSpawner(enemy.MinRadius, enemy.MaxRadius).RandomPosition() : _squareSpawner.RandomPosition(enemy);
-
-    //    var gameObject =  Instantiate<GameObject>(FindPrefabForEnemy(enemy), spawnPos, Quaternion.identity, enemiesHolder.transform);
-
-    //    var enemyScript = gameObject.GetComponent<EnemyScript>();
-
-    //    enemyScript.Speed = enemy.Speed;
-    //}
-
-    //GameObject FindPrefabForEnemy(Enemy enemy)
-    //{
-    //    return FindPrefabForEnemyType(enemy.EnemyType);
-    //}
+    }
 
     GameObject FindPrefabForEnemy(Enemy enemy)
     {

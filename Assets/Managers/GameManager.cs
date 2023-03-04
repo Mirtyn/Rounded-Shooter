@@ -10,9 +10,28 @@ public class GameManager
     public EnemyManager EnemyManager { get; set; } = new EnemyManager();
     public PlayerData PlayerData { get; set; } = new PlayerData();
 
+    private GameObject _playerGameObject = null;
+
+    private PlayerScript _playerScript = null;
+
     public GameObject GetPlayerGameObject()
     {
-        return GameObject.FindGameObjectWithTag("MyPlayer");
+        if(_playerGameObject == null)
+        {
+            _playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
+        }
+        
+        return _playerGameObject;
+    }
+
+    public PlayerScript GetPlayerScript()
+    {
+        if (_playerScript == null)
+        {
+            _playerScript = GetPlayerGameObject().GetComponent<PlayerScript>();
+        }
+
+        return _playerScript;
     }
 
     public void Reset(bool resetPlayerData)

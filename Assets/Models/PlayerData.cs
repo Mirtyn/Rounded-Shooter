@@ -17,8 +17,11 @@ public class PlayerData
         Reset();
     }
 
+    public bool IsDead { get; internal set; }
+
     public void Reset()
     {
+        IsDead = false;
         ShopOpened = false;
         ArrowSpeedLevel = 1;
         PlayerTurnSpeedLevel = 1;

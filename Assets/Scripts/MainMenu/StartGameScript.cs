@@ -9,7 +9,7 @@ public class StartGameScript : ProjectBehaviour
 
     public void BackButtonPressed()
     {
-        startGamePanel.active = false;
+        startGamePanel.SetActive(false);
     }
 
     public void StartEasyGame()

@@ -26,7 +26,7 @@ public class FastEnemyScript : EnemyScript
 
     void Update()
     {
-        if (playerScript.IsDead == false)
+        if (Game.PlayerData.IsDead == false)
         {
             Vector3 translation;
 
