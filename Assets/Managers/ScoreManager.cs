@@ -10,6 +10,8 @@ public class ScoreManager
 
     private long deathscore = 0;
 
+    public long CurrentScore { get; set; } = 0;
+
     public void MarkStart(float starttime)
     {
         Starttime = starttime;
@@ -21,11 +23,16 @@ public class ScoreManager
 
         var goldscore = (long)((gold) * 1000f);
 
-        return timescore + deathscore + goldscore;
+        CurrentScore = timescore + deathscore + goldscore;
+
+        return CurrentScore;
     }
+
+
 
     public void Reset()
     {
+        CurrentScore = 0;
         Starttime = 0;
         deathscore = 0;
     }
@@ -50,7 +57,7 @@ public class ScoreManager
 
         var f = 1f - (d / maxdistance);
 
-        if(f < 0f)
+        if (f < 0f)
         {
             f = 0f;
         }

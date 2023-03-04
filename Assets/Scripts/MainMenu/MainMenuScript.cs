@@ -10,7 +10,7 @@ public class MainMenuScript : ProjectBehaviour
 
     public void StartButtonPressed()
     {
-        startGamePanel.active = true;
+        startGamePanel.SetActive( true);
     }
 
     public void QuitButtonPressed()

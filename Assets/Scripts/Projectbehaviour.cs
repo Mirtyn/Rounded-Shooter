@@ -13,6 +13,8 @@ public class ProjectBehaviour : MonoBehaviour
 
     bool resetPlayerData;
 
+    public static string Version = "0.2.0";
+
     //public static ScoreManager ScoreCalculator = new ScoreManager();
 
     //public static PlayerData PlayerData = new PlayerData();
@@ -26,7 +28,7 @@ public class ProjectBehaviour : MonoBehaviour
         Master,
     }
 
-    public static GameType Game_Type;
+    public static GameType Game_Type = GameType.Easy;
 
 
     public static GameManager Game = new GameManager();
