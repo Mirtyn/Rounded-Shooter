@@ -37,17 +37,16 @@ public class EnemyWavesControler : ProjectBehaviour
     {
         Reset();
 
-#if DEBUG
+//#if DEBUG
 
-        // super easy
-        BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
+//        // super easy
+//        BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
 
-#else
+//#else
 
         if (Game_Type == GameType.Easy)
         {
-            //BuildEasyEnemyWaves(15f, 0.32f, 0);
-            BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
+            BuildEasyEnemyWaves(15f, 0.32f, 0);
         }
         else if (Game_Type == GameType.Medium)
         {
@@ -66,7 +65,7 @@ public class EnemyWavesControler : ProjectBehaviour
 
         }
 
-#endif
+//#endif
     }
 
     public void BuildSuperEasyEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
