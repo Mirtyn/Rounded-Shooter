@@ -36,7 +36,7 @@ public class ShopScript : ProjectBehaviour
 
     void Start()
     {
-        if (Game_Type == GameType.Master)
+        if (Game.GameType == Assets.Models.GameType.Master)
         {
             Game.PlayerData.IsDead = false;
             Game.PlayerData.ShopOpened = false;

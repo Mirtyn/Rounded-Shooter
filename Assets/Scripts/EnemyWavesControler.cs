@@ -35,28 +35,28 @@ public class EnemyWavesControler : ProjectBehaviour
 
     public void Start()
     {
-        Reset();
+        Game.Reset();
 
-//#if DEBUG
+#if DEBUG
 
-//        // super easy
-//        BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
+        // super easy
+        BuildSuperEasyEnemyWaves(10f, 0.32f, 0);
 
-//#else
+#else
 
-        if (Game_Type == GameType.Easy)
+        if (Game.GameType == GameType.Easy)
         {
             BuildEasyEnemyWaves(15f, 0.32f, 0);
         }
-        else if (Game_Type == GameType.Medium)
+        else if (Game.GameType == GameType.Medium)
         {
             BuildMediumEnemyWaves(15f, 0.50f, 4);
         }
-        else if (Game_Type == GameType.Hard)
+        else if (Game.GameType == GameType.Hard)
         {
             BuildHardEnemyWaves(15f, 0.7f, 10);
         }
-        else if (Game_Type == GameType.Master)
+        else if (Game.GameType == GameType.Master)
         {
             BuildMasterEnemyWaves(15f, 1f, 8);
         }
@@ -65,7 +65,7 @@ public class EnemyWavesControler : ProjectBehaviour
 
         }
 
-//#endif
+#endif
     }
 
     public void BuildSuperEasyEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -679,26 +679,11 @@ public class EnemyWavesControler : ProjectBehaviour
         var enemyScript = gameObject.GetComponent<EnemyScript>();
 
         enemyScript.Speed = enemy.Speed;
-        //enemyScript.RotateTowardsPlayer(1f);
 
         enemy.InstanceID = gameObject.GetInstanceID();
 
         enemy.HasSpawned = true;
     }
-
-    //void SpawnBoss(Enemy enemy)
-    //{
-
-    //    var gameObject = Instantiate(boss, enemy.Position, Quaternion.identity);
-
-    //    var enemyScript = gameObject.GetComponent<EnemyScript>();
-
-    //    enemyScript.Speed = enemy.Speed;
-
-    //    enemy.InstanceID = gameObject.GetInstanceID();
-
-    //    enemy.HasSpawned = true;
-    //}
 
     void CheckForGameEnding()
     {
@@ -717,13 +702,23 @@ public class EnemyWavesControler : ProjectBehaviour
 
     public void SubmitButtonPressed()
     {
-        var version = ProjectBehaviour.Version;
+        var version = GameManager.Version;
 
         var ladderService = new LadderClientApi(@"https://mirtyn.be/rounded-shooter/ladder/post");
 
-        var entryFlag = Ladder.Flag.None;
+        var points = Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold);
 
-        if (ladderService.TryPost(new Ladder.Entry { Name = "[unknown]", Points = Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold), Flag = entryFlag }, version, out LadderClientApi.PostResponse response))
+        var entry = new Ladder.Entry
+        {
+            Name = "[unknown]",
+            Points = points,
+            Flag = (Ladder.Flag)Game.GameType,
+        };
+
+        if (ladderService.TryPost(
+            entry, 
+            version, 
+            out LadderClientApi.PostResponse response))
         {
             _hasSubmitedScore = true;
 
@@ -735,7 +730,6 @@ public class EnemyWavesControler : ProjectBehaviour
             Debug.Log("The data could not be saved.");
             Debug.Log("Please try again latter.");
         }
-
     }
 
     GameObject FindPrefabForEnemy(Enemy enemy)

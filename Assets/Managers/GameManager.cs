@@ -6,13 +6,52 @@ using UnityEngine;
 
 public class GameManager
 {
+    public bool ClampY = false;
+
+    //static public bool UseRadiusSpawner = true;
+
+    public bool IsPaused = false;
+
+    public static string Version = "0.3.0";
+
+    public GameType GameType = GameType.Easy;
+
     public ScoreManager ScoreManager { get; set; } = new ScoreManager();
+
     public EnemyManager EnemyManager { get; set; } = new EnemyManager();
+
     public PlayerData PlayerData { get; set; } = new PlayerData();
 
     private GameObject _playerGameObject = null;
 
     private PlayerScript _playerScript = null;
+
+
+
+
+    private static readonly GameManager _instance = new GameManager();
+
+    // Explicit static constructor to tell C# compiler
+    // not to mark type as beforefieldinit
+    static GameManager()
+    {
+    }
+
+    private GameManager()
+    {
+    }
+
+    public static GameManager Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+
+
+
 
     public GameObject GetPlayerGameObject()
     {
@@ -34,9 +73,11 @@ public class GameManager
         return _playerScript;
     }
 
-    public void Reset(bool resetPlayerData)
+    public void Reset()
     {
-        if (resetPlayerData == true)
+        IsPaused = false;
+
+        if (GameType != GameType.Master)
         {
             PlayerData.Reset();
         }

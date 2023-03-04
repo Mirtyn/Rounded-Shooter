@@ -29,7 +29,7 @@ public class PlayerAimAtRayHit : ProjectBehaviour
                 break;
         }
 
-        if (y_Clamp == false)
+        if (Game.ClampY == false)
         {
             direction.y = (target.position.y - transform.position.y);
         }

@@ -117,13 +117,13 @@ public class PlayerScript : ProjectBehaviour
 
     public void PauseGame()
     {
-        IsPaused = true;
+        Game.IsPaused = true;
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        IsPaused = false;
+        Game.IsPaused = false;
         Time.timeScale = GameSpeed;
     }
 }
