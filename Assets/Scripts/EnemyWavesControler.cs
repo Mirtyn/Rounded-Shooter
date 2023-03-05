@@ -29,9 +29,27 @@ public class EnemyWavesControler : ProjectBehaviour
     private bool _hasSubmitedScore = false;
 
     private float _nextEndlessWaveGameTime = 0f;
-    private float _nextEndlessSpeedModifier = 0.5f;
+    private float _endlessSpeedModifier = 0.30f;
+    private float _endlessEnemyCount = 3;
+    private WeightedList<EnemyType> _endlessWeightedList = new WeightedList<EnemyType>();
+    //private WeightedCollection<EnemyType> _endlessWeightedCollection = new WeightedCollection<EnemyType>();
+
+    private int _endlessCasualWeight = 1000;
+    private int _endlessFastWeight = 100;
+    private int _endlessToughWeight = 10;
+
+    private float _endlessCasualMinSpeed = 0.8f;
+    private float _endlessCasualMaxSpeed = 1.2f;
+
+    private float _endlessFastMinSpeed = 1.55f;
+    private float _endlessFastMaxSpeed = 2.0f;
+
+    private float _endlessToughMinSpeed = 0.45f;
+    private float _endlessToughMaxSpeed = 0.55f;
 
     private TimedSpawner _timedSpawner = new TimedSpawner();
+
+    private System.Random _endlessRandom = new System.Random();
 
 
     //int currentWave = 0;
@@ -76,21 +94,93 @@ public class EnemyWavesControler : ProjectBehaviour
 
     private void BuildEndlessWave(float inGameTime)
     {
-        if(inGameTime < _nextEndlessWaveGameTime)
+        BuildEndlessWave1(inGameTime);
+    }
+
+    private void BuildEndlessWave1(float inGameTime)
+    {
+        if (inGameTime < _nextEndlessWaveGameTime)
         {
             return;
         }
 
-        Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(EnemyType.Casual, inGameTime + 6, 0.9f * _nextEndlessSpeedModifier, 1));
-        Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(EnemyType.Casual, inGameTime + 8, 0.9f * _nextEndlessSpeedModifier, 1));
-        Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(EnemyType.Casual, inGameTime + 12, 0.9f * _nextEndlessSpeedModifier, 1));
+        var count = (int)_endlessEnemyCount;
 
-        _nextEndlessWaveGameTime = inGameTime + 15;
-        _nextEndlessSpeedModifier += 0.05f;
+        _endlessWeightedList.Clear();
 
-        if(_nextEndlessSpeedModifier > 2f)
+        _endlessWeightedList.Add(EnemyType.Casual, _endlessCasualWeight);
+        _endlessWeightedList.Add(EnemyType.Fast, _endlessFastWeight);
+        _endlessWeightedList.Add(EnemyType.Tough, _endlessToughWeight);
+
+        var t = 4f;
+
+        for (var i = 0; i < count; i++)
         {
-            _nextEndlessSpeedModifier = 2f;
+            var enemyType = _endlessWeightedList.Next();
+            var speed = RandomSpeedForEnemyType(enemyType) * _endlessSpeedModifier;
+
+            Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(enemyType, inGameTime + t, speed, 1));
+
+            t += 4f;
+        }
+
+        _nextEndlessWaveGameTime = inGameTime + 12;
+        _endlessSpeedModifier = Mathf.Min(_endlessSpeedModifier + 0.025f, 2.25f);
+        _endlessEnemyCount += 0.15f;
+        _endlessCasualWeight = Mathf.Max(_endlessCasualWeight - 5, 1);
+        _endlessFastWeight = Mathf.Min(_endlessCasualWeight + 4, 1000);
+        _endlessToughWeight = Mathf.Min(_endlessCasualWeight + 2, 1000);
+
+        //Debug.Log($"_endlessSpeedModifier: {_endlessSpeedModifier}");
+    }
+
+    private void BuildEndlessWave2(float inGameTime)
+    {
+        if (inGameTime < _nextEndlessWaveGameTime)
+        {
+            return;
+        }
+
+        _endlessEnemyCount = (int)_endlessEnemyCount;
+
+        _endlessWeightedList.Clear();
+
+        _endlessWeightedList.Add(EnemyType.Casual, _endlessCasualWeight);
+        _endlessWeightedList.Add(EnemyType.Fast, _endlessFastWeight);
+        _endlessWeightedList.Add(EnemyType.Tough, _endlessToughWeight);
+
+        var t = 4f;
+
+        for (var i = 0; i < _endlessEnemyCount; i++)
+        {
+            var enemyType = _endlessWeightedList.Next();
+            var speed = RandomSpeedForEnemyType(enemyType) * _endlessSpeedModifier;
+
+            Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(enemyType, inGameTime + t, speed, 1));
+
+            t += 4f;
+        }
+
+        _nextEndlessWaveGameTime = inGameTime + 12;
+        _endlessSpeedModifier = Mathf.Min(_endlessSpeedModifier + 0.05f, 2.25f);
+        _endlessEnemyCount += 0.20f;
+        _endlessCasualWeight = Mathf.Max(_endlessCasualWeight - 5, 1);
+        _endlessFastWeight = Mathf.Min(_endlessCasualWeight + 4, 1000);
+        _endlessToughWeight = Mathf.Min(_endlessCasualWeight + 2, 1000);
+
+        Debug.Log($"_endlessSpeedModifier: {_endlessSpeedModifier}");
+    }
+
+    private float RandomSpeedForEnemyType(EnemyType enemyType)
+    {
+        switch (enemyType)
+        {
+            case EnemyType.Fast:
+                return _endlessFastMinSpeed + ((_endlessFastMaxSpeed - _endlessFastMinSpeed) * (float)_endlessRandom.NextDouble());
+            case EnemyType.Tough:
+                return _endlessToughMinSpeed + ((_endlessToughMaxSpeed - _endlessToughMinSpeed) * (float)_endlessRandom.NextDouble());
+            default:
+                return _endlessCasualMinSpeed + ((_endlessCasualMaxSpeed - _endlessCasualMinSpeed) * (float)_endlessRandom.NextDouble());
         }
     }
 
@@ -717,6 +807,11 @@ public class EnemyWavesControler : ProjectBehaviour
     {
         if(Game.GameType == GameType.Endless)
         {
+            if (Game.PlayerData.IsDead && !_hasSubmitedScore)
+            {
+                SubmitButtonPressed();
+            }
+
             return;
         }
 
