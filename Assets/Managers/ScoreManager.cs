@@ -8,7 +8,7 @@ public class ScoreManager
 {
     private float Starttime = 0f;
 
-    private long deathscore = 0;
+    private long KillScore = 0;
 
     public long CurrentScore { get; set; } = 0;
 
@@ -17,42 +17,50 @@ public class ScoreManager
         Starttime = starttime;
     }
 
-    public long CalculateScore(float time, int gold)
+    public long CalculateScore(float time, int gold, GameType gameType)
     {
-        var timescore = (long)((time - Starttime) * 100f);
+        var timescore = (long)((time - Starttime) * TimeScoreMultiplier(gameType));
 
         var goldscore = (long)((gold) * 1000f);
 
-        CurrentScore = timescore + deathscore + goldscore;
+        CurrentScore = timescore + KillScore + goldscore;
 
         return CurrentScore;
     }
 
+    private float TimeScoreMultiplier(GameType gameType)
+    {
+        switch (gameType)
+        {
+            case GameType.Easy:
+                return 100f;
+            case GameType.Medium:
+                return 250f;
+            case GameType.Hard:
+                return 500f;
+            case GameType.Master:
+                return 250f;
+            case GameType.Endless:
+                return 100f;
+            default:
+                throw new ArgumentException();
+        }
+    }
 
 
     public void Reset()
     {
         CurrentScore = 0;
         Starttime = 0;
-        deathscore = 0;
+        KillScore = 0;
     }
 
-    internal void TrackEnemyDeath(Enemy enemy, GameObject enemyGameObject, GameObject playerGameObject)
+    internal void TrackKillScore(Enemy enemy, GameObject enemyGameObject, GameObject playerGameObject, GameType gameType)
     {
-        //if(enemyGameObject == null)
-        //{
-        //    var t = 0;
-        //}
-
-        //if (playerGameObject == null)
-        //{
-        //    var t = 0;
-        //}
-
         var d = Vector3.Distance(enemyGameObject.transform.position, playerGameObject.transform.position);
 
-        var minscore = 20;
-        var maxscore = 1000;
+        var minscore = MinKillScore(gameType);
+        var maxscore = MaxKillScore(gameType);
         var maxdistance = 6f;
 
         var f = 1f - (d / maxdistance);
@@ -64,6 +72,44 @@ public class ScoreManager
 
         f = Mathf.Pow(f, 4);
 
-        deathscore += (long)(minscore + (f * maxscore));
+        KillScore += (long)(minscore + (f * maxscore));
+    }
+
+    private int MinKillScore(GameType gameType)
+    {
+        switch (gameType)
+        {
+            case GameType.Easy:
+                return 20;
+            case GameType.Medium:
+                return 50;
+            case GameType.Hard:
+                return 100;
+            case GameType.Master:
+                return 50;
+            case GameType.Endless:
+                return 20;
+            default:
+                throw new ArgumentException();
+        }
+    }
+
+    private int MaxKillScore(GameType gameType)
+    {
+        switch (gameType)
+        {
+            case GameType.Easy:
+                return 1000;
+            case GameType.Medium:
+                return 2500;
+            case GameType.Hard:
+                return 5000;
+            case GameType.Master:
+                return 2500;
+            case GameType.Endless:
+                return 1000;
+            default:
+                throw new ArgumentException();
+        }
     }
 }

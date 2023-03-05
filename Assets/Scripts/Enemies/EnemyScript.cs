@@ -66,7 +66,7 @@ public class EnemyScript : ProjectBehaviour
         if (enemy != null)
         {
             enemy.IsAlive = false;
-            Game.ScoreManager.TrackEnemyDeath(enemy, gameObject, Player);
+            Game.ScoreManager.TrackKillScore(enemy, gameObject, Player, Game.GameType);
         }
 
         Destroy(gameObject);

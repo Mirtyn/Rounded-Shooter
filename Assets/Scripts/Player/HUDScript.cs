@@ -22,7 +22,7 @@ public class HUDScript : ProjectBehaviour
 
     void SetScoreOnHUD()
     {
-        scoreText.text = "Score: " + Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold);
+        scoreText.text = "Score: " + Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold, Game.GameType);
     }
 
     void SetTimeOnHUD()
