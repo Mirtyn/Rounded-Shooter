@@ -8,7 +8,8 @@ namespace Assets.Models
 {
     public enum GameType
     {
-        Easy = 1,
+        None,
+        Easy,
         Medium,
         Hard,
         Endless,

@@ -14,7 +14,7 @@ public class GameManager
 
     public static string Version = "0.3.0";
 
-    public GameType GameType = GameType.Easy;
+    public GameType GameType = GameType.None;
 
     public ScoreManager ScoreManager { get; set; } = new ScoreManager();
 
