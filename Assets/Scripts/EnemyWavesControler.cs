@@ -797,6 +797,8 @@ public class EnemyWavesControler : ProjectBehaviour
 
         var ladderService = new LadderClientApi(@"https://mirtyn.be/rounded-shooter/ladder/post");
 
+        //var ladderService = new LadderClientApi(@"https://localhost:7245/rounded-shooter/ladder/post");
+
         var points = Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold, Game.GameType);
 
         var entry = new Ladder.Entry
