@@ -24,9 +24,15 @@ public class EnemyWavesControler : ProjectBehaviour
 
     //public GameObject[] EnemiesOnMap;
 
-    public int LastSpawnedEnemy;
+    //public int LastSpawnedEnemy;
 
     private bool _hasSubmitedScore = false;
+
+    private float _nextEndlessWaveGameTime = 0f;
+    private float _nextEndlessSpeedModifier = 0.5f;
+
+    private TimedSpawner _timedSpawner = new TimedSpawner();
+
 
     //int currentWave = 0;
     //int CurrentTimedEnemy { get; set; }
@@ -60,12 +66,32 @@ public class EnemyWavesControler : ProjectBehaviour
         {
             BuildMasterEnemyWaves(15f, 1f, 8);
         }
-        else // Random
+        else // endless
         {
-
+            BuildEndlessWave(8f);
         }
 
 //#endif
+    }
+
+    private void BuildEndlessWave(float inGameTime)
+    {
+        if(inGameTime < _nextEndlessWaveGameTime)
+        {
+            return;
+        }
+
+        Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(EnemyType.Casual, inGameTime + 6, 0.9f * _nextEndlessSpeedModifier, 1));
+        Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(EnemyType.Casual, inGameTime + 8, 0.9f * _nextEndlessSpeedModifier, 1));
+        Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(EnemyType.Casual, inGameTime + 12, 0.9f * _nextEndlessSpeedModifier, 1));
+
+        _nextEndlessWaveGameTime = inGameTime + 15;
+        _nextEndlessSpeedModifier += 0.05f;
+
+        if(_nextEndlessSpeedModifier > 2f)
+        {
+            _nextEndlessSpeedModifier = 2f;
+        }
     }
 
     public void BuildSuperEasyEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -657,17 +683,19 @@ public class EnemyWavesControler : ProjectBehaviour
 
     void SpawnEnemies()
     {
-        //if (Game.EnemyManager.TimedEnemies.Any(o => !o.HasSpawned))
-        //{
-            foreach (var enemy in Game.EnemyManager.Enemies.Where(o => !o.HasSpawned && o.StartTime <= timerScript.InGameTime))
-            {
-                Debug.Log($"Enemy spawned:{Game.EnemyManager.Enemies.Count(o => o.HasSpawned) + 1} /{Game.EnemyManager.Enemies.Count}");
+        if(Game.GameType == GameType.Endless)
+        {
+            BuildEndlessWave(timerScript.InGameTime);
+        }
 
-                LastSpawnedEnemy = Game.EnemyManager.Enemies.Count(o => o.HasSpawned) + 1;
+        foreach (var enemy in Game.EnemyManager.Enemies.Where(o => !o.HasSpawned && o.StartTime <= timerScript.InGameTime))
+        {
+            Debug.Log($"Enemy spawned:{Game.EnemyManager.Enemies.Count(o => o.HasSpawned) + 1} /{Game.EnemyManager.Enemies.Count}");
 
-                SpawnEnemy(enemy);
-            }
-        //}
+            //LastSpawnedEnemy = Game.EnemyManager.Enemies.Count(o => o.HasSpawned) + 1;
+
+            SpawnEnemy(enemy);
+        }
     }
 
     void SpawnEnemy(Enemy enemy)
@@ -687,6 +715,11 @@ public class EnemyWavesControler : ProjectBehaviour
 
     void CheckForGameEnding()
     {
+        if(Game.GameType == GameType.Endless)
+        {
+            return;
+        }
+
         if (Game.EnemyManager.AreAllDead())
         {
             timerScript.KeepTrackOfTime = false;

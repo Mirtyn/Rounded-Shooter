@@ -14,25 +14,32 @@ public class StartGameScript : ProjectBehaviour
 
     public void StartEasyGame()
     {
-        Game.GameType = Assets.Models.GameType.Easy;
-        SceneManager.LoadScene(1);
+        StartGame(Assets.Models.GameType.Easy);
     }
 
     public void StartMediumGame()
     {
-        Game.GameType = Assets.Models.GameType.Medium;
-        SceneManager.LoadScene(1);
+        StartGame(Assets.Models.GameType.Medium);
     }
 
     public void StartHardGame()
     {
-        Game.GameType = Assets.Models.GameType.Hard;
-        SceneManager.LoadScene(1);
+        StartGame(Assets.Models.GameType.Hard);
     }
 
     public void StartMasterGame()
     {
-        Game.GameType = Assets.Models.GameType.Master;
+        StartGame(Assets.Models.GameType.Master);
+    }
+
+    public void StartEndlessGame()
+    {
+        StartGame(Assets.Models.GameType.Endless);
+    }
+
+    private void StartGame(Assets.Models.GameType gameType)
+    {
+        Game.GameType = gameType;
         SceneManager.LoadScene(1);
     }
 }

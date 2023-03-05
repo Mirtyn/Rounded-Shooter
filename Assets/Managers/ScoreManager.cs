@@ -43,7 +43,7 @@ public class ScoreManager
             case GameType.Endless:
                 return 100f;
             default:
-                throw new ArgumentException();
+                return 0f;
         }
     }
 
@@ -90,7 +90,7 @@ public class ScoreManager
             case GameType.Endless:
                 return 20;
             default:
-                throw new ArgumentException();
+                return 0;
         }
     }
 
@@ -109,7 +109,7 @@ public class ScoreManager
             case GameType.Endless:
                 return 1000;
             default:
-                throw new ArgumentException();
+                return 0;
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -489,6 +489,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1371196507, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371196507, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371196507, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 163965901}
+    - target: {fileID: 1371196507, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371196507, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartEndlessGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371196507, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: StartGameScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371196507, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1380472569, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -544,6 +572,10 @@ PrefabInstance:
     - target: {fileID: 1400578508, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778756316, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
+      propertyPath: m_text
+      value: ENDLESS
       objectReference: {fileID: 0}
     - target: {fileID: 1928022298, guid: 60d7356e747cd26448f824dd7a2ebb48, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
