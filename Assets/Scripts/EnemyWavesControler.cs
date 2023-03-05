@@ -134,43 +134,6 @@ public class EnemyWavesControler : ProjectBehaviour
         //Debug.Log($"_endlessSpeedModifier: {_endlessSpeedModifier}");
     }
 
-    private void BuildEndlessWave2(float inGameTime)
-    {
-        if (inGameTime < _nextEndlessWaveGameTime)
-        {
-            return;
-        }
-
-        _endlessEnemyCount = (int)_endlessEnemyCount;
-
-        _endlessWeightedList.Clear();
-
-        _endlessWeightedList.Add(EnemyType.Casual, _endlessCasualWeight);
-        _endlessWeightedList.Add(EnemyType.Fast, _endlessFastWeight);
-        _endlessWeightedList.Add(EnemyType.Tough, _endlessToughWeight);
-
-        var t = 4f;
-
-        for (var i = 0; i < _endlessEnemyCount; i++)
-        {
-            var enemyType = _endlessWeightedList.Next();
-            var speed = RandomSpeedForEnemyType(enemyType) * _endlessSpeedModifier;
-
-            Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(enemyType, inGameTime + t, speed, 1));
-
-            t += 4f;
-        }
-
-        _nextEndlessWaveGameTime = inGameTime + 12;
-        _endlessSpeedModifier = Mathf.Min(_endlessSpeedModifier + 0.05f, 2.25f);
-        _endlessEnemyCount += 0.20f;
-        _endlessCasualWeight = Mathf.Max(_endlessCasualWeight - 5, 1);
-        _endlessFastWeight = Mathf.Min(_endlessCasualWeight + 4, 1000);
-        _endlessToughWeight = Mathf.Min(_endlessCasualWeight + 2, 1000);
-
-        Debug.Log($"_endlessSpeedModifier: {_endlessSpeedModifier}");
-    }
-
     private float RandomSpeedForEnemyType(EnemyType enemyType)
     {
         switch (enemyType)
@@ -841,6 +804,7 @@ public class EnemyWavesControler : ProjectBehaviour
             Name = "[unknown]",
             Points = points,
             Flag = (Ladder.Flag)Game.GameType,
+            TimeInSeconds = timerScript.InGameTime,
         };
 
         if (ladderService.TryPost(
