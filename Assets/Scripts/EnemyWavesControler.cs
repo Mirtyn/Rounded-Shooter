@@ -92,7 +92,7 @@ public class EnemyWavesControler : ProjectBehaviour
             _endlessWeightedList2.Add(EnemyType.Casual, _endlessCasualWeight);
             _endlessWeightedList2.Add(EnemyType.Fast, _endlessFastWeight);
             _endlessWeightedList2.Add(EnemyType.Tough, _endlessToughWeight);
-            //_endlessWeightedList2.Add(EnemyType.SpawnerBoss, _endlessSpawnerBossWeight);
+            _endlessWeightedList2.Add(EnemyType.SpawnerBoss, _endlessSpawnerBossWeight);
 
             BuildEndlessWave(8f);
         }
@@ -175,7 +175,9 @@ public class EnemyWavesControler : ProjectBehaviour
         _endlessWeightedList2[EnemyType.Casual] = Mathf.Max(_endlessWeightedList2[EnemyType.Casual] - 5, 500);
         _endlessWeightedList2[EnemyType.Fast] = Mathf.Min(_endlessWeightedList2[EnemyType.Fast] + 10, 1000);
         _endlessWeightedList2[EnemyType.Tough] = Mathf.Min(_endlessWeightedList2[EnemyType.Tough] + 2, 1000);
-        //_endlessWeightedList2[EnemyType.SpawnerBoss] = (int)Mathf.Floor(Mathf.Min(_endlessWeightedList2[EnemyType.SpawnerBoss] + 0.125f, 20f));
+        _endlessWeightedList2[EnemyType.SpawnerBoss] = (int)Mathf.Floor(Mathf.Min(_endlessWeightedList2[EnemyType.SpawnerBoss] + 0.125f, 20f));
+
+        Debug.Log($"SpawnerBoss Weight: {_endlessWeightedList2[EnemyType.SpawnerBoss]}");
 
         //_endlessCasualWeight = Mathf.Max(_endlessCasualWeight - 20, 500);
         //_endlessFastWeight = Mathf.Min(_endlessCasualWeight + 50, 1000);
