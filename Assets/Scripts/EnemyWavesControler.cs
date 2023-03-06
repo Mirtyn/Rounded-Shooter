@@ -32,11 +32,12 @@ public class EnemyWavesControler : ProjectBehaviour
     private float _endlessSpeedModifier = 0.30f;
     private float _endlessEnemyCount = 3;
     private WeightedList<EnemyType> _endlessWeightedList = new WeightedList<EnemyType>();
-    //private WeightedCollection<EnemyType> _endlessWeightedCollection = new WeightedCollection<EnemyType>();
+    private WeightedList2<EnemyType> _endlessWeightedList2 = new WeightedList2<EnemyType>();
 
     private int _endlessCasualWeight = 1000;
-    private int _endlessFastWeight = 100;
-    private int _endlessToughWeight = 10;
+    private int _endlessFastWeight = 50;
+    private int _endlessToughWeight = 0;
+    private int _endlessSpawnerBossWeight = 0;
 
     private float _endlessCasualMinSpeed = 0.8f;
     private float _endlessCasualMaxSpeed = 1.2f;
@@ -46,6 +47,8 @@ public class EnemyWavesControler : ProjectBehaviour
 
     private float _endlessToughMinSpeed = 0.45f;
     private float _endlessToughMaxSpeed = 0.55f;
+
+    private float _endlessWaveDuration = 12f;
 
     private TimedSpawner _timedSpawner = new TimedSpawner();
 
@@ -86,6 +89,11 @@ public class EnemyWavesControler : ProjectBehaviour
         }
         else // endless
         {
+            _endlessWeightedList2.Add(EnemyType.Casual, _endlessCasualWeight);
+            _endlessWeightedList2.Add(EnemyType.Fast, _endlessFastWeight);
+            _endlessWeightedList2.Add(EnemyType.Tough, _endlessToughWeight);
+            //_endlessWeightedList2.Add(EnemyType.SpawnerBoss, _endlessSpawnerBossWeight);
+
             BuildEndlessWave(8f);
         }
 
@@ -94,7 +102,7 @@ public class EnemyWavesControler : ProjectBehaviour
 
     private void BuildEndlessWave(float inGameTime)
     {
-        BuildEndlessWave1(inGameTime);
+        BuildEndlessWave2(inGameTime);
     }
 
     private void BuildEndlessWave1(float inGameTime)
@@ -130,6 +138,48 @@ public class EnemyWavesControler : ProjectBehaviour
         _endlessCasualWeight = Mathf.Max(_endlessCasualWeight - 5, 1);
         _endlessFastWeight = Mathf.Min(_endlessCasualWeight + 4, 1000);
         _endlessToughWeight = Mathf.Min(_endlessCasualWeight + 2, 1000);
+
+        //Debug.Log($"_endlessSpeedModifier: {_endlessSpeedModifier}");
+    }
+
+    private void BuildEndlessWave2(float inGameTime)
+    {
+        if (inGameTime < _nextEndlessWaveGameTime)
+        {
+            if(Game.EnemyManager.AreAllDead())
+            {
+                _nextEndlessWaveGameTime = Mathf.Min(_nextEndlessWaveGameTime, inGameTime + 1f);
+            }
+            return;
+        }
+
+        var count = (int)Mathf.Floor(_endlessEnemyCount);
+
+        var t = 4f;
+
+        for (var i = 0; i < count; i++)
+        {
+            var enemyType = _endlessWeightedList2.Next();
+            var speed = RandomSpeedForEnemyType(enemyType) * _endlessSpeedModifier;
+
+            Game.EnemyManager.Enemies.AddRange(_timedSpawner.Build(enemyType, inGameTime + t, speed, 1));
+
+            t += 4f;
+        }
+
+        _nextEndlessWaveGameTime = inGameTime + Mathf.Ceil(_endlessWaveDuration);
+        _endlessSpeedModifier = Mathf.Min(_endlessSpeedModifier + 0.0125f, 2.25f);
+        _endlessWaveDuration = Mathf.Max(_endlessWaveDuration - 0.0125f, 8f);
+        _endlessEnemyCount += 0.05f;
+
+        _endlessWeightedList2[EnemyType.Casual] = Mathf.Max(_endlessWeightedList2[EnemyType.Casual] - 5, 500);
+        _endlessWeightedList2[EnemyType.Fast] = Mathf.Min(_endlessWeightedList2[EnemyType.Fast] + 10, 1000);
+        _endlessWeightedList2[EnemyType.Tough] = Mathf.Min(_endlessWeightedList2[EnemyType.Tough] + 2, 1000);
+        //_endlessWeightedList2[EnemyType.SpawnerBoss] = (int)Mathf.Floor(Mathf.Min(_endlessWeightedList2[EnemyType.SpawnerBoss] + 0.125f, 20f));
+
+        //_endlessCasualWeight = Mathf.Max(_endlessCasualWeight - 20, 500);
+        //_endlessFastWeight = Mathf.Min(_endlessCasualWeight + 50, 1000);
+        //_endlessToughWeight = Mathf.Min(_endlessCasualWeight + 20, 1000);
 
         //Debug.Log($"_endlessSpeedModifier: {_endlessSpeedModifier}");
     }
@@ -724,15 +774,6 @@ public class EnemyWavesControler : ProjectBehaviour
 
         CheckForGameEnding();
     }
-
-    //void CheckForBossSpawn()
-    //{
-    //    if (timerScript.InGameTime >= 140 && BossSpawned == false)
-    //    {
-    //        BossSpawned = true;
-    //        Instantiate(boss, new Vector3(0f, 0f, 5), Quaternion.identity);
-    //    }
-    //}
 
     void SpawnEnemies()
     {

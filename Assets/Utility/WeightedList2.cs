@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Assets.Models.WeightErrorHandlingType;
 
 namespace Assets.Models
 {
@@ -14,13 +15,13 @@ namespace Assets.Models
     /// O(n) CRUD complexity. In other words, you can add any item of type T to a List with an integer weight,
     /// and get a random item from the list with probability ( weight / sum-weights ).
     /// </summary>
-    public class WeightedList<T> : IEnumerable<T>
+    public class WeightedList2<T> : IEnumerable<T>
     {
         /// <summary>
         /// Create a new WeightedList with an optional System.Random.
         /// </summary>
         /// <param name="rand"></param>
-        public WeightedList(System.Random rand = null)
+        public WeightedList2(System.Random rand = null)
         {
             _rand = rand ?? new System.Random();
         }
@@ -28,7 +29,7 @@ namespace Assets.Models
         /// <summary>
         /// Create a WeightedList with the provided items and an optional System.Random.
         /// </summary>
-        public WeightedList(ICollection<WeightedListItem<T>> listItems, System.Random rand = null)
+        public WeightedList2(ICollection<WeightedListItem<T>> listItems, System.Random rand = null)
         {
             _rand = rand ?? new System.Random();
             foreach (WeightedListItem<T> item in listItems)
@@ -39,7 +40,7 @@ namespace Assets.Models
             Recalculate();
         }
 
-        public WeightErrorHandlingType BadWeightErrorHandling { get; set; } = WeightErrorHandlingType.SetWeightToOne;
+        public WeightErrorHandlingType BadWeightErrorHandling { get; set; } = SetWeightToOne;
 
         public T Next()
         {
@@ -52,8 +53,9 @@ namespace Assets.Models
 
         public void AddWeightToAll(int weight)
         {
-            if (weight + _minWeight <= 0 && BadWeightErrorHandling == WeightErrorHandlingType.ThrowExceptionOnAdd)
-                throw new ArgumentException($"Subtracting {-1 * weight} from all items would set weight to non-positive for at least one element.");
+            //if (weight + _minWeight <= 0 && BadWeightErrorHandling == ThrowExceptionOnAdd)
+            //    throw new ArgumentException($"Subtracting {-1 * weight} from all items would set weight to non-positive for at least one element.");
+
             for (int i = 0; i < Count; i++)
             {
                 _weights[i] = FixWeight(_weights[i] + weight);
@@ -65,7 +67,7 @@ namespace Assets.Models
 
         public void SetWeightOfAll(int weight)
         {
-            if (weight <= 0 && BadWeightErrorHandling == WeightErrorHandlingType.ThrowExceptionOnAdd) throw new ArgumentException("Weight cannot be non-positive.");
+            //if (weight <= 0 && BadWeightErrorHandling == ThrowExceptionOnAdd) throw new ArgumentException("Weight cannot be non-positive.");
             for (int i = 0; i < Count; i++) _weights[i] = FixWeight(weight);
             Recalculate();
         }
@@ -90,6 +92,11 @@ namespace Assets.Models
 
         public void Add(T item, int weight)
         {
+            //if(weight == 0)
+            //{
+            //    return;
+            //}
+
             _list.Add(item);
             _weights.Add(FixWeight(weight));
             Recalculate();
@@ -137,7 +144,11 @@ namespace Assets.Models
             Recalculate();
         }
 
-        public T this[int index] => _list[index];
+        public int this[T item]
+        {
+            get { return GetWeightAtIndex(IndexOf(item)); }
+            set { SetWeightAtIndex(IndexOf(item), FixWeight(value)); }
+        }
 
         public int Count => _list.Count;
 
@@ -278,6 +289,31 @@ namespace Assets.Models
         // Throw an exception when adding a bad weight.
         internal static int FixWeightExceptionOnAdd(int weight) => (weight <= 0) ? throw new ArgumentException("Weight cannot be non-positive") : weight;
 
-        private int FixWeight(int weight) => (BadWeightErrorHandling == WeightErrorHandlingType.ThrowExceptionOnAdd) ? FixWeightExceptionOnAdd(weight) : FixWeightSetToOne(weight);
+        private int FixWeight(int weight) => (BadWeightErrorHandling == ThrowExceptionOnAdd) ? FixWeightExceptionOnAdd(weight) : FixWeightSetToOne(weight);
     }
+
+    /// <summary>
+    /// A single item for a list with matching T. Create one or more WeightedListItems, add to a Collection
+    /// and Add() to the WeightedList for a single calculation pass.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public readonly struct WeightedListItem<T>
+    {
+        internal readonly T _item;
+        internal readonly int _weight;
+
+        public WeightedListItem(T item, int weight)
+        {
+            _item = item;
+            _weight = weight;
+        }
+    }
+
+    public enum WeightErrorHandlingType
+    {
+        SetWeightToOne, // Default
+        ThrowExceptionOnAdd, // Throw exception for adding non-positive weight.
+        AllowZeroWeight,
+    }
+
 }
