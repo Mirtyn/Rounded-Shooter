@@ -69,7 +69,7 @@ public class ShopScript : ProjectBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            EscapePressedCooldown = 0.1f;
+            EscapePressedCooldown = 0.25f;
             ExitShopButtonPressed();
         }
 

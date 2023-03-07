@@ -9,6 +9,7 @@ public class PlayerScript : ProjectBehaviour
 
     [SerializeField] GameObject BombExplode;
     [SerializeField] GameObject playerDeathParticle;
+    [SerializeField] GameObject pausePanel;
 
     //[SerializeField] PlayerData playerData;
     [SerializeField] GameObject enemiesHolder;
@@ -36,11 +37,19 @@ public class PlayerScript : ProjectBehaviour
     {
         if (Game.PlayerData.ShopOpened == false)
         {
-            if (shopScript.EscapePressedCooldown <= 0)
+            if (shopScript.EscapePressedCooldown <= 0 || Game.IsPaused == true)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    SceneManager.LoadScene(0);
+                    if (Game.IsPaused == false)
+                    {
+                        PauseGame();
+                        shopScript.EscapePressedCooldown = 0f;
+                    }
+                    else
+                    {
+                        ResumeGame();
+                    }
                 }
             }
         }
@@ -117,13 +126,15 @@ public class PlayerScript : ProjectBehaviour
 
     public void PauseGame()
     {
-        Game.IsPaused = true;
         Time.timeScale = 0f;
+        Game.IsPaused = true;
+        pausePanel.SetActive(true);
     }
 
     public void ResumeGame()
     {
+        Time.timeScale = 1f;
         Game.IsPaused = false;
-        Time.timeScale = GameSpeed;
+        pausePanel.SetActive(false);
     }
 }
