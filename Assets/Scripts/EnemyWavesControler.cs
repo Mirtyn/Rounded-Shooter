@@ -28,7 +28,7 @@ public class EnemyWavesControler : ProjectBehaviour
 
     private bool _hasSubmitedScore = false;
 
-    private long _nextSpawnerBossGamePoints = 400000;
+    private long _nextSpawnerBossGamePoints = 300000;
     private long _nextSpawnerBossGamePointsOffset = 100000;
     private float _nextEndlessWaveGameTime = 0f;
     private float _endlessSpeedModifier = 0.30f;
@@ -177,7 +177,7 @@ public class EnemyWavesControler : ProjectBehaviour
         _nextEndlessWaveGameTime = inGameTime + Mathf.Ceil(_endlessWaveDuration);
         _endlessSpeedModifier = Mathf.Min(_endlessSpeedModifier + 0.0125f, 2.25f);
         _endlessWaveDuration = Mathf.Max(_endlessWaveDuration - 0.0125f, 8f);
-        _endlessEnemyCount += 0.05f;
+        _endlessEnemyCount += 0.075f;
 
         _endlessWeightedList2[EnemyType.Casual] = Mathf.Max(_endlessWeightedList2[EnemyType.Casual] - 5, 500);
         _endlessWeightedList2[EnemyType.Fast] = Mathf.Min(_endlessWeightedList2[EnemyType.Fast] + 10, 1000);

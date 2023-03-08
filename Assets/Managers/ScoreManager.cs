@@ -88,7 +88,7 @@ public class ScoreManager
             case GameType.Master:
                 return 50;
             case GameType.Endless:
-                return 200;
+                return 1000;
             default:
                 return 0;
         }
