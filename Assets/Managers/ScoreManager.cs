@@ -21,7 +21,7 @@ public class ScoreManager
     {
         var timescore = (long)((time - Starttime) * TimeScoreMultiplier(gameType));
 
-        var goldscore = (long)((gold) * 1000f);
+        var goldscore = gameType == GameType.Endless ? 0 : (long)((gold) * 1000f);
 
         CurrentScore = timescore + KillScore + goldscore;
 
@@ -41,7 +41,7 @@ public class ScoreManager
             case GameType.Master:
                 return 250f;
             case GameType.Endless:
-                return 100f;
+                return 250f;
             default:
                 return 0f;
         }
@@ -88,7 +88,7 @@ public class ScoreManager
             case GameType.Master:
                 return 50;
             case GameType.Endless:
-                return 20;
+                return 200;
             default:
                 return 0;
         }
@@ -107,7 +107,7 @@ public class ScoreManager
             case GameType.Master:
                 return 2500;
             case GameType.Endless:
-                return 1000;
+                return 5000;
             default:
                 return 0;
         }

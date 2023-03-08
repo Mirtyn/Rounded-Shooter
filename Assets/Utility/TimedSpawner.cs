@@ -20,6 +20,11 @@ namespace Assets.Models
 
 		public IEnumerable<Enemy> Build(EnemyType enemyType, float arrivaltime, float speed, int count = 1)
         {
+			if (enemyType == EnemyType.SpawnerBoss)
+			{
+				return new[] { Build(enemyType, new Vector3(0, 0, 5), arrivaltime, speed) };
+			}
+
 			var radius = Radius;
 
 			var time = radius / speed;
@@ -30,14 +35,16 @@ namespace Assets.Models
 				radius = time * speed;
 			}
 
-			for(var c = 0; c < count; c++)
+			var spawns = new Enemy[count];
+
+			for (var c = 0; c < count; c++)
             {
 				var radians = (float)random.NextDouble() * MathF.PI * 2f;
 
 				var x = MathF.Cos(radians) * radius;
 				var z = MathF.Sin(radians) * radius;
 
-				yield return new Enemy
+				spawns[c] = new Enemy
 				{
 					EnemyType = enemyType,
 					Speed = speed,
@@ -46,21 +53,20 @@ namespace Assets.Models
 					StartTime = arrivaltime - time,
 				};
 			}
+
+			return spawns;
 		}
 
-        public IEnumerable<Enemy> Build(EnemyType enemyType, Vector3 position, float starttime, float speed, int count = 1)
+        public Enemy Build(EnemyType enemyType, Vector3 position, float starttime, float speed)
         {
-            for (var c = 0; c < count; c++)
+            return new Enemy
             {
-                yield return new Enemy
-                {
-                    EnemyType = enemyType,
-                    Speed = speed,
-                    IsAlive = true,
-                    Position = position,
-                    StartTime = starttime,
-                };
-            }
+                EnemyType = enemyType,
+                Speed = speed,
+                IsAlive = true,
+                Position = position,
+                StartTime = starttime,
+            };
         }
     }
 }

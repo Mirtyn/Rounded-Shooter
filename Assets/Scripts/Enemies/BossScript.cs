@@ -48,18 +48,8 @@ public class BossScript : EnemyScript
 
         maxSummonCooldown = 10 - (timeAliveScinceSpawn / 17);
 
-        //if (playerScript.IsDead == false)
-        //{
-        //    direction.x = (target.position.x - transform.position.x);
-        //    direction.z = (target.position.z - transform.position.z);
-        //    rotGoal = Quaternion.LookRotation(direction);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
-        //}
-
         if (rndCooldown <= 0)
         {
-            //Debug.Log("BossScript.Update(): " + rndCooldown);
-
             rndCooldown = 2.0f;
             BossMovementOptions();
             BossSpawnEnemies();
@@ -187,7 +177,7 @@ public class BossScript : EnemyScript
                     //Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
                 }
 
-                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, transform.position + right * offset, 0, 0.50f, 1));
+                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Fast, transform.position + right * offset, 0, 0.50f));
             }
             else if (rnd <= 75)
             {
@@ -204,7 +194,7 @@ public class BossScript : EnemyScript
                     //Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
                 }
 
-                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, transform.position + right * offset, 0, 0.30f, 1));
+                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Casual, transform.position + right * offset, 0, 0.30f));
             }
             else
             {
@@ -221,7 +211,7 @@ public class BossScript : EnemyScript
                     //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
                 }
 
-                Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, transform.position + right * offset, 0, 0.25f, 1));
+                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Tough, transform.position + right * offset, 0, 0.25f));
             }
         }
         
