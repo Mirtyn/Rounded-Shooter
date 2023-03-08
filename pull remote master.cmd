@@ -1,2 +1,2 @@
-git pull https://github.com/Mirtyn/Rounded-Shooter master
+git pull origin master
 PAUSE
