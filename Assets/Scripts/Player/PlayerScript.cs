@@ -35,6 +35,11 @@ public class PlayerScript : ProjectBehaviour
 
     void Update()
     {
+        if (!Game.IsPaused)
+        {
+            Time.timeScale = GameSpeed;
+        }
+        
         if (Game.PlayerData.ShopOpened == false)
         {
             if (shopScript.EscapePressedCooldown <= 0 || Game.IsPaused == true)

@@ -46,7 +46,7 @@ public class BossScript : EnemyScript
     {
         timeAliveScinceSpawn += Time.deltaTime;
 
-        maxSummonCooldown = 10 - (timeAliveScinceSpawn / 17);
+        maxSummonCooldown = 10 - (timeAliveScinceSpawn / 20);
 
         if (rndCooldown <= 0)
         {
@@ -78,9 +78,9 @@ public class BossScript : EnemyScript
 
         rnd = Random.Range(0f, 100f);
 
-        if (teleportCooldown <= 0f && rnd <= 50f)
+        if (teleportCooldown <= 0f && rnd <= 70f)
         {
-            teleportCooldown = 2f;
+            teleportCooldown = Random.Range(3f, 5.5f);
 
             rnd = Random.Range(0f, 100f);
 
@@ -211,7 +211,7 @@ public class BossScript : EnemyScript
                     //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
                 }
 
-                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Tough, transform.position + right * offset, 0, 0.25f));
+                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Tough, transform.position + right * offset, 0, 0.2f));
             }
         }
         

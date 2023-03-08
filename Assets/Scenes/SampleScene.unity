@@ -207,6 +207,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d28635d7615e843bc2dc086f6a63bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &212829591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6890753763783051880, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
+  m_PrefabInstance: {fileID: 6890753765428857592}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d0e25c286336e42b9be40360397dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &304656629 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6460138935172725197, guid: a8a95bd93daf64a43b69f7646c69edd2, type: 3}
@@ -247,6 +258,11 @@ GameObject:
 Camera:
   m_CorrespondingSourceObject: {fileID: 1574647713453476591, guid: 4f88f7ab58230684bb224fa4435ed0c6, type: 3}
   m_PrefabInstance: {fileID: 1574647713334536092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1028372672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6644212998386657087, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+  m_PrefabInstance: {fileID: 8341553856631604780}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1866228453 stripped
 GameObject:
@@ -597,6 +613,10 @@ PrefabInstance:
       propertyPath: enemiesHolder
       value: 
       objectReference: {fileID: 557510458}
+    - target: {fileID: 6890753763783051880, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
+      propertyPath: submitButtonPanel
+      value: 
+      objectReference: {fileID: 1028372672}
     - target: {fileID: 6890753763783051881, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -715,6 +735,10 @@ PrefabInstance:
       propertyPath: goldScript
       value: 
       objectReference: {fileID: 304656629}
+    - target: {fileID: 2679240425033939487, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: enemyWavesControler
+      value: 
+      objectReference: {fileID: 212829591}
     - target: {fileID: 8341553857047082885, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
       propertyPath: m_Camera
       value: 

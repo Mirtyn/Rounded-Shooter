@@ -19,6 +19,7 @@ public class EnemyWavesControler : ProjectBehaviour
     [SerializeField] GameObject boss;
 
     [SerializeField] GameObject finsishPanel;
+    [SerializeField] GameObject submitButtonPanel;
 
     //List<Wave> Waves = new List<Wave>();
 
@@ -231,15 +232,15 @@ public class EnemyWavesControler : ProjectBehaviour
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3, 2f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 6, 2f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 6.75f, 2f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 7, 0.9f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 10, 0.9f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 12, 0.9f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 13, 2f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 16, 1f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20, 2f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 20, 2f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 24, 0.55f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 14, 2f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 19, 0.55f * speedmofifier, 1));
 
-        time = 80f;
+        time = 75f;
 
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 2, 0.8f * speedmofifier, 1));
@@ -253,17 +254,17 @@ public class EnemyWavesControler : ProjectBehaviour
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3f, 1.8f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 3f, 0.45f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 3f, 0.9f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 5f, 0.9f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 5.5f, 1f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 6f, 1.55f * speedmofifier, 2));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 7.75f, 1.55f * speedmofifier, 1));
 
         time = 108f;
         speedmofifier += 0.15f * speedmofifier;
 
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 3, 0.8f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 4, 0.45f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 6, 0.9f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 5, 0.45f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 7.5f, 0.9f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 9, 1f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 12, 1.55f * speedmofifier, 1));
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 13.5f, 0.5f * speedmofifier, 1));
@@ -275,20 +276,21 @@ public class EnemyWavesControler : ProjectBehaviour
         speedmofifier += 0.35f * speedmofifier;
 
         Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time, 1f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 1, 0.8f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 1, 1.75f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 3, 0.5f * speedmofifier, 2));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 4, 1f * speedmofifier, 2));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 3, 0.8f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 5, 1.75f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 7, 0.5f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 10, 1f * speedmofifier, 2));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 12, 0.5f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 5, 0.85f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 5.5f, 1.75f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 7.5f, 1f * speedmofifier, 1));
         //Game.EnemyManager.TimedEnemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 8.5f, 1.8f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 10, 0.55f * speedmofifier, 2));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 13, 1.1f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 14, 1f * speedmofifier, 1));
-        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 16, 1.55f * speedmofifier, 2));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Tough, time + 15, 0.55f * speedmofifier, 2));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 18, 1.1f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Casual, time + 19, 1f * speedmofifier, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.Fast, time + 22, 1.55f * speedmofifier, 2));
 
-        //Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, time + 10, 1f, 1));
+        Game.EnemyManager.Enemies.AddRange(timedSpawner.Build(EnemyType.SpawnerBoss, time + 26, 1f, 1));
     }
 
     public void BuildMediumEnemyWaves(float basetime, float speedmofifier, int additionalWavesCount)
@@ -811,9 +813,10 @@ public class EnemyWavesControler : ProjectBehaviour
     {
         if(Game.GameType == GameType.Endless)
         {
-            if (Game.PlayerData.IsDead && !_hasSubmitedScore)
+            if (Game.PlayerData.IsDead )//&& !_hasSubmitedScore)
             {
-                SubmitButtonPressed();
+                submitButtonPanel.SetActive(true);
+                //SubmitButtonPressed();
             }
 
             return;
@@ -824,15 +827,16 @@ public class EnemyWavesControler : ProjectBehaviour
             timerScript.KeepTrackOfTime = false;
 
             finsishPanel.SetActive(true);
+            submitButtonPanel.SetActive(true);
 
-            if (!Game.PlayerData.IsDead && !_hasSubmitedScore)
-            {
-                SubmitButtonPressed();
-            }
+            //if (!Game.PlayerData.IsDead && !_hasSubmitedScore)
+            //{
+            //    SubmitButtonPressed();
+            //}
         }
     }
 
-    public void SubmitButtonPressed()
+    public void SubmitButtonPressed(string name)
     {
         var version = GameManager.Version;
 
@@ -844,7 +848,7 @@ public class EnemyWavesControler : ProjectBehaviour
 
         var entry = new Ladder.Entry
         {
-            Name = "[unknown]",
+            Name = name,
             Points = points,
             Flag = (Ladder.Flag)Game.GameType,
             TimeInSeconds = timerScript.InGameTime,
