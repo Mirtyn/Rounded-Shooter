@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -736,6 +736,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 304656629}
     - target: {fileID: 2679240425033939487, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+      propertyPath: nameText
+      value: 
+      objectReference: {fileID: 8341553856631604781}
+    - target: {fileID: 2679240425033939487, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
       propertyPath: enemyWavesControler
       value: 
       objectReference: {fileID: 212829591}
@@ -841,6 +845,17 @@ PrefabInstance:
       objectReference: {fileID: 192125736}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+--- !u!114 &8341553856631604781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3882326539622328687, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
+  m_PrefabInstance: {fileID: 8341553856631604780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8341553856631604782 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 274325681034839574, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}

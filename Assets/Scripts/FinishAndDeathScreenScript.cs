@@ -8,21 +8,30 @@ using UnityEngine.UI;
 public class FinishAndDeathScreenScript : ProjectBehaviour
 {
     [SerializeField] GameObject submitPanel;
-    [SerializeField] TMP_Text nameText;
+    [SerializeField] TMP_InputField nameText;
     [SerializeField] Button submitForRealButton;
     [SerializeField] Button submitButton;
     [SerializeField] EnemyWavesControler enemyWavesControler;
+    //string startString;
+
+    //void Start()
+    //{
+    //    startString = nameText.text;
+    //}
 
     void Update()
     {
-        if (nameText.text == "")
-        {
-            submitForRealButton.interactable = false;
-        }
-        else
-        {
-            submitForRealButton.interactable = true;
-        }
+        //if (nameText.text == startString)
+        //{
+        //    submitForRealButton.interactable = false;
+        //}
+        //else
+        //{
+        //    submitForRealButton.interactable = true;
+        //}
+
+        //submitForRealButton.interactable = nameText.text != startString;
+        submitForRealButton.interactable = nameText.text.Length >= 2;
     }
 
     public void RestartScene()
