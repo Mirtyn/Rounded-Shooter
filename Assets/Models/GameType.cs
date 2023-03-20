@@ -13,6 +13,6 @@ namespace Assets.Models
         Medium,
         Hard,
         Endless,
-        Master,
+        //Master,
     }
 }

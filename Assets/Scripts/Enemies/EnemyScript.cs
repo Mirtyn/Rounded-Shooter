@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EnemyScript : ProjectBehaviour
+internal class EnemyScript : AnimatedTransform
 {
     public float Speed = 0.9f;
 
@@ -12,9 +12,14 @@ public class EnemyScript : ProjectBehaviour
 
     [SerializeField] protected GoldScript goldScript;
     [SerializeField] protected GameObject deathParticle;
-    [SerializeField] GameObject eye_1;
-    [SerializeField] GameObject eye_2;
+    [SerializeField] protected GameObject eye_1;
+    [SerializeField] protected GameObject eye_2;
     [SerializeField] protected PlayerScript playerScript;
+    [SerializeField] protected GameObject hitParticle;
+
+    protected float _onHitByArrowRotation = -3f;
+
+    private float _initialY;
 
     Transform target;
     //float turnSpeed = 1f;
@@ -27,22 +32,33 @@ public class EnemyScript : ProjectBehaviour
 
     GameObject Player;
 
+    public float DifficultyModifier { get; internal set; } = 1f;
+
     public EnemyScript(float speed = 1f)
     {
         Speed = speed;
     }
 
-    public void Start()
+    protected virtual void Start()
     {
         goldScript = FindObjectOfType<GoldScript>();
         Player = GameObject.FindGameObjectWithTag("MyPlayer");
         playerScript = FindObjectOfType<PlayerScript>();
         target = playerScript.transform;
 
+        _initialY = transform.position.y;
+
         RotateTowardsPlayer(1);
     }
 
-    public void RotateTowardsPlayer(float time)
+    protected override void Update()
+    {
+        base.Update();
+
+        transform.position = new Vector3(transform.position.x, _initialY, transform.position.z);
+    }
+
+    protected void RotateTowardsPlayer(float time)
     {
         direction.x = (target.position.x - transform.position.x);
         direction.z = (target.position.z - transform.position.z);
@@ -52,7 +68,34 @@ public class EnemyScript : ProjectBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, time);
     }
 
-    public void OnDeath()
+    protected virtual void OnHitByArrow()
+    {
+        HP--;
+
+        if (HP == 0)
+        {
+            OnDeath();
+
+            return;
+        }
+        else
+        {
+            RotateAddReturn(_onHitByArrowRotation, 0, 0, 0.05f, 0.20f);
+
+            Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
+        }
+
+        TurnEyesRed();
+
+        Invoke("TurnWhiteEyes", 0.5f);
+    }
+
+    public virtual void OnHitByBomb()
+    {
+        OnDeath();
+    }
+
+    protected virtual void OnDeath()
     {
         HP = 0;
 

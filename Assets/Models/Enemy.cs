@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Models
 {
-	public class Enemy
+    internal class Enemy
 	{
 		public EnemyType EnemyType;
 
@@ -25,18 +25,20 @@ namespace Assets.Models
 
         public GameObject GameObject { get; set; }
 
-        public float Height
-        {
-			get
-            {
-                switch(EnemyType)
-                {
-                    case EnemyType.Fast:
-                        return 0.5f;
-                    default:
-                        return 0.6f;
-                }
-            }
-        }
+        public float DifficultyModifier { get; set; } = 1f;
+
+   //     public float Height
+   //     {
+			//get
+   //         {
+   //             switch(EnemyType)
+   //             {
+   //                 case EnemyType.Fast:
+   //                     return 0.5f;
+   //                 default:
+   //                     return 0.6f;
+   //             }
+   //         }
+   //     }
 	}
 }

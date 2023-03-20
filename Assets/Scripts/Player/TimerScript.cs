@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimerScript : ProjectBehaviour
+internal class TimerScript : ProjectBehaviour
 {
     public float InGameTime;
 

@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyManager
+internal class EnemyManager
 {
+    public TimedSpawner Spawner { get; set; } = new TimedSpawner();
+
     public List<Enemy> Enemies { get; set; } = new List<Enemy>();
 
     public void Reset()

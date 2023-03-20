@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CasualEnemyScript : EnemyScript
+internal class CasualEnemyScript : EnemyScript
 {
-    //[SerializeField] PlayerScript playerScript;
-
     [SerializeField] GameObject body;
-    [SerializeField] GameObject hitParticle;
 
     public CasualEnemyScript()
         : base(0.9f)
@@ -17,15 +14,15 @@ public class CasualEnemyScript : EnemyScript
         HP = 3;
     }
 
-    new void Start()
+    protected override void Start()
     {
         base.Start();
-
-        //playerScript = FindObjectOfType<PlayerScript>();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (Game.PlayerData.IsDead == false)
         {
             Vector3 translation;
@@ -35,7 +32,7 @@ public class CasualEnemyScript : EnemyScript
             //rotGoal = Quaternion.LookRotation(direction);
             //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
 
-            RotateTowardsPlayer(1f);
+            //RotateTowardsPlayer(1f);
 
             translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 
@@ -48,35 +45,22 @@ public class CasualEnemyScript : EnemyScript
         switch (collision.gameObject.tag)
         {
             case "Arrow":
-                HitByArrow();
+                OnHitByArrow();
                 break;
             case "Bomb":
-                HitByBomb();
+                OnHitByBomb();
                 break;
             case "MyPlayer":
-                playerScript.Death();
+                playerScript.OnDeath();
                 break;
             default:
                 break;
         }
     }
 
-    void HitByArrow()
+    protected override void OnHitByArrow()
     {
-        HP--;
-
-        if (HP == 0)
-        {
-            OnDeath();
-        }
-        else
-        {
-            Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
-        }
-
-        TurnEyesRed();
-
-        Invoke("TurnWhiteEyes", 0.5f);
+        base.OnHitByArrow();
 
         switch (HP)
         {
@@ -88,10 +72,4 @@ public class CasualEnemyScript : EnemyScript
                 break;
         }
     }
-
-    public void HitByBomb()
-    {
-        OnDeath();
-    }
-
 }

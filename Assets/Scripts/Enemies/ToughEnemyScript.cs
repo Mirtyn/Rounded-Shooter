@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToughEnemyScript : EnemyScript
+internal class ToughEnemyScript : EnemyScript
 {
     [SerializeField] GameObject body;
-    [SerializeField] GameObject hitParticle;
 
     public ToughEnemyScript()
         : base(0.55f)
@@ -14,18 +13,20 @@ public class ToughEnemyScript : EnemyScript
         HP = 6;
     }
 
-    new void Start()
+    protected override void Start()
     {
         base.Start();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (Game.PlayerData.IsDead == false)
         {
             Vector3 translation;
 
-            RotateTowardsPlayer(1f);
+            //RotateTowardsPlayer(1f);
 
             //direction.x = (target.position.x - transform.position.x);
             //direction.z = (target.position.z - transform.position.z);
@@ -43,13 +44,13 @@ public class ToughEnemyScript : EnemyScript
         switch (collision.gameObject.tag)
         {
             case "Arrow":
-                HitByArrow();
+                OnHitByArrow();
                 break;
             case "Bomb":
-                HitByBomb();
+                OnHitByBomb();
                 break;
             case "MyPlayer":
-                playerScript.Death();
+                playerScript.OnDeath();
                 break;
             default:
                 break;
@@ -57,22 +58,9 @@ public class ToughEnemyScript : EnemyScript
         }
     }
 
-    void HitByArrow()
+    protected override void OnHitByArrow()
     {
-        HP--;
-
-        if (HP == 0)
-        {
-            OnDeath();
-        }
-        else
-        {
-            Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
-        }
-
-        TurnEyesRed();
-
-        Invoke("TurnWhiteEyes", 0.5f);
+        base.OnHitByArrow();
 
         switch (HP)
         {
@@ -92,10 +80,5 @@ public class ToughEnemyScript : EnemyScript
                 body.GetComponent<Renderer>().material.color = new Color(0.8f, 0f, 0f);
                 break;
         }
-    }
-
-    public void HitByBomb()
-    {
-        OnDeath();
     }
 }

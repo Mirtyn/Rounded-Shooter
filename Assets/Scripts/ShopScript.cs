@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class ShopScript : ProjectBehaviour
+internal class ShopScript : ProjectBehaviour
 {
     //[SerializeField] PlayerData PlayerData;
     [SerializeField] GoldScript goldScript;
@@ -36,21 +36,21 @@ public class ShopScript : ProjectBehaviour
 
     void Start()
     {
-        if (Game.GameType == Assets.Models.GameType.Master)
-        {
-            Game.PlayerData.IsDead = false;
-            Game.PlayerData.ShopOpened = false;
-            Game.PlayerData.ArrowSpeedLevel = 4;
-            Game.PlayerData.PlayerTurnSpeedLevel = 4;
-            Game.PlayerData.ShootingCooldownLevel = 4;
-            Game.PlayerData.Bombs = 5;
-            Game.PlayerData.MaxBombs = 0;
-            Game.PlayerData.HasForceField = false;
+        //if (Game.GameType == Assets.Models.GameType.Master)
+        //{
+        //    Game.PlayerData.IsDead = false;
+        //    Game.PlayerData.ShopOpened = false;
+        //    Game.PlayerData.ArrowSpeedLevel = 4;
+        //    Game.PlayerData.PlayerTurnSpeedLevel = 4;
+        //    Game.PlayerData.ShootingCooldownLevel = 4;
+        //    Game.PlayerData.Bombs = 5;
+        //    Game.PlayerData.MaxBombs = 0;
+        //    Game.PlayerData.HasForceField = false;
 
-            hUDScript.SetBombsOnScreen();
+        //    hUDScript.SetBombsOnScreen();
 
-            shopPannel.SetActive(false);
-        }
+        //    shopPannel.SetActive(false);
+        //}
     }
 
     void Update()

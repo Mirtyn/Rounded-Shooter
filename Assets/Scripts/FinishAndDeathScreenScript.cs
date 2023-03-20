@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
-public class FinishAndDeathScreenScript : ProjectBehaviour
+internal class FinishAndDeathScreenScript : ProjectBehaviour
 {
     [SerializeField] GameObject submitPanel;
     [SerializeField] TMP_InputField nameText;

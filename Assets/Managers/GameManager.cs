@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager
+internal class GameManager
 {
     public bool ClampY = false;
 
@@ -77,11 +77,7 @@ public class GameManager
     {
         IsPaused = false;
 
-        if (GameType != GameType.Master)
-        {
-            PlayerData.Reset();
-        }
-
+        PlayerData.Reset();
         EnemyManager.Reset();
         ScoreManager.Reset();
     }

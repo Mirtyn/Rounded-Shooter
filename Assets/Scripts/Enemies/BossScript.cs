@@ -3,12 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossScript : EnemyScript
+internal class BossScript : EnemyScript
 {
-    //[SerializeField] PlayerScript playerScript;
+    private enum Movement
+    {
+        North,
+        NorthEast,
+        East,
+        SouthEast,
+        South,
+        SouthWest,
+        West,
+        NorthWest,
+    }
 
     [SerializeField] GameObject body;
-    [SerializeField] GameObject hitParticle;
     [SerializeField] GameObject teleportParticle;
 
     float rnd;
@@ -20,9 +29,16 @@ public class BossScript : EnemyScript
     [SerializeField] GameObject bossThoughEnemy;
 
     float summonCooldown;
-    float maxSummonCooldown = 10f;
+    
+    float minSummonCooldown = 12f;
+    float maxSummonCooldown = 18f;
 
-    float timeAliveScinceSpawn = 1f;
+    float minTeleportCooldown = 8f;
+    float maxTeleportCooldown = 12f;
+
+    //float timeAliveScinceSpawn = 1f;
+
+    Movement Location = Movement.North;
 
     //float nextUpdateTime = 0f;
 
@@ -30,192 +46,119 @@ public class BossScript : EnemyScript
         : base(0f)
     {
         Description = "Boss";
-        HP = 50;
+        _onHitByArrowRotation = -2f;
     }
 
-    new void Start()
+    protected override void Start()
     {
         base.Start();
 
-        Debug.Log("BossScript.Start()");
-
+        HP = 12 + (int)(12f * DifficultyModifier);
         rndCooldown = 2f;
+        teleportCooldown = 0;// Random.Range(3f * DifficultyModifier, 5.5f * DifficultyModifier);
+
+        Debug.Log($"BossScript.Start() - DifficultyModifier: {DifficultyModifier}  - HP: {HP}");
     }
 
-    void Update()
+    protected override void Update()
     {
-        timeAliveScinceSpawn += Time.deltaTime;
+        base.Update();
 
-        maxSummonCooldown = 10 - (timeAliveScinceSpawn / 20);
+        teleportCooldown -= Time.deltaTime;
+        summonCooldown -= Time.deltaTime;
 
-        if (rndCooldown <= 0)
-        {
-            rndCooldown = 2.0f;
-            BossMovementOptions();
-            BossSpawnEnemies();
-        }
-
-        if (rndCooldown > 0)
-        {
-            rndCooldown -= Time.deltaTime;
-        }
-
-        if (teleportCooldown > 0)
-        {
-            teleportCooldown -= Time.deltaTime;
-        }
-
-        if (summonCooldown > 0)
-        {
-            summonCooldown -= Time.deltaTime;
-        }
+        BossMovementOptions();
+        BossSpawnEnemies();
     }
 
+    private float InverseDifficultyModifier
+    {
+        get { return 1f / DifficultyModifier; }
+    }
 
     void BossMovementOptions()
     {
-        //Debug.Log("BossMovementOptions");
-
-        rnd = Random.Range(0f, 100f);
-
-        if (teleportCooldown <= 0f && rnd <= 70f)
+        if (teleportCooldown > 0)
         {
-            teleportCooldown = Random.Range(3f, 5.5f);
+            return;
+        }
 
-            rnd = Random.Range(0f, 100f);
+        teleportCooldown = Random.Range(minTeleportCooldown * InverseDifficultyModifier, maxTeleportCooldown * InverseDifficultyModifier);
 
-            if (rnd > 0 && rnd <= 12.5)
+        Debug.Log($"teleportCooldown: {teleportCooldown}");
+
+        var location = Location;
+
+        while (location == Location)
+        {
+            location = (Movement)Random.Range(0, 7);
+        }
+
+        Location = location;
+
+        //Debug.Log($"Location: {Location}");
+
+            switch (Location)
             {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(0f, 0f, 5f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
+                case Movement.North:
+                    this.transform.position = new Vector3(0f, 0f, 5f);
+                    break;
+                case Movement.NorthEast:
+                    this.transform.position = new Vector3(5f, 0f, 4f);
+                    break;
+                case Movement.East:
+                    this.transform.position = new Vector3(6f, 0f, 0f);
+                    break;
+                case Movement.SouthEast:
+                    this.transform.position = new Vector3(5f, 0f, -4f);
+                    break;
+                case Movement.South:
+                    this.transform.position = new Vector3(0f, 0f, -5f);
+                    break;
+                case Movement.SouthWest:
+                    this.transform.position = new Vector3(-5f, 0f, -4f);
+                    break;
+                case Movement.West:
+                    this.transform.position = new Vector3(-6f, 0f, 0f);
+                    break;
+                default:
+                    this.transform.position = new Vector3(-5f, 0f, 4f);
+                    break;
             }
-            else if (rnd > 12.5 && rnd <= 25)
-            {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(5f, 0f, 4f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-            }
-            else if (rnd > 25 && rnd <= 37.5)
-            {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(6f, 0f, 0f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-            }
-            else if (rnd > 37.5 && rnd <= 50)
-            {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(5f, 0f, -4f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-            }
-            else if (rnd > 50 && rnd <= 62.5)
-            {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(0f, 0f, -5f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-            }
-            else if (rnd > 62.5 && rnd <= 75)
-            {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(-5f, 0f, -4f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-            }
-            else if (rnd > 75 && rnd <= 87.5)
-            {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(-6f, 0f, 0f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-            }
-            else if (rnd > 87.5 && rnd <= 100)
-            {
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-                this.transform.position = new Vector3(-5f, 0f, 4f);
-                RotateTowardsPlayer(1);
-                Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
-            }
-        }        
+
+            Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
+            RotateTowardsPlayer(1);
+            Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
+        //}
     }
 
     void BossSpawnEnemies()
     {
-        //return;
-
-        //Debug.Log("BossSpawnEnemies");
-
-        rnd = Random.Range(0f, 100f);
-
-        if (summonCooldown <= 0 && rnd <= 50)
+        if (summonCooldown > 0)
         {
-            var timedSpawner = new TimedSpawner();
-
-            summonCooldown = maxSummonCooldown;
-
-            rnd = Random.Range(0f, 100f);
-
-            Vector3 right = transform.right;
-            float offset;
-
-            if (rnd <= 40)
-            {
-                rnd = Random.Range(0f, 100f);
-
-                if (rnd < 50)
-                {
-                    offset = -3f;
-                    //Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
-                }
-                else
-                {
-                    offset = 3f;
-                    //Instantiate(bossFastEnemy, transform.position + right * offset, this.transform.rotation);
-                }
-
-                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Fast, transform.position + right * offset, 0, 0.50f));
-            }
-            else if (rnd <= 75)
-            {
-                rnd = Random.Range(0f, 100f);
-
-                if (rnd < 50)
-                {
-                    offset = -3f;
-                    //Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
-                }
-                else
-                {
-                    offset = 3f;
-                    //Instantiate(bossCasualEnemy, transform.position + right * offset, this.transform.rotation);
-                }
-
-                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Casual, transform.position + right * offset, 0, 0.30f));
-            }
-            else
-            {
-                rnd = Random.Range(0f, 100f);
-
-                if (rnd < 50)
-                {
-                    offset = -3f;
-                    //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
-                }
-                else
-                {
-                    offset = 3f;
-                    //Instantiate(bossThoughEnemy, transform.position + right * offset, this.transform.rotation);
-                }
-
-                Game.EnemyManager.Enemies.Add(timedSpawner.Build(EnemyType.Tough, transform.position + right * offset, 0, 0.2f));
-            }
+            return;
         }
-        
-        
+
+        summonCooldown = Random.Range(minSummonCooldown * InverseDifficultyModifier, maxSummonCooldown * InverseDifficultyModifier);
+
+        Debug.Log($"summonCooldown: {summonCooldown}");
+
+        var enemyTypeChance = Random.Range(0, 9);
+
+        var enemyType = EnemyType.Tough;
+
+        if (enemyTypeChance < 4)
+        {
+            enemyType = EnemyType.Casual;
+        }
+        else if (rnd < 8)
+        {
+            enemyType = EnemyType.Fast;
+        }
+
+        var offset = Random.Range(0, 1) == 0 ? - 3f : 3f;
+
+        Game.EnemyManager.Enemies.Add(Game.EnemyManager.Spawner.Build(enemyType, transform.position + transform.right * offset, 0));
     }
 
     void OnCollisionEnter(Collision collision)
@@ -223,10 +166,10 @@ public class BossScript : EnemyScript
         switch (collision.gameObject.tag)
         {
             case "Arrow":
-                HitByArrow();
+                OnHitByArrow();
                 break;
             case "MyPlayer":
-                playerScript.Death();
+                playerScript.OnDeath();
                 break;
             default:
                 break;
@@ -234,24 +177,9 @@ public class BossScript : EnemyScript
         }
     }
 
-    void HitByArrow()
+    protected override void OnHitByArrow()
     {
-        HP--;
-
-        if (HP == 0)
-        {
-            OnDeath();
-            Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
-            Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
-        }
-
-        TurnEyesRed();
-
-        Invoke("TurnWhiteEyes", 0.5f);
+        base.OnHitByArrow();
 
         switch (HP)
         {
@@ -283,5 +211,13 @@ public class BossScript : EnemyScript
                 body.GetComponent<Renderer>().material.color = new Color(0.9f, 0f, 0f);
                 break;
         }
+    }
+
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+
+        Instantiate<GameObject>(deathParticle, this.transform.position, Quaternion.identity);
+        Instantiate<GameObject>(hitParticle, this.transform.position, Quaternion.identity);
     }
 }

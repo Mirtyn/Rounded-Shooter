@@ -11,13 +11,13 @@ public class BaseEnemyScript : MonoBehaviour
         switch (EnemyType)
         {
             case "Casual":
-                this.GetComponent<CasualEnemyScript>().HitByBomb();
+                this.GetComponent<CasualEnemyScript>().OnHitByBomb();
                 break;
             case "Fast":
-                this.GetComponent<FastEnemyScript>().HitByBomb();
+                this.GetComponent<FastEnemyScript>().OnHitByBomb();
                 break;
             case "Tough":
-                this.GetComponent<ToughEnemyScript>().HitByBomb();
+                this.GetComponent<ToughEnemyScript>().OnHitByBomb();
                 break;
             case "Boss":
                 break;

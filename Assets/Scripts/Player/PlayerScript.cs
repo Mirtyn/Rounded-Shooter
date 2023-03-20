@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerScript : ProjectBehaviour
+internal class PlayerScript : ProjectBehaviour
 {
     Vector3 startPos;
 
@@ -59,12 +59,8 @@ public class PlayerScript : ProjectBehaviour
             }
         }
 
-        //if (escapeCooldown > 0)
-        //{
-        //    escapeCooldown -= Time.deltaTime;
-        //}
-
         this.transform.position = startPos;
+
         if (Game.PlayerData.IsDead == false)
         {
             if (Input.GetAxis("UseBomb") > 0)
@@ -80,14 +76,12 @@ public class PlayerScript : ProjectBehaviour
 
                         EnemiesOnMap = GameObject.FindGameObjectsWithTag("Enemy");
 
-                        int o = 0;
-                        foreach (GameObject i in EnemiesOnMap)
+                        foreach (GameObject gameObject in EnemiesOnMap)
                         {
-                            if (Vector3.Distance(EnemiesOnMap[o].transform.position, this.transform.position) <= 4f)
+                            if (Vector3.Distance(gameObject.transform.position, this.transform.position) <= 4f)
                             {
-                                EnemiesOnMap[o].GetComponent<BaseEnemyScript>().BombDeath();
+                                gameObject.GetComponent<EnemyScript>().OnHitByBomb();
                             }
-                            o++;
                         }
                     }
                 }
@@ -112,7 +106,7 @@ public class PlayerScript : ProjectBehaviour
         return IsDead();
     }
 
-    public void Death()
+    public void OnDeath()
     {
         IsDead(true);
         Instantiate(playerDeathParticle, new Vector3(this.transform.position.x, 2, this.transform.position.z), Quaternion.identity);

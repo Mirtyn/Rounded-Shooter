@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HUDScript : ProjectBehaviour
+internal class HUDScript : ProjectBehaviour
 {
     [SerializeField] TimerScript timerScript;
     [SerializeField] GoldScript goldScript;

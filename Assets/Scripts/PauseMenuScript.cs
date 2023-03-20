@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenuScript : ProjectBehaviour
+internal class PauseMenuScript : ProjectBehaviour
 {
     void Update()
     {

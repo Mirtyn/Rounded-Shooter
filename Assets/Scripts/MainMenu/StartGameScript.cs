@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartGameScript : ProjectBehaviour
+internal class StartGameScript : ProjectBehaviour
 {
     [SerializeField] GameObject startGamePanel;
 
@@ -27,10 +27,10 @@ public class StartGameScript : ProjectBehaviour
         StartGame(Assets.Models.GameType.Hard);
     }
 
-    public void StartMasterGame()
-    {
-        StartGame(Assets.Models.GameType.Master);
-    }
+    //public void StartMasterGame()
+    //{
+    //    StartGame(Assets.Models.GameType.Master);
+    //}
 
     public void StartEndlessGame()
     {

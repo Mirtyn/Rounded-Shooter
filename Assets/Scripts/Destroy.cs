@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destroy : ProjectBehaviour
+internal class Destroy : ProjectBehaviour
 {
     [SerializeField] float timeInSec = 5f;
     void Update()

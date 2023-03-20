@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreManager
+internal class ScoreManager
 {
     private float Starttime = 0f;
 
@@ -38,8 +38,6 @@ public class ScoreManager
                 return 250f;
             case GameType.Hard:
                 return 500f;
-            case GameType.Master:
-                return 250f;
             case GameType.Endless:
                 return 250f;
             default:
@@ -85,8 +83,6 @@ public class ScoreManager
                 return 50;
             case GameType.Hard:
                 return 100;
-            case GameType.Master:
-                return 50;
             case GameType.Endless:
                 return 1000;
             default:
@@ -104,8 +100,6 @@ public class ScoreManager
                 return 2500;
             case GameType.Hard:
                 return 5000;
-            case GameType.Master:
-                return 2500;
             case GameType.Endless:
                 return 5000;
             default:

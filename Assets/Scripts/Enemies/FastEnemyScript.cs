@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FastEnemyScript : EnemyScript
+internal class FastEnemyScript : EnemyScript
 {
-    //[SerializeField] PlayerScript playerScript;
-
-    [SerializeField] GameObject hitParticle;
-
     public FastEnemyScript()
         : base(2.0f)
     {
@@ -15,17 +11,15 @@ public class FastEnemyScript : EnemyScript
         HP = 1;
     }
 
-    new void Start()
+    protected override void Start()
     {
         base.Start();
-
-        //target = FindObjectOfType<PlayerScript>().transform;
-        //goldScript = FindObjectOfType<GoldScript>();
-        //playerScript = FindObjectOfType<PlayerScript>();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (Game.PlayerData.IsDead == false)
         {
             Vector3 translation;
@@ -35,7 +29,7 @@ public class FastEnemyScript : EnemyScript
             //rotGoal = Quaternion.LookRotation(direction);
             //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, turnSpeed);
 
-            RotateTowardsPlayer(1f);
+            //RotateTowardsPlayer(1f);
 
             translation = new Vector3(0, 0, Speed) * Time.deltaTime;
 
@@ -48,27 +42,17 @@ public class FastEnemyScript : EnemyScript
         switch (collision.gameObject.tag)
         {
             case "Arrow":
-                HitByArrow();
+                OnHitByArrow();
                 break;
             case "Bomb":
-                HitByBomb();
+                OnHitByBomb();
                 break;
             case "MyPlayer":
-                playerScript.Death();
+                playerScript.OnDeath();
                 break;
             default:
                 break;
 
         }
-    }
-
-    void HitByArrow()
-    {
-        OnDeath();
-    }
-
-    public void HitByBomb()
-    {
-        OnDeath();
     }
 }

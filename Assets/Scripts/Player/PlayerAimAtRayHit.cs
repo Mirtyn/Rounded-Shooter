@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAimAtRayHit : ProjectBehaviour
+internal class PlayerAimAtRayHit : ProjectBehaviour
 {
     //[SerializeField] PlayerData playerData;
 
