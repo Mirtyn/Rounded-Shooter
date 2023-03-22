@@ -26,7 +26,7 @@ internal class GameManager
 
     private PlayerScript _playerScript = null;
 
-
+    private TimerScript _timerScript = null;
 
 
     private static readonly GameManager _instance = new GameManager();
@@ -61,6 +61,19 @@ internal class GameManager
         }
         
         return _playerGameObject;
+    }
+
+    public TimerScript TimerScript
+    {
+        get
+        {
+            if (_timerScript == null)
+            {
+                _timerScript = GameObject.FindGameObjectWithTag("TimeKeeper").GetComponent<TimerScript>();
+            }
+
+            return _timerScript;
+        }
     }
 
     public PlayerScript GetPlayerScript()

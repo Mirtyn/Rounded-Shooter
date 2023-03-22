@@ -15,11 +15,13 @@ internal class AnimatedTransform : ProjectBehaviour
         public float _returnDuration = 1f;
         public bool _return = false;
         public float _timeRemaining;
-        public Vector3 _fromEulerAngles;
-        public Vector3 _targetEulerAngles;
+        //public Vector3 _fromEulerAngles;
+        //public Vector3 _targetEulerAngles;
+        internal Vector3 _totalOffset;
+        internal Vector3 _offsetPerSecond;
     }
 
-    public Easing Easing = Easing.Linear;
+    //public Easing Easing = Easing.Linear;
 
     // Update is called once per frame
     protected virtual void Update()
@@ -34,6 +36,8 @@ internal class AnimatedTransform : ProjectBehaviour
 
     void UpdateAnimation(Animation animation)
     {
+        //Debug.Log("UpdateAnimation");
+
         if (animation._timeRemaining <= 0f)
         {
             animation._timeRemaining = 0f;
@@ -42,99 +46,109 @@ internal class AnimatedTransform : ProjectBehaviour
             {
                 _animations.Remove(animation);
 
-                animation._fromEulerAngles = animation._targetEulerAngles;
+                //animation._fromEulerAngles = animation._targetEulerAngles;
             }
             else
             {
                 animation._return = false;
                 animation._timeRemaining = animation._duration = animation._returnDuration;
-                animation._targetEulerAngles = animation._fromEulerAngles;
-                animation._fromEulerAngles = transform.localEulerAngles;
+                //animation._targetEulerAngles = animation._fromEulerAngles;
+                //animation._fromEulerAngles = transform.localEulerAngles;
+                animation._totalOffset = new Vector3(-animation._totalOffset.x, -animation._totalOffset.y, -animation._totalOffset.z);
+                animation._offsetPerSecond = (1f / animation._duration) * animation._totalOffset;
             }
         }
 
         animation._timeRemaining -= Time.deltaTime;
 
-        var t = Ease((animation._duration - animation._timeRemaining) / animation._duration, Easing);
+        //var t = Ease((animation._duration - animation._timeRemaining) / animation._duration, Easing);
 
-        var r = LerpAngle(animation._fromEulerAngles, animation._targetEulerAngles, t);
+        //Debug.Log($"t: {t}");
 
-        transform.localEulerAngles = r;
+        //var r = LerpAngle(animation._fromEulerAngles, animation._targetEulerAngles, t);
+
+        //var r = transform.localEulerAngles + (animation._targetOffset * t);
+
+        //var r = transform.localEulerAngles + (animation._offsetPerSecond * Time.deltaTime);
+
+        transform.localEulerAngles += (animation._offsetPerSecond * Time.deltaTime);
+
+        //Debug.Log($"transform.localEulerAngles: {transform.localEulerAngles.x}, {transform.localEulerAngles.y}, {transform.localEulerAngles.z}");
     }
 
-    private Vector3 LerpAngle(Vector3 from, Vector3 target, float t)
-    {
-        return new Vector3(
-            Mathf.LerpAngle(from.x, target.x, t),
-            Mathf.LerpAngle(from.y, target.y, t),
-            Mathf.LerpAngle(from.z, target.z, t));
-    }
+    //private Vector3 LerpAngle(Vector3 from, Vector3 target, float t)
+    //{
+    //    return new Vector3(
+    //        Mathf.LerpAngle(from.x, target.x, t),
+    //        Mathf.LerpAngle(from.y, target.y, t),
+    //        Mathf.LerpAngle(from.z, target.z, t));
+    //}
 
-    public AnimatedTransform RotateTowards(float x, float y, float z)
-    {
-        return RotateTowards(x, y, z, 1f);
-    }
+    //public AnimatedTransform RotateTowards(float x, float y, float z)
+    //{
+    //    return RotateTowards(x, y, z, 1f);
+    //}
 
-    public AnimatedTransform RotateTowards(float x, float y, float z, float duration)
-    {
-        var animation = new Animation
-        {
-            _fromEulerAngles = transform.localEulerAngles,
-            _timeRemaining = duration,
-            _duration = duration,
-            _targetEulerAngles = new Vector3(x, y, z),
-        };
+    //public AnimatedTransform RotateTowards(float x, float y, float z, float duration)
+    //{
+    //    var animation = new Animation
+    //    {
+    //        _fromEulerAngles = transform.localEulerAngles,
+    //        _timeRemaining = duration,
+    //        _duration = duration,
+    //        _targetEulerAngles = new Vector3(x, y, z),
+    //    };
 
-        _animations.Add(animation);
+    //    _animations.Add(animation);
 
-        return this;
-    }
+    //    return this;
+    //}
 
-    public AnimatedTransform RotateTowardsReturn(float x, float y, float z, float duration)
-    {
-        return RotateTowardsReturn(x, y, z, duration, duration);
-    }
+    //public AnimatedTransform RotateTowardsReturn(float x, float y, float z, float duration)
+    //{
+    //    return RotateTowardsReturn(x, y, z, duration, duration);
+    //}
 
-    public AnimatedTransform RotateTowardsReturn(float x, float y, float z, float duration, float returnDuration)
-    {
-        var animation = new Animation
-        {
-            _return = true,
-            _fromEulerAngles = transform.localEulerAngles,
-            _timeRemaining = duration,
-            _duration = duration,
-            _targetEulerAngles = new Vector3(x, y, z),
-        };
+    //public AnimatedTransform RotateTowardsReturn(float x, float y, float z, float duration, float returnDuration)
+    //{
+    //    var animation = new Animation
+    //    {
+    //        _return = true,
+    //        _fromEulerAngles = transform.localEulerAngles,
+    //        _timeRemaining = duration,
+    //        _duration = duration,
+    //        _targetEulerAngles = new Vector3(x, y, z),
+    //    };
 
-        _animations.Add(animation);
+    //    _animations.Add(animation);
 
-        return this;
-    }
+    //    return this;
+    //}
 
-    public AnimatedTransform RotateAdd(float x, float y, float z)
-    {
-        return RotateAdd(x, y, z, 1f);
-    }
+    //public AnimatedTransform RotateAdd(float x, float y, float z)
+    //{
+    //    return RotateAdd(x, y, z, 1f);
+    //}
 
-    public AnimatedTransform RotateAdd(float x, float y, float z, float duration)
-    {
-        var animation = new Animation
-        {
-            _fromEulerAngles = transform.localEulerAngles,
-            _timeRemaining = duration,
-            _duration = duration,
-            _targetEulerAngles = new Vector3(transform.localEulerAngles.x + x, transform.localEulerAngles.y + y, transform.localEulerAngles.z + z),
-        };
+    //public AnimatedTransform RotateAdd(float x, float y, float z, float duration)
+    //{
+    //    var animation = new Animation
+    //    {
+    //        _fromEulerAngles = transform.localEulerAngles,
+    //        _timeRemaining = duration,
+    //        _duration = duration,
+    //        _targetEulerAngles = new Vector3(transform.localEulerAngles.x + x, transform.localEulerAngles.y + y, transform.localEulerAngles.z + z),
+    //    };
 
-        _animations.Add(animation);
+    //    _animations.Add(animation);
 
-        return this;
-    }
+    //    return this;
+    //}
 
-    public AnimatedTransform RotateAddReturn(float x, float y, float z, float duration)
-    {
-        return RotateAddReturn(x, y, z, duration, duration);
-    }
+    //public AnimatedTransform RotateAddReturn(float x, float y, float z, float duration)
+    //{
+    //    return RotateAddReturn(x, y, z, duration, duration);
+    //}
 
     public AnimatedTransform RotateAddReturn(float x, float y, float z, float duration, float returnDuration)
     {
@@ -142,10 +156,12 @@ internal class AnimatedTransform : ProjectBehaviour
         {
             _return = true,
             _returnDuration = returnDuration,
-            _fromEulerAngles = transform.localEulerAngles,
+            //_fromEulerAngles = transform.localEulerAngles,
             _timeRemaining = duration,
             _duration = duration,
-            _targetEulerAngles = new Vector3(transform.localEulerAngles.x + x, transform.localEulerAngles.y + y, transform.localEulerAngles.z + z),
+            //_targetEulerAngles = new Vector3(transform.localEulerAngles.x + x, transform.localEulerAngles.y + y, transform.localEulerAngles.z + z),
+            _totalOffset = new Vector3(x, y, z),
+            _offsetPerSecond = (1f / duration) * new Vector3(x, y, z),
         };
 
         _animations.Add(animation);

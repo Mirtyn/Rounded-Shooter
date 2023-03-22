@@ -878,6 +878,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeKeeper
       objectReference: {fileID: 0}
+    - target: {fileID: 8489478074639197090, guid: 34dc66d1454ee4847a74dff9fd68f721, type: 3}
+      propertyPath: m_TagString
+      value: TimeKeeper
+      objectReference: {fileID: 0}
     - target: {fileID: 8489478074639197100, guid: 34dc66d1454ee4847a74dff9fd68f721, type: 3}
       propertyPath: m_RootOrder
       value: 8

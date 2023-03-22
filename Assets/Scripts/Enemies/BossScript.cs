@@ -20,21 +20,38 @@ internal class BossScript : EnemyScript
     [SerializeField] GameObject body;
     [SerializeField] GameObject teleportParticle;
 
-    float rnd;
+    //float rnd;
     float teleportCooldown;
-    float rndCooldown;
+    //float rndCooldown;
 
     [SerializeField] GameObject bossCasualEnemy;
     [SerializeField] GameObject bossFastEnemy;
     [SerializeField] GameObject bossThoughEnemy;
 
     float summonCooldown;
-    
-    float minSummonCooldown = 12f;
-    float maxSummonCooldown = 18f;
 
-    float minTeleportCooldown = 8f;
-    float maxTeleportCooldown = 12f;
+    const float AbsoluteMinSummonCooldown = 4f;
+    const float AbsoluteMaxSummonCooldown = 8f;
+    const float SummonCooldownDecrement = 0.125f;
+
+    //const float AbsoluteMinSummonCount = 1f;
+    const float AbsoluteMaxSummonCount = 8f;
+    const float SummonCountIncrement = 0.125f;
+
+    float minSummonCooldown = 8f;
+    float maxSummonCooldown = 12f;
+    float summonCount = 1f;
+
+    const float AbsoluteMinTeleportCooldown = 3f;
+    const float AbsoluteMaxTeleportCooldown = 6f;
+    const float TeleportCooldownDecrement = 0.125f;
+
+    float minTeleportCooldown = 4f;
+    float maxTeleportCooldown = 8f;
+    //float minTeleportCooldown = 2f;
+    //float maxTeleportCooldown = 2f;
+
+    public bool DisableSummon = false;
 
     //float timeAliveScinceSpawn = 1f;
 
@@ -54,8 +71,8 @@ internal class BossScript : EnemyScript
         base.Start();
 
         HP = 12 + (int)(12f * DifficultyModifier);
-        rndCooldown = 2f;
         teleportCooldown = 0;// Random.Range(3f * DifficultyModifier, 5.5f * DifficultyModifier);
+        RandomSummonCooldown();
 
         Debug.Log($"BossScript.Start() - DifficultyModifier: {DifficultyModifier}  - HP: {HP}");
     }
@@ -67,7 +84,7 @@ internal class BossScript : EnemyScript
         teleportCooldown -= Time.deltaTime;
         summonCooldown -= Time.deltaTime;
 
-        BossMovementOptions();
+        BossTeleport();
         BossSpawnEnemies();
     }
 
@@ -76,27 +93,29 @@ internal class BossScript : EnemyScript
         get { return 1f / DifficultyModifier; }
     }
 
-    void BossMovementOptions()
+    void BossTeleport()
     {
         if (teleportCooldown > 0)
         {
             return;
         }
 
-        teleportCooldown = Random.Range(minTeleportCooldown * InverseDifficultyModifier, maxTeleportCooldown * InverseDifficultyModifier);
+        RandomTeleportCooldown();
 
-        Debug.Log($"teleportCooldown: {teleportCooldown}");
+        //try
+        //{
+            Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
 
-        var location = Location;
+            var location = Location;
 
-        while (location == Location)
-        {
-            location = (Movement)Random.Range(0, 7);
-        }
+            while (location == Location)
+            {
+                location = (Movement)Random.Range(0, 7);
+            }
 
-        Location = location;
+            Location = location;
 
-        //Debug.Log($"Location: {Location}");
+            //Debug.Log($"New Location: {Location}");
 
             switch (Location)
             {
@@ -126,39 +145,88 @@ internal class BossScript : EnemyScript
                     break;
             }
 
-            Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
+            //Debug.Log($"transform.position: {transform.position.x}, {transform.position.y}, {transform.position.z}");
+
             RotateTowardsPlayer(1);
+
             Instantiate(teleportParticle, this.transform.position, Quaternion.identity);
         //}
+        //catch (System.Exception x)
+        //{
+        //    Debug.Log($"Exception: {x.Message}");
+        //}
+    }
+
+    private void RandomTeleportCooldown()
+    {
+        teleportCooldown = Random.Range(minTeleportCooldown * InverseDifficultyModifier, maxTeleportCooldown * InverseDifficultyModifier);
+
+        var s = (int)minTeleportCooldown;
+        var t = (int)maxTeleportCooldown;
+
+        minTeleportCooldown = Mathf.Max(minTeleportCooldown - TeleportCooldownDecrement, AbsoluteMinTeleportCooldown);
+        maxTeleportCooldown = Mathf.Max(maxTeleportCooldown - TeleportCooldownDecrement, AbsoluteMaxTeleportCooldown);
+
+        if (s != (int)minTeleportCooldown)
+        {
+            Debug.Log($"minTeleportCooldown: {minTeleportCooldown}");
+        }
+
+        if (t != (int)maxTeleportCooldown)
+        {
+            Debug.Log($"maxTeleportCooldown: {maxTeleportCooldown}");
+        }
+    }
+
+    private void RandomSummonCooldown()
+    {
+        summonCooldown = Random.Range(minSummonCooldown * InverseDifficultyModifier, maxSummonCooldown * InverseDifficultyModifier);
+
+        minSummonCooldown = Mathf.Max(minSummonCooldown - SummonCooldownDecrement, AbsoluteMinSummonCooldown);
+        maxSummonCooldown = Mathf.Max(maxSummonCooldown - SummonCooldownDecrement, AbsoluteMaxSummonCooldown);
+
+        summonCount = Mathf.Min(summonCount + SummonCountIncrement, AbsoluteMaxSummonCount);
+
+        Debug.Log($"summonCount: {summonCount}");
     }
 
     void BossSpawnEnemies()
     {
-        if (summonCooldown > 0)
+        if (summonCooldown > 0 || DisableSummon)
         {
             return;
         }
 
-        summonCooldown = Random.Range(minSummonCooldown * InverseDifficultyModifier, maxSummonCooldown * InverseDifficultyModifier);
+        RandomSummonCooldown();
 
-        Debug.Log($"summonCooldown: {summonCooldown}");
+        var left = Random.Range(0, 1) == 0;
 
+        for (var i = 0; i < (int)summonCount; i++)
+        {
+            BossSpawnEnemy(Game.TimerScript.InGameTime + (i * InverseDifficultyModifier), left);
+
+            left = !left;
+        }
+    }
+
+    void BossSpawnEnemy(float starttime, bool left)
+    {
         var enemyTypeChance = Random.Range(0, 9);
 
         var enemyType = EnemyType.Tough;
 
-        if (enemyTypeChance < 4)
+        if (enemyTypeChance < 5)
         {
             enemyType = EnemyType.Casual;
         }
-        else if (rnd < 8)
+        else if (enemyTypeChance < 8)
         {
             enemyType = EnemyType.Fast;
         }
 
-        var offset = Random.Range(0, 1) == 0 ? - 3f : 3f;
+        var offset = left ? -3f : 3f;
 
-        Game.EnemyManager.Enemies.Add(Game.EnemyManager.Spawner.Build(enemyType, transform.position + transform.right * offset, 0));
+        Game.EnemyManager.Enemies.Add(Game.EnemyManager.Spawner.Build(enemyType, transform.position + transform.right * offset, starttime));
     }
 
     void OnCollisionEnter(Collision collision)

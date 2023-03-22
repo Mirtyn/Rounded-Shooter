@@ -5,7 +5,7 @@ using TMPro;
 
 internal class HUDScript : ProjectBehaviour
 {
-    [SerializeField] TimerScript timerScript;
+    //[SerializeField] TimerScript timerScript;
     [SerializeField] GoldScript goldScript;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text goldText;
@@ -22,12 +22,12 @@ internal class HUDScript : ProjectBehaviour
 
     void SetScoreOnHUD()
     {
-        scoreText.text = "Score: " + Game.ScoreManager.CalculateScore(timerScript.InGameTime, goldScript.Gold, Game.GameType);
+        scoreText.text = "Score: " + Game.ScoreManager.CalculateScore(Game.TimerScript.InGameTime, goldScript.Gold, Game.GameType);
     }
 
     void SetTimeOnHUD()
     {
-        timerText.text = "Time: " + timerScript.InGameTime.ToString("F2") + " sec";
+        timerText.text = "Time: " + Game.TimerScript.InGameTime.ToString("F2") + " sec";
     }
 
     public void SetGoldOnHUD(int gold)

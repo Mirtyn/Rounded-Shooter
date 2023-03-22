@@ -27,7 +27,7 @@ namespace Assets.Models
 
 		private float _difficultyModifier = 1f;
 
-		public float DifficultyModifier 
+		public float BossDifficultyModifier 
 		{ 
 			get { return _difficultyModifier; } 
 			set { _difficultyModifier = Math.Max(Math.Min(2f, value), 1f); } 
@@ -95,7 +95,7 @@ namespace Assets.Models
                 IsAlive = true,
                 Position = position,
                 StartTime = starttime,
-				DifficultyModifier = DifficultyModifier,
+				DifficultyModifier = BossDifficultyModifier,
 			};
         }
 

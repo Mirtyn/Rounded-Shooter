@@ -14,7 +14,7 @@ internal class PlayerScript : ProjectBehaviour
     //[SerializeField] PlayerData playerData;
     [SerializeField] GameObject enemiesHolder;
     [SerializeField] HUDScript hUDScript;
-    [SerializeField] TimerScript timerScript;
+    //[SerializeField] TimerScript timerScript;
     [SerializeField] ShopScript shopScript;
 
     public float GameSpeed = 1f;
@@ -120,7 +120,7 @@ internal class PlayerScript : ProjectBehaviour
 
         deathPanel.SetActive(true);
 
-        timerScript.KeepTrackOfTime = false;
+        Game.TimerScript.KeepTrackOfTime = false;
     }
 
     public void PauseGame()

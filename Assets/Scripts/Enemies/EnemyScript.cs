@@ -23,7 +23,7 @@ internal class EnemyScript : AnimatedTransform
 
     Transform target;
     //float turnSpeed = 1f;
-    Quaternion rotGoal;
+    //Quaternion rotGoal;
     Vector3 direction;
 
     public int HP = 3;
@@ -60,12 +60,17 @@ internal class EnemyScript : AnimatedTransform
 
     protected void RotateTowardsPlayer(float time)
     {
+        //Debug.Log($"RotateTowardsPlayer: {time}");
+
         direction.x = (target.position.x - transform.position.x);
         direction.z = (target.position.z - transform.position.z);
 
-        rotGoal = Quaternion.LookRotation(direction);
+        //rotGoal = Quaternion.LookRotation(direction);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, time);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, rotGoal, time);
+        transform.rotation = Quaternion.LookRotation(direction);
+
+        //Debug.Log($"transform.localEulerAngles: {transform.localEulerAngles.x}, {transform.localEulerAngles.y}, {transform.localEulerAngles.z}");
     }
 
     protected virtual void OnHitByArrow()
