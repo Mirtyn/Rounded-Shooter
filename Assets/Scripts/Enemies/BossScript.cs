@@ -59,6 +59,8 @@ internal class BossScript : EnemyScript
 
     //float nextUpdateTime = 0f;
 
+    int startHP;
+
     public BossScript()
         : base(0f)
     {
@@ -71,6 +73,9 @@ internal class BossScript : EnemyScript
         base.Start();
 
         HP = 12 + (int)(12f * DifficultyModifier);
+
+        startHP = HP;
+
         teleportCooldown = 0;// Random.Range(3f * DifficultyModifier, 5.5f * DifficultyModifier);
         RandomSummonCooldown();
 
@@ -249,36 +254,40 @@ internal class BossScript : EnemyScript
     {
         base.OnHitByArrow();
 
-        switch (HP)
-        {
-            case 45:
-                body.GetComponent<Renderer>().material.color = new Color(0.1f, 0f, 0f);
-                break;
-            case 40:
-                body.GetComponent<Renderer>().material.color = new Color(0.2f, 0f, 0f);
-                break;
-            case 35:
-                body.GetComponent<Renderer>().material.color = new Color(0.3f, 0f, 0f);
-                break;
-            case 30:
-                body.GetComponent<Renderer>().material.color = new Color(0.4f, 0f, 0f);
-                break;
-            case 25:
-                body.GetComponent<Renderer>().material.color = new Color(0.5f, 0f, 0f);
-                break;
-            case 20:
-                body.GetComponent<Renderer>().material.color = new Color(0.6f, 0f, 0f);
-                break;
-            case 15:
-                body.GetComponent<Renderer>().material.color = new Color(0.7f, 0f, 0f);
-                break;
-            case 10:
-                body.GetComponent<Renderer>().material.color = new Color(0.8f, 0f, 0f);
-                break;
-            case 5:
-                body.GetComponent<Renderer>().material.color = new Color(0.9f, 0f, 0f);
-                break;
-        }
+        var p = 1f - (float)HP / (float)startHP;
+
+        body.GetComponent<Renderer>().material.color = new Color(p, 0f, 0f);
+
+        //switch (HP)
+        //{
+        //    case startHP * :
+        //        body.GetComponent<Renderer>().material.color = new Color(0.1f, 0f, 0f);
+        //        break;
+        //    case 40:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.2f, 0f, 0f);
+        //        break;
+        //    case 35:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.3f, 0f, 0f);
+        //        break;
+        //    case 30:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.4f, 0f, 0f);
+        //        break;
+        //    case 25:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.5f, 0f, 0f);
+        //        break;
+        //    case 20:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.6f, 0f, 0f);
+        //        break;
+        //    case 15:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.7f, 0f, 0f);
+        //        break;
+        //    case 10:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.8f, 0f, 0f);
+        //        break;
+        //    case 5:
+        //        body.GetComponent<Renderer>().material.color = new Color(0.9f, 0f, 0f);
+        //        break;
+        //}
     }
 
     protected override void OnDeath()
