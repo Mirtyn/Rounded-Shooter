@@ -26,4 +26,9 @@ internal class EnemyManager
         return Enemies.All(o => o.HasSpawned);
     }
 
+    public bool HasBossSpawnedAndIsAlive()
+    {
+        return Enemies.Any(o => o.EnemyType == EnemyType.SpawnerBoss && o.HasSpawned && o.IsAlive);
+    }
+
 }

@@ -25,20 +25,22 @@ namespace Assets.Models
 
         public GameObject GameObject { get; set; }
 
-        public float DifficultyModifier { get; set; } = 1f;
+        public float BossDifficultyModifier { get; set; } = 1f;
 
-   //     public float Height
-   //     {
-			//get
-   //         {
-   //             switch(EnemyType)
-   //             {
-   //                 case EnemyType.Fast:
-   //                     return 0.5f;
-   //                 default:
-   //                     return 0.6f;
-   //             }
-   //         }
-   //     }
-	}
+        public int BossHP { get; set; } = 40;
+
+        //     public float Height
+        //     {
+        //get
+        //         {
+        //             switch(EnemyType)
+        //             {
+        //                 case EnemyType.Fast:
+        //                     return 0.5f;
+        //                 default:
+        //                     return 0.6f;
+        //             }
+        //         }
+        //     }
+    }
 }

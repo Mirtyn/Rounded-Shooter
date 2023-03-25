@@ -45,18 +45,27 @@ namespace Assets.Models
 			ToughMaxSpeed = s.ToughMaxSpeed * speedModifier;
 		}
 
+		public IEnumerable<Enemy> BuildEnemies(EnemyType enemyType, float arrivaltime, int count)
+        {
+			var spawns = new Enemy[count];
 
-		[Obsolete("Use Build(EnemyType enemyType, float arrivaltime, int count = 1) instead. The speed paramater is ignored from now on")]
-		public IEnumerable<Enemy> Build(EnemyType enemyType, float arrivaltime, float speed, int count = 1)
-		{
-			return Build(enemyType, arrivaltime, count);
+			for (var c = 0; c < count; c++)
+            {
+				spawns[c] = BuildEnemy(enemyType, arrivaltime, 0);
+			}
+
+			return spawns;
 		}
 
-		public IEnumerable<Enemy> Build(EnemyType enemyType, float arrivaltime, int count = 1)
-        {
+		public Enemy BuildEnemy(EnemyType enemyType, float arrivaltime, int hp)
+		{
 			if (enemyType == EnemyType.SpawnerBoss)
 			{
-				return new[] { Build(enemyType, new Vector3(0, 0, 5), arrivaltime) };
+				var e = BuildEnemy(enemyType, new Vector3(0, 0, 5), arrivaltime);
+
+				e.BossHP = hp;
+
+				return e;
 			}
 
 			var speed = Speed(enemyType);
@@ -65,28 +74,21 @@ namespace Assets.Models
 
 			var time = radius / speed;
 
-			if(time > arrivaltime)
-            {
+			if (time > arrivaltime)
+			{
 				time = arrivaltime;
 				radius = time * speed;
 			}
 
-			var spawns = new Enemy[count];
+			var radians = (float)random.NextDouble() * MathF.PI * 2f;
 
-			for (var c = 0; c < count; c++)
-            {
-				var radians = (float)random.NextDouble() * MathF.PI * 2f;
+			var x = MathF.Cos(radians) * radius;
+			var z = MathF.Sin(radians) * radius;
 
-				var x = MathF.Cos(radians) * radius;
-				var z = MathF.Sin(radians) * radius;
-
-				spawns[c] = Build(enemyType, new Vector3(x, 0f, z), arrivaltime - time);
-			}
-
-			return spawns;
+			return BuildEnemy(enemyType, new Vector3(x, 0f, z), arrivaltime - time);
 		}
 
-        public Enemy Build(EnemyType enemyType, Vector3 position, float starttime)
+		public Enemy BuildEnemy(EnemyType enemyType, Vector3 position, float starttime)
         {
             return new Enemy
             {
@@ -95,7 +97,7 @@ namespace Assets.Models
                 IsAlive = true,
                 Position = position,
                 StartTime = starttime,
-				DifficultyModifier = BossDifficultyModifier,
+				BossDifficultyModifier = BossDifficultyModifier,
 			};
         }
 
