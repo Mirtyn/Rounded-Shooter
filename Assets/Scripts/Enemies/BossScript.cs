@@ -59,7 +59,13 @@ internal class BossScript : EnemyScript
 
     //float nextUpdateTime = 0f;
 
-    int startHP;
+    public float DifficultyModifier { get; internal set; } = 1f;
+
+    public int StartHP
+    {
+        get;
+        set;
+    }
 
     public BossScript()
         : base(0f)
@@ -72,9 +78,9 @@ internal class BossScript : EnemyScript
     {
         base.Start();
 
-        HP = 12 + (int)(12f * DifficultyModifier);
+        //HP = 24 + (int)(24f * BossDifficultyModifier);
 
-        startHP = HP;
+        //_startHP = HP;
 
         teleportCooldown = 0;// Random.Range(3f * DifficultyModifier, 5.5f * DifficultyModifier);
         RandomSummonCooldown();
@@ -231,7 +237,7 @@ internal class BossScript : EnemyScript
 
         var offset = left ? -3f : 3f;
 
-        Game.EnemyManager.Enemies.Add(Game.EnemyManager.Spawner.Build(enemyType, transform.position + transform.right * offset, starttime));
+        Game.EnemyManager.Enemies.Add(Game.EnemyManager.Spawner.BuildEnemy(enemyType, transform.position + transform.right * offset, starttime));
     }
 
     void OnCollisionEnter(Collision collision)
@@ -254,7 +260,7 @@ internal class BossScript : EnemyScript
     {
         base.OnHitByArrow();
 
-        var p = 1f - (float)HP / (float)startHP;
+        var p = 1f - (float)HP / (float)StartHP;
 
         body.GetComponent<Renderer>().material.color = new Color(p, 0f, 0f);
 

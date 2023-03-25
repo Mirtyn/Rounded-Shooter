@@ -26,13 +26,13 @@ internal class EnemyScript : AnimatedTransform
     //Quaternion rotGoal;
     Vector3 direction;
 
-    public int HP = 3;
+    protected int _hp = 3;
+
+    public virtual int HP { get { return _hp; } set { _hp = value; } }
 
     [SerializeField] public bool getGold = true;
 
     GameObject Player;
-
-    public float DifficultyModifier { get; internal set; } = 1f;
 
     public EnemyScript(float speed = 1f)
     {
