@@ -109,12 +109,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76c1f8df79bb914da8cfd27c18746f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDead: 0
   BombExplode: {fileID: 1668991630889547312, guid: 963521d4016228f41bb48a97c7374256, type: 3}
   playerDeathParticle: {fileID: 2281659287658787881, guid: bcf72949d8682dd41a29c1a73cd741f6, type: 3}
+  pausePanel: {fileID: 0}
   enemiesHolder: {fileID: 0}
   hUDScript: {fileID: 0}
-  timerScript: {fileID: 0}
+  shopScript: {fileID: 0}
   GameSpeed: 1
   EnemiesOnMap: []
   deathPanel: {fileID: 0}

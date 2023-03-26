@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d0e25c286336e42b9be40360397dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerScript: {fileID: 0}
   enemiesHolder: {fileID: 0}
+  goldScript: {fileID: 0}
   casualEnemy: {fileID: 6821775452321487912, guid: c88a2e723bb2ba54c923b99c83e2fc72, type: 3}
   fastEnemy: {fileID: 6821775452321487912, guid: 39152efb59c0bde4cab3c2fdee805cb0, type: 3}
   toughEnemy: {fileID: 6821775452321487912, guid: 13f103e4783428e42a6a56073ec6aa29, type: 3}
   boss: {fileID: 5686401558786077135, guid: fec18b68be4186d4a8ffb811ba12fdcf, type: 3}
   finsishPanel: {fileID: 0}
-  LastSpawnedEnemy: 0
+  submitButtonPanel: {fileID: 0}

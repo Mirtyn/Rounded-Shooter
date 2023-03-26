@@ -12,7 +12,7 @@ internal class GameManager
 
     public bool IsPaused = false;
 
-    public static string Version = "0.4.0";
+    public static string Version = "1.0.0";
 
     public GameType GameType = GameType.None;
 

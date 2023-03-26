@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8489478074639197101}
   m_Layer: 0
   m_Name: TimeKeeper
-  m_TagString: Untagged
+  m_TagString: TimeKeeper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InGameTime: 0
+  KeepTrackOfTime: 1

@@ -196,17 +196,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 173867961, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
   m_PrefabInstance: {fileID: 8341553856631604780}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &192125736 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8489478074639197101, guid: 34dc66d1454ee4847a74dff9fd68f721, type: 3}
-  m_PrefabInstance: {fileID: 8489478074719910021}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24d28635d7615e843bc2dc086f6a63bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &212829591 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6890753763783051880, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
@@ -463,10 +452,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8341553856631604782}
     - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
-      propertyPath: timerScript
-      value: 
-      objectReference: {fileID: 192125736}
-    - target: {fileID: 8912399583825518452, guid: e07b3ffbe1bb0dc488f008dfc3571d70, type: 3}
       propertyPath: enemiesHolder
       value: 
       objectReference: {fileID: 557510457}
@@ -602,10 +587,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 304656629}
     - target: {fileID: 6890753763783051880, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
-      propertyPath: timerScript
-      value: 
-      objectReference: {fileID: 192125736}
-    - target: {fileID: 6890753763783051880, guid: 119d7cd8245231b46993e3f5bfb7e909, type: 3}
       propertyPath: finsishPanel
       value: 
       objectReference: {fileID: 1866228453}
@@ -735,10 +716,6 @@ PrefabInstance:
       propertyPath: goldScript
       value: 
       objectReference: {fileID: 304656629}
-    - target: {fileID: 709978059984786731, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2679240425033939487, guid: 63b7f7f8d215fef4e823ce9e670992e4, type: 3}
       propertyPath: enemyWavesControler
       value: 
@@ -861,10 +838,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8489478074639197090, guid: 34dc66d1454ee4847a74dff9fd68f721, type: 3}
       propertyPath: m_Name
-      value: TimeKeeper
-      objectReference: {fileID: 0}
-    - target: {fileID: 8489478074639197090, guid: 34dc66d1454ee4847a74dff9fd68f721, type: 3}
-      propertyPath: m_TagString
       value: TimeKeeper
       objectReference: {fileID: 0}
     - target: {fileID: 8489478074639197100, guid: 34dc66d1454ee4847a74dff9fd68f721, type: 3}
