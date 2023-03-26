@@ -10,6 +10,7 @@ internal class ArrowMovement : ProjectBehaviour
     bool move = true;
 
     float arrowSpeed;
+    float arrowDownSpeed;
 
     //void Start()
     //{
@@ -42,7 +43,15 @@ internal class ArrowMovement : ProjectBehaviour
         }
         else
         {
-            translation = Vector3.zero;
+            if (hitEnemy == true)
+            {
+                arrowDownSpeed = 0f;
+            }
+            else
+            {
+                arrowDownSpeed = -0.1f;
+            }
+            translation = new Vector3(0, arrowDownSpeed, 0) * Time.deltaTime; ;
             //translation.x = 0f * Time.deltaTime;
             //translation.y = 0f * Time.deltaTime;
             //translation.z = 0f * Time.deltaTime;
